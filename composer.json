@@ -7,7 +7,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Project\\" : "src/Projet",
+            "Project\\" : "src/Project",
+            "Project\\Validator\\" : "src/Project/Validator",
             "Tests\\Project\\" : "tests/Project"
         }
     },
