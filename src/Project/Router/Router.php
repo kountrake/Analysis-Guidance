@@ -29,6 +29,9 @@ class Router
      */
     public function addRoute(string $methode, string $name, string $path, string $action)
     {
+        if (!(isset($this->routes[$methode]))) {
+            $this->routes[$methode] = [];
+        }
         foreach ($this->routes[$methode] as $route) {
             if ($route->getName() === $name) {
                 throw new RouteAlreadyExistsException();
@@ -53,23 +56,24 @@ class Router
      */
     public function getRoute(string $name): Route
     {
-        foreach ($this->routes as $route) {
-            if ($route->getName() === $name) {
-                return $route;
+        foreach ($this->routes as $routes) {
+            foreach ($routes as $route) {
+                if ($route->getName() === $name) {
+                    return $route;
+                }
             }
         }
         return new Route("404", '/404', function () {
         });
     }
 
-    public function match(string $path)
+    public function match(string $path, string $methode): Route
     {
-        foreach ($this->routes as $route) {
-            if ($route->getPath() === $path) {
+        foreach ($this->routes[$methode] as $route) {
+            if ($route->matches($path)) {
                 return $route;
             }
         }
-        return new Route("404", '/404', function () {
-        });
+        return new Route("404", '/404', 'ErrorController@doesNotExist');
     }
 }

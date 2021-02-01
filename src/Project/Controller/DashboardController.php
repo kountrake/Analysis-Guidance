@@ -5,10 +5,10 @@ namespace Project\Controller;
 
 use GuzzleHttp\Psr7\Response;
 
-class DashboardController
+class DashboardController extends Controller
 {
     public function index()
     {
-        echo 'Je suis la page index';
+        $this->view('dashboard');
     }
 }

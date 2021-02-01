@@ -3,6 +3,7 @@
 namespace Project;
 
 use GuzzleHttp\Psr7\Response;
+use Project\Router\Router;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -15,7 +16,7 @@ class App
     /**
      * @var array
      */
-    private $modules;
+    //private $modules;
 
     private $router;
 
@@ -24,31 +25,28 @@ class App
      */
     public function __construct()
     {
-        $this->modules = [];
+//      $this->modules = [];
         $this->router = new Router();
-        foreach ($this->modules as $module) {
-            $temp = new $module($this->router);
-            $temp->mapRoutes();
-        }
+//        foreach ($this->modules as $module) {
+//            $temp = new $module($this->router);
+//            $temp->mapRoutes();
+//        }
     }
 
 
     /**
      * @param ServerRequestInterface $request
-     * @return \GuzzleHttp\Psr7\MessageTrait|Response
      */
     public function run(ServerRequestInterface $request)
     {
-        $uri = $request->getUri()->getPath();
-        $tmpUri = str_replace('/~naessens', '', $uri);
-        if (!empty($tmpUri) && strlen($tmpUri) > 1 && $tmpUri[-1] === "/") {
-            return (new Response())
-                ->withStatus(301)
-                ->withHeader('Location', substr($uri, 0, -1));
-        }
-
-
-
-        return new Response(404, [], '<h1 style="color: #ff0000">Erreur 404, Page introuvable </h1>');
+        $path = str_replace('/~naessens', '', $request->getUri()->getPath());
+        $this->router->addRoute('GET', 'home', '/', 'HomeController@index');
+        $this->router->addRoute('GET', 'dashboard_index', '/dashboard', 'DashboardController@index');
+        $this->router->addRoute('GET', 'login', '/login', 'LoginController@index');
+        $this->router->addRoute('POST', 'login_connexion', '/login', 'LoginController@index');
+        $this->router->addRoute('GET', 'register', '/register', 'RegisterController@index');
+        $this->router->addRoute('POST', 'register_post', '/register', 'RegisterController@index');
+        $route = $this->router->match($path, $request->getMethod());
+        $route->execute();
     }
 }

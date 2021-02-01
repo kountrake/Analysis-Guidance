@@ -5,6 +5,7 @@ namespace Tests\Project;
 
 use PHPUnit\Framework\TestCase;
 use Project\Router\Route;
+use Project\Tools\TestTools;
 
 class RouteTest extends TestCase
 {
@@ -13,7 +14,7 @@ class RouteTest extends TestCase
 
     public function setUp(): void
     {
-        $this->route = new Route("test", "path", 'MonController@fonction');
+        $this->route = new Route("test", "path", '\Tests\Project\Tools\TestTools@index');
     }
 
     public function testGetName()
@@ -28,6 +29,11 @@ class RouteTest extends TestCase
 
     public function testGetAction()
     {
-        $this->assertEquals('MonController@fonction', $this->route->getAction());
+        $this->assertEquals('\Tests\Project\Tools\TestTools@index', $this->route->getAction());
+    }
+
+    public function testExecute()
+    {
+        $this->assertEquals('it works!', $this->route->execute());
     }
 }

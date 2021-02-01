@@ -13,15 +13,18 @@ class Route
      * @var string Name of the route
      */
     private $name;
+
     /**
      * @var string Path of the route
      */
     private $path;
+
     /**
      * @var string The action to perform
      */
     private $action;
 
+    public $matches;
     /**
      * Route constructor.
      * @param $name string The name of the route
@@ -31,7 +34,7 @@ class Route
     {
         $this->name = $name;
         $this->path = $path;
-        $this->action = $action;
+        $this->action = "Project\Controller\\" . $action;
     }
 
     /**
@@ -56,5 +59,28 @@ class Route
     public function getAction(): string
     {
         return $this->action;
+    }
+
+    public function matches($path): bool
+    {
+        $new = preg_replace('#:([\w]+)#', '([^/]+)', $this->path);
+        $pathToMatch = "#^$new$#";
+        if (preg_match($pathToMatch, $path, $matches)) {
+            $this->matches = $matches;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Execute the action of the route
+     */
+    public function execute()
+    {
+        $params = explode('@', $this->action);
+        $controller = new $params[0]();
+        $method = $params[1];
+        return $controller->$method();
     }
 }
