@@ -9,7 +9,12 @@
     <title>Projet</title>
 </head>
 <body>
-
+<ul>
+    <li><a href="/">Accueil</a></li>
+    <li><a href="/dashboard">Dashboard</a></li>
+    <li><a href="/login">Login</a></li>
+    <li><a href="/register">Inscription</a></li>
+</ul>
 <?= $content ?>
 
 </body>

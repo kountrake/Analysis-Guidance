@@ -41,6 +41,7 @@ class App
     {
         $path = str_replace('/~naessens', '', $request->getUri()->getPath());
         $this->router->addRoute('GET', 'home', '/', 'HomeController@index');
+        $this->router->addRoute('GET', 'home_index', '/index', 'HomeController@index');
         $this->router->addRoute('GET', 'dashboard_index', '/dashboard', 'DashboardController@index');
         $this->router->addRoute('GET', 'login', '/login', 'LoginController@index');
         $this->router->addRoute('POST', 'login_connexion', '/login', 'LoginController@index');
