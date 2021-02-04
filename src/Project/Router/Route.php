@@ -61,6 +61,11 @@ class Route
         return $this->action;
     }
 
+    /**
+     * Compares the path in param to the routes and return a bool, true if the paths are equals, false otherwise.
+     * @param $path
+     * @return bool
+     */
     public function matches($path): bool
     {
         $new = preg_replace('#:([\w]+)#', '([^/]+)', $this->path);
