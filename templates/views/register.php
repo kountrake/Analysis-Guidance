@@ -33,11 +33,8 @@
         </div>
         <div class="flex items-center justify-between">
             <button class="bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold hover:underline hover:bg-blue-600">
-                Se connecter
+                S'inscrire
             </button>
-            <a class="inline-block align-baseline text-sm text-gray-400 hover:underline" href="#">
-                Mot de passe oublié?
-            </a>
         </div>
 
     </form>
