@@ -1,5 +1,5 @@
 <div class="flex justify-center w-full">
-    <div class="bg-white w-2/3 mt-10 p-4">
+    <div class="bg-white w-2/3 mt-10 p-4 rounded">
         <h1 class="text-center text-4xl font-bold ">Présentation du site</h1>
         <h2 class="text-xl underline mt-14 py-3"> Que vous est-il possible de faire ?</h2>
         <p class="p-2">

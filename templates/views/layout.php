@@ -14,10 +14,21 @@
     <ul class="flex flex-row">
         <li class="p-4"><a href="/">Accueil</a></li>
     </ul>
-    <ul class="flex flex-row">
-        <li class="p-4"><a href="/login">Connexion</a></li>
-        <li class="p-4"><a href="/register">Inscription</a></li>
-    </ul>
+    <?php if ($auth) : ?>
+        <ul class="flex flex-row">
+            <li class="p-4"><a href="/account">Mon compte</a></li>
+            <li class="p-4">
+                <form action="/logout" method="post">
+                    <button type="submit" >Déconnexion</button>
+                </form>
+            </li>
+        </ul>
+    <?php else : ?>
+        <ul class="flex flex-row">
+            <li class="p-4"><a href="/login">Connexion</a></li>
+            <li class="p-4"><a href="/register">Inscription</a></li>
+        </ul>
+    <?php endif; ?>
 </header>
     <?= $content ?>
 </body>

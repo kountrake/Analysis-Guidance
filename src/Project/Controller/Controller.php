@@ -14,6 +14,7 @@ class Controller
             $params = extract($params);
         }
         $content = ob_get_clean();
+        $auth = false;
         require VIEWS . 'layout.php';
     }
 }
