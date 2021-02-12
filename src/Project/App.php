@@ -48,6 +48,7 @@ class App
         $this->router->addRoute('POST', 'login_connexion', '/login', 'LoginController@index');
         $this->router->addRoute('GET', 'register', '/register', 'RegisterController@index');
         $this->router->addRoute('POST', 'register_post', '/register', 'RegisterController@index');
+        $this->router->addRoute('POST', 'logout', '/logout', 'LoginController@logout');
         $route = $this->router->match($path, $request->getMethod());
         $route->execute();
     }
