@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/tailwind.css">
     <title>Projet</title>
 </head>
 <body class="bg-gray-200">
@@ -16,7 +16,7 @@
     </ul>
     <?php if ($auth) : ?>
         <ul class="flex flex-row">
-            <li class="p-4"><a href="/dashboard">Mon compte</a></li>
+            <li class="p-4"><a href="/account">Mon compte</a></li>
             <li class="p-4">
                 <form action="/logout" method="post">
                     <button type="submit" >Déconnexion</button>
