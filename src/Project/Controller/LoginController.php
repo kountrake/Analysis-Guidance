@@ -12,10 +12,10 @@ class LoginController extends Controller
 
     public function logout()
     {
-    	session_start();
-		session_destroy();
-		session_unset();
-		header("Location: /");
-		exit();
-	} 
+        session_start();
+        session_destroy();
+        session_unset();
+        header("Location: /");
+        exit();
+    }
 }
