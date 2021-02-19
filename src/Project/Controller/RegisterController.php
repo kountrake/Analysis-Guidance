@@ -36,8 +36,7 @@ class RegisterController extends Controller
             header('Location: /dashboard');
             die();
         } catch (PasswordValidatorException | NameValidatorException | EmailValidatorException $e) {
-            var_dump($e);
-            die();
+            //TODO Ajouter un systeme de traitement des erreurs
         }
     }
 }

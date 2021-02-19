@@ -23,7 +23,7 @@ class PasswordValidator
 
     public function passwordHasNoNumber(string $password):bool
     {
-        if (! preg_match('?=.*[0-9]', $password)) {
+        if (! preg_match('/(?=.*[0-9])/m', $password)) {
             throw new PasswordValidatorException('Le mot de passe doit contenir au moins un chiffre');
         }
         return true;
@@ -31,7 +31,7 @@ class PasswordValidator
 
     public function passwordHasNoMaj(string $password):bool
     {
-        if (! preg_match('?=.*[A-Z]', $password)) {
+        if (! preg_match('/(?=.*[A-Z])/m', $password)) {
             throw new PasswordValidatorException('Le mot de passe doit contenir au moins une lettre majuscule');
         }
         return true;
@@ -39,7 +39,7 @@ class PasswordValidator
 
     public function passwordHasNoMin(string $password):bool
     {
-        if (! preg_match('?=.*[a-z]', $password)) {
+        if (! preg_match('/(?=.*[A-Z])/m', $password)) {
             throw new PasswordValidatorException('Le mot de passe doit contenir au moins une lettre minuscule');
         }
         return true;
@@ -47,7 +47,7 @@ class PasswordValidator
 
     public function passwordHasNoSpecial(string $password):bool
     {
-        if (! preg_match('?=.*\W', $password)) {
+        if (! preg_match('/(?=.*\W)/m', $password)) {
             throw new PasswordValidatorException('Le mot de passe doit contenir au moins un caractère spécial');
         }
         return true;
@@ -55,7 +55,7 @@ class PasswordValidator
 
     public function confirmPassword($password, $passwordConf)
     {
-        if (!(strcmp($password, $passwordConf))) {
+        if (!($password ===  $passwordConf)) {
             throw new PasswordValidatorException('La confirmation du mot de passe a échoué');
         }
         return true;
