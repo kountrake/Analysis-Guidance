@@ -35,7 +35,7 @@ class Db
     /**
      * @return PDO
      */
-    private function getPDO()
+    public function getPDO()
     {
         if ($this->pdo === null) {
             $pdo = new PDO(
@@ -45,6 +45,7 @@ class Db
                 ';password='.$this->db_pass
             );
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
             $this->pdo = $pdo;
         }
         return $this->pdo;

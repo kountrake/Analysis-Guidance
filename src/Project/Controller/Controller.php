@@ -14,7 +14,12 @@ class Controller
             $params = extract($params);
         }
         $content = ob_get_clean();
-        $auth = false;
+        session_start();
+        if (isset($_SESSION['user'])) {
+            $auth = $_SESSION['user'];
+        } else {
+            $auth = false;
+        }
         require VIEWS . 'layout.php';
     }
 }

@@ -3,6 +3,8 @@
 
 namespace Project\Controller;
 
+use Project\Item\User;
+use Project\Middleware\UserMiddleware;
 use Project\Validator\EmailValidatorException;
 use Project\Validator\NameValidatorException;
 use Project\Validator\PasswordValidatorException;
@@ -27,8 +29,15 @@ class RegisterController extends Controller
         try {
             $registerValidator = new RegisterValidator();
             $registerValidator->run($lastname, $firstname, $email, $password, $password_confirm);
+            $userMid = new UserMiddleware();
+            $userMid->register($lastname, $firstname, $email, $password);
+            session_start();
+            $_SESSION['user'] = new User($firstname, $lastname, $email);
+            header('Location: /dashboard');
+            die();
         } catch (PasswordValidatorException | NameValidatorException | EmailValidatorException $e) {
-            echo 'Erreur : ' . $e->getMessage();
+            var_dump($e);
+            die();
         }
     }
 }

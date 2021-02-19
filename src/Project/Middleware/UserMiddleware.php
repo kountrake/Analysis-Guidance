@@ -4,6 +4,7 @@
 namespace Project\Middleware;
 
 use Project\Db\Db;
+use Project\Item\User;
 
 class UserMiddleware
 {
@@ -21,17 +22,26 @@ class UserMiddleware
     /**
      * @param string $email
      * @param string $password
-     * @return mixed|null
+     * @return User|null
      */
     public function login(string $email, string $password)
     {
         $email = htmlspecialchars($email);
         $password = htmlspecialchars($password);
-        $user = $this->db->query('SELECT * FROM utilisateur WHERE mail='. $email);
-        if (count($user) === 1 &&
+        $stmt = $this->db->getPDO()->prepare('SELECT * FROM utilisateur WHERE mail=:mail');
+        $values = array(':mail' => $email);
+        $stmt->execute($values);
+        $userDB = $stmt->fetch();
+        if ($userDB &&
             filter_var($email, FILTER_VALIDATE_EMAIL) &&
-            password_verify($password, $user[0]->mdp)) {
-            return $user[0];
+            password_verify($password, $userDB->mdp)) {
+            $user = new User(
+                $userDB->prenom,
+                $userDB->nom,
+                $userDB->mail
+            );
+            $user->setId($userDB->userid);
+            return $user;
         }
         return null;
     }
@@ -45,8 +55,9 @@ class UserMiddleware
     public function register(string $lastname, string $firstname, string $email, string $password)
     {
         $hash = password_hash($password, PASSWORD_BCRYPT);
-        $query = 'INSERT INTO utilisateur VALUES (prenom ='. $firstname.', nom = '.$lastname.', mail = '.$email.
-            ', mdp = ' .$hash.')';
-        $this->db->query($query);
+        $stmt = $this->db->getPDO()->prepare('INSERT INTO utilisateur (prenom, nom, mail, mdp) VALUES (:prenom, 
+                                                        :nom, :mail, :mdp)');
+        $values = array(':prenom' => $firstname,':nom' => $lastname, ':mail' => $email, ':mdp' => $hash);
+        $stmt->execute($values);
     }
 }

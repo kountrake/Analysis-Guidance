@@ -45,9 +45,10 @@ class App
         $this->router->addRoute('GET', 'dashboard_index', '/dashboard', 'DashboardController@index');
         $this->router->addRoute('GET', 'help_index', '/help', 'HelpController@index');
         $this->router->addRoute('GET', 'login', '/login', 'LoginController@index');
-        $this->router->addRoute('POST', 'login_connexion', '/login', 'LoginController@index');
+        $this->router->addRoute('POST', 'login_connexion', '/login', 'LoginController@login');
+        $this->router->addRoute('POST', 'login_logout', '/logout', 'LoginController@logout');
         $this->router->addRoute('GET', 'register', '/register', 'RegisterController@index');
-        $this->router->addRoute('POST', 'register_post', '/register', 'RegisterController@index');
+        $this->router->addRoute('POST', 'register_post', '/register', 'RegisterController@register');
         $this->router->addRoute('GET', 'score', '/score', 'ScoreController@index');
         $this->router->addRoute('GET', 'userstory', '/userstory', 'UserStoryController@index');
         $route = $this->router->match($path, $request->getMethod());

@@ -17,7 +17,7 @@
     </ul>
     <?php if ($auth) : ?>
         <ul class="flex flex-row">
-            <li class="p-4"><a href="/account">Mon compte</a></li>
+            <li class="p-4"><a href="/dashboard">Mon compte</a></li>
             <li class="p-4">
                 <form action="/logout" method="post">
                     <button type="submit" >Déconnexion</button>
