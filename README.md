@@ -40,6 +40,11 @@ Cette commande va se charger d'installer toutes les dépendances relatives au pr
 
 ## Le projet
 
+Afin de développer en local, utiliser cette commande :
+```
+    php -S localhost:8000 -t .\public_html\ -d display_errors=1
+```
+
 ### Les routes
 
 Les routes permettent de définir les pages de l'application et d'y associer différentes fonctions.
@@ -60,7 +65,7 @@ $maroute = new Route('dashboard_index', '/dashboard', 'DashboardController@index
 
 ##### Les Getters
 
-La classe route possède les Getters nécessaire pour accéder à chacune des propriétés:
+La classe route possède les Getters nécessaires pour accéder à chacune des propriétés:
 
 - getName()
 - getPath()
