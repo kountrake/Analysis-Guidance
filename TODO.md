@@ -25,7 +25,7 @@
 
 ## Page profil (Bastien)
 
-- [ ] Autocompléter les informations Nom, Prénom et Email
+- [x] Autocompléter les informations Nom, Prénom et Email
 - [ ] Mettre en place la fonctionnalité de modification des informations
 - [ ] Mettre en place la fonctionnalité de changement de mot de passe
 - [ ] Mettre en place la fonctionnalité de suppression de compte

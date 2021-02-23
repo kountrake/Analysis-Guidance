@@ -1,5 +1,5 @@
 <div class="flex justify-center w-full">
-    <form class="bg-white w-2/3 mt-10 p-4 rounded" method="post" target="/login">
+    <form class="bg-white w-2/3 mt-10 p-4 rounded" method="post">
         <h1 class="text-center text-4xl font-bold underline mb-20">Connexion</h1>
             <div class="mb-4">
                 <label class="block text-grey-darker text-sm font-bold mb-2" for="email">
