@@ -60,4 +60,42 @@ class UserMiddleware
         $values = array(':prenom' => $firstname,':nom' => $lastname, ':mail' => $email, ':mdp' => $hash);
         $stmt->execute($values);
     }
+
+    /**
+     * @param string $lastname
+     * @param string $firstname
+     * @param string $email
+     * @param int $id
+     */
+    public function updateInfo(string $lastname, string $firstname, string $email, int $id)
+    {
+        $stmt = $this->db->getPDO()->prepare('UPDATE utilisateur SET prenom= :prenom, nom= :nom, mail= :mail 
+WHERE userid= :id');
+        $values = array(':prenom' => $firstname,':nom' => $lastname, ':mail' => $email, 'id' => $id);
+        $stmt->execute($values);
+    }
+
+    /**
+     * @param string $previous
+     * @param string $new
+     * @param string $confirm
+     * @param int $id
+     * @return bool
+     */
+    public function updatePassword(string $previous, string $new, string $confirm, int $id): bool
+    {
+        $password = htmlspecialchars($previous);
+        $stmt = $this->db->getPDO()->prepare('SELECT * FROM utilisateur WHERE userid=:id');
+        $values = array(':id' => $id);
+        $stmt->execute($values);
+        $userDB = $stmt->fetch();
+        if ($userDB && password_verify($password, $userDB->mdp) && $new === $confirm) {
+            $stmt = $this->db->getPDO()->prepare('UPDATE utilisateur SET mdp= :new WHERE userid= :id');
+            $hash = password_hash($password, PASSWORD_BCRYPT);
+            $values = array(':new' => $hash,':id' => $id);
+            $stmt->execute($values);
+            return true;
+        }
+        return false;
+    }
 }
