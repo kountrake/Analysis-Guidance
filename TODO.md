@@ -28,7 +28,7 @@
 - [x] Autocompléter les informations Nom, Prénom et Email
 - [x] Mettre en place la fonctionnalité de modification des informations
 - [x] Mettre en place la fonctionnalité de changement de mot de passe
-- [ ] Mettre en place la fonctionnalité de suppression de compte
+- [x] Mettre en place la fonctionnalité de suppression de compte
 
 ## Page d'aide (Corentin)
 
