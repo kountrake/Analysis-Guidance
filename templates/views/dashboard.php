@@ -7,7 +7,7 @@
         <div class="mt-10 mx-2 w-1/2">
             <div class="bg-white rounded">
                 <h3 class="text-center underline text-xl">Mes informations</h3>
-                <form method="post" class="p-4">
+                <form method="post" class="p-4" action="/dashboard/update/info">
                     <input type="hidden" name="id" value="<?= $auth->getId()?>">
                     <div class="mb-4">
                         <label class="block text-grey-darker text-sm font-bold mb-2" for="lastname">
@@ -36,7 +36,7 @@
             </div>
             <div class="bg-white rounded mt-10">
                 <h3 class="text-center underline text-xl">Modifications</h3>
-                <form method="post" class="p-4">
+                <form method="post" class="p-4" action="/dashboard/update/password">
                     <input type="hidden" name="id" value="<?= $auth->getId()?>">
                     <div class="mb-6">
                         <label class="block text-grey-darker text-sm font-bold mb-2" for="previous_password">
@@ -48,13 +48,16 @@
                         <label class="block text-grey-darker text-sm font-bold mb-2" for="new_password">
                             Nouveau mot de passe
                         </label>
-                        <input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" name="new" id="new_password" type="password" placeholder="Nouveau mot de passe">
+                        <input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
+                               name="new" id="new_password" type="password" placeholder="Nouveau mot de passe">
                     </div>
                     <div class="mb-6">
                         <label class="block text-grey-darker text-sm font-bold mb-2" for="password_confirm">
                             Confirmation du mot de passe
                         </label>
-                        <input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" name="confirm" id="password_confirm" type="password" placeholder="Confirmez votre nouveau mot de passe">
+                        <input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
+                               name="confirm" id="password_confirm" type="password"
+                               placeholder="Confirmez votre nouveau mot de passe">
                     </div>
                     <div class="flex items-center justify-between">
                         <button class="bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold hover:underline hover:bg-blue-600">
@@ -64,9 +67,12 @@
                 </form>
             </div>
             <div class="flex items-center justify-center my-4">
-                <button class="bg-red-700 rounded border-2 border-red-800 py-2 px-5  text-white text-semi-bold hover:underline hover:bg-red-600">
-                    Supprimer mon compte
-                </button>
+                <form method="post" action="/dashboard/delete/account">
+                    <input type="hidden" name="id" value="<?= $auth->getId() ?>">
+                    <button class="bg-red-700 rounded border-2 border-red-800 py-2 px-5  text-white text-semi-bold hover:underline hover:bg-red-600">
+                        Supprimer mon compte
+                    </button>
+                </form>
             </div>
         </div>
         <div class="mt-10 mx-2 w-1/2 bg-white rounded">

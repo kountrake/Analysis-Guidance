@@ -92,10 +92,17 @@ WHERE userid= :id');
         if ($userDB && password_verify($password, $userDB->mdp) && $new === $confirm) {
             $stmt = $this->db->getPDO()->prepare('UPDATE utilisateur SET mdp= :new WHERE userid= :id');
             $hash = password_hash($password, PASSWORD_BCRYPT);
-            $values = array(':new' => $hash,':id' => $id);
+            $values = array(':new' => $hash, ':id' => $id);
             $stmt->execute($values);
             return true;
         }
         return false;
+    }
+
+    public function deleteAccount($id)
+    {
+        $stmt = $this->db->getPDO()->prepare('DELETE FROM utilisateur WHERE userid=:id');
+        $values = array(':id' => $id);
+        $stmt->execute($values);
     }
 }

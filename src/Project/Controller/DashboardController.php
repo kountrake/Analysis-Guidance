@@ -3,6 +3,7 @@
 
 namespace Project\Controller;
 
+use Exception;
 use Project\Item\User;
 use Project\Middleware\UserMiddleware;
 use Project\Validator\EmailValidator;
@@ -19,7 +20,28 @@ class DashboardController extends Controller
         $this->view('dashboard');
     }
 
-    public function update()
+    public function updatePassword()
+    {
+        $userMid = new UserMiddleware();
+        $id = $_POST['id'];
+        try {
+            if (isset($_POST['previous'])) {
+                $previous = $_POST['previous'];
+                $new = $_POST['new'];
+                $confirm = $_POST['confirm'];
+                $validator = new PasswordValidator();
+                $validator->confirmPassword($new, $confirm);
+                $validator->run($new);
+                $userMid->updatePassword($previous, $new, $confirm, $id);
+            }
+        } catch (PasswordValidatorException $e) {
+            //TODO Ajouter un systeme de traitement des erreurs
+        }
+        header('Location: /dashboard');
+        die();
+    }
+
+    public function updateInfo()
     {
         try {
             $userMid = new UserMiddleware();
@@ -38,23 +60,25 @@ class DashboardController extends Controller
                 $user = new User($firstname, $lastname, $email);
                 $user->setId($id);
                 $_SESSION['user'] = $user;
-            } elseif (isset($_POST['previous'])) {
-                $previous = $_POST['previous'];
-                $new = $_POST['new'];
-                $confirm = $_POST['confirm'];
-                $validator = new PasswordValidator();
-                $validator->confirmPassword($new, $confirm);
-                $validator->run($new);
-                $userMid->updatePassword($previous, $new, $confirm, $id);
-            } else {
-                null;
             }
-            header('Location: /dashboard');
-            die();
-        } catch (PasswordValidatorException | NameValidatorException | EmailValidatorException $e) {
+        } catch (NameValidatorException | EmailValidatorException $e) {
             //TODO Ajouter un systeme de traitement des erreurs
         }
+        header('Location: /dashboard');
+        die();
+    }
 
-        $this->view('dashboard');
+    public function delete()
+    {
+        try {
+            $userMid = new UserMiddleware();
+            $userMid->deleteAccount($_POST['id']);
+        } catch (Exception $e) {
+            //TODO Ajouter un systeme de traitement des erreurs
+        }
+        session_start();
+        session_destroy();
+        header('Location: /');
+        die();
     }
 }
