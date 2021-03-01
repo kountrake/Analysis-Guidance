@@ -3,34 +3,19 @@
         <h1 class="text-center text-4xl font-bold ">Présentation du site</h1>
         <h2 class="text-xl underline mt-14 py-3"> Que vous est-il possible de faire ?</h2>
         <p class="p-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut posuere dolor. Donec mollis lobortis
-            efficitur. Donec a nunc tellus. Nullam facilisis mi sapien, in pretium neque iaculis et. In euismod tempor
-            felis ac egestas. Nullam commodo magna vestibulum metus tempus, in vehicula eros mattis. Vestibulum ante
-            ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis porttitor diam eget finibus
-            dapibus. Maecenas rhoncus nibh sit amet elit sodales faucibus. Ut id elit ac massa ultricies finibus.
-        </p>
-        <p class="p-2">
-            Morbi dui dolor, dapibus non ante vitae, pharetra aliquet enim. Duis non tortor magna. In hac habitasse
-            platea dictumst. Sed tincidunt nec turpis vitae molestie. Cras eget nunc eget magna lobortis pharetra ac vel
-            elit. Aliquam fermentum tellus eget orci fermentum dictum. Proin elementum dapibus orci, suscipit luctus
-            elit aliquam eget. Maecenas lacus lacus, fermentum a mattis quis, convallis id urna. Quisque id justo
-            tempor, malesuada ex a, vestibulum dui. Morbi semper euismod arcu, eu finibus tellus.
+            Le but principal va être de vous permettre de faire une analyse fonctionnelle complète et la plus logique possible.   L’application va donc faire en sorte de vous aider à faire que l’analyse soit cohérente dans ses différentes parties. 
+Ces différentes parties que l’application va vous aider à rédiger seront : les personas, les users-stories, la story-map et la matrice.
+De plus, une aide est rédigée pour chaque partie pour aider un débutant ou une personne ayant besoin d’un rappel.
+
         </p>
         <h2 class="text-xl underline py-3">Cadre dans lequel nous réalisons ce projet</h2>
         <p class="p-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut posuere dolor. Donec mollis lobortis
-            efficitur. Donec a nunc tellus. Nullam facilisis mi sapien, in pretium neque iaculis et. In euismod tempor
-            felis ac egestas. Nullam commodo magna vestibulum metus tempus, in vehicula eros mattis. Vestibulum ante
-            ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis porttitor diam eget finibus
-            dapibus. Maecenas rhoncus nibh sit amet elit sodales faucibus. Ut id elit ac massa ultricies finibus.
+            Ce projet est réalisé dans le cadre de notre S6 de Licence MIAGE, d’une part son but sera d’aider les étudiants des prochaines années à mener à bien leurs analyses fonctionnelles, tout en comprenant bien comment rédiger chaque partie. Et d’autre part le but est d’appliquer l’ensemble de nos connaissances acquises jusqu’à présent. 
+
         </p>
         <h2 class="text-xl underline py-3">Remerciement</h2>
         <p class="p-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut posuere dolor. Donec mollis lobortis
-            efficitur. Donec a nunc tellus. Nullam facilisis mi sapien, in pretium neque iaculis et. In euismod tempor
-            felis ac egestas. Nullam commodo magna vestibulum metus tempus, in vehicula eros mattis. Vestibulum ante
-            ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis porttitor diam eget finibus
-            dapibus. Maecenas rhoncus nibh sit amet elit sodales faucibus. Ut id elit ac massa ultricies finibus.
+            Pour ce projet nous nous devons de remercier l’ensemble de nos professeurs de Licence et de nos études supérieures. Nous voulons également remercier de façon plus précise Marc DECALLONE, notre référent pour ce projet qui nous a également fourni le sujet correspondant à ce projet.
         </p>
     </div>
 </div>
