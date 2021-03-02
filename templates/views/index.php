@@ -11,7 +11,7 @@
         </head>
         <body>
         
-        <div class="login-form"><!-- les erreurs de connexion -->
+        <div class="login-form"><!-- les erreurs de connexions -->
              <?php 
                 if(isset($_GET['login_err']))
                 {
