@@ -53,6 +53,7 @@ class App
         $this->router->addRoute('POST', 'register_post', '/register', 'RegisterController@register');
         $this->router->addRoute('GET', 'score', '/score', 'ScoreController@index');
         $this->router->addRoute('GET', 'userstory', '/userstory', 'UserStoryController@index');
+        $this->router->addRoute('GET', 'personna', '/personna', 'PersonnaController@index');
         $route = $this->router->match($path, $request->getMethod());
         $route->execute();
     }
