@@ -50,7 +50,7 @@
             <form action="connexion.php" method="post">
                 <h2 class="text-center"> Connexion </h2>       
                 <div class="form-group">
-                    <input type="email" name="email" autocomplete="on" placeholder="Email" required autocomplete="email"  > <!-- champs du formulaire en required-->
+                    <input type="email" name="email" autocomplete="on" placeholder="Email" required autocomplete="email"  > <!-- champs du formulaire en required and auto completion-->
                 </div>
                 <div >
                     <input type="password" name="password" placeholder="Mot de passe" required autocomplete="password"> <!-- champs du formulaire en required-->
