@@ -4,14 +4,14 @@
 
 ## Page d'accueil non connecté (Corentin)
 
-- [ ] Rédiger les différentes parties
+- [x] Rédiger les différentes parties
 
 ## Page de connexion (Papa Laye)
 
-- [ ] Mettre les champs du formulaire en required afin qu'on ne puisse pas soumette de formulaire vide
-- [ ] Gérer les erreurs de connexion
-- [ ] Autocompléter le champ email avec l'email soumis avant la soumission du formulaire qui a retourné l'erreur
-- [ ] Rediriger la connexion sur la page du profil plutôt que sur l'accueil
+- [x] Mettre les champs du formulaire en required afin qu'on ne puisse pas soumette de formulaire vide
+- [x] Gérer les erreurs de connexion
+- [x] Autocompléter le champ email avec l'email soumis avant la soumission du formulaire qui a retourné l'erreur
+- [x] Rediriger la connexion sur la page du profil plutôt que sur l'accueil
 
 ## Page d'inscription (Alexis)
 

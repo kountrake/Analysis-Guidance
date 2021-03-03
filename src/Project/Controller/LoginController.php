@@ -19,10 +19,11 @@ class LoginController extends Controller
         if ($user) {
             session_start();
             $_SESSION['user'] = $user;
-            header('Location: /');
+            header('Location: /dashboard');
             exit();
         }
-        header('Location: /login');
+        $this->view('login', ["error" => "Les identifiants de connexions ne sont pas corrects",
+            "prev" => $_POST['email']]);
         exit();
     }
 
