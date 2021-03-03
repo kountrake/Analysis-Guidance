@@ -41,9 +41,8 @@ class Db
             $pdo = new PDO(
                 'pgsql:host=' .$this->db_host.
                 ';port=5432;dbname=' .$this->db_name.
-                ';user='.$this->db_user.
-                ';password='.$this->db_pass
-            );
+                ';user=' .$this->db_user.
+                ';password=' .$this->db_pass);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
             $this->pdo = $pdo;
