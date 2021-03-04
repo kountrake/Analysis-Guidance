@@ -7,17 +7,7 @@
         <h1 class="w-full bg-white text-center text-4xl font-bold underline p-2">Personna</h1>
         <div class="flex justify-center">
             <p class="mt-5 rounded p-2 w-2/3 bg-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut posuere dolor. Donec mollis lobortis
-                efficitur. Donec a nunc tellus. Nullam facilisis mi sapien, in pretium neque iaculis et. In euismod tempor
-                felis ac egestas. Nullam commodo magna vestibulum metus tempus, in vehicula eros mattis. Vestibulum ante
-                ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis porttitor diam eget finibus
-                dapibus. Maecenas rhoncus nibh sit amet elit sodales faucibus. Ut id elit ac massa ultricies finibus.
-                <br>
-                Morbi dui dolor, dapibus non ante vitae, pharetra aliquet enim. Duis non tortor magna. In hac habitasse
-                platea dictumst. Sed tincidunt nec turpis vitae molestie. Cras eget nunc eget magna lobortis pharetra ac vel
-                elit. Aliquam fermentum tellus eget orci fermentum dictum. Proin elementum dapibus orci, suscipit luctus
-                elit aliquam eget. Maecenas lacus lacus, fermentum a mattis quis, convallis id urna. Quisque id justo
-                tempor, malesuada ex a, vestibulum dui. Morbi semper euismod arcu, eu finibus tellus.
+                Un Persona est une personne fictive qui représente un groupe cible de profils utilisateurs répondant à un cas d’usage particulier. Le but va être de l’enrichir pour le rendre le plus “vivant” possible. Pour l’enrichir, il faudra réutiliser les caractéristiques des utilisateurs obtenus lors des interviews préalables. Ces caractéristiques vont ensuite permettre de guider les choix sur les fonctionnalités, la conception et aider à prendre des décisions concernant le produit.
             </p>
         </div>
     </div>
@@ -25,17 +15,13 @@
         <h1 class="w-full bg-white text-center text-4xl font-bold underline p-2">User-Story</h1>
         <div class="flex justify-center">
             <p class="mt-5 rounded p-2 w-2/3 bg-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut posuere dolor. Donec mollis lobortis
-                efficitur. Donec a nunc tellus. Nullam facilisis mi sapien, in pretium neque iaculis et. In euismod tempor
-                felis ac egestas. Nullam commodo magna vestibulum metus tempus, in vehicula eros mattis. Vestibulum ante
-                ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis porttitor diam eget finibus
-                dapibus. Maecenas rhoncus nibh sit amet elit sodales faucibus. Ut id elit ac massa ultricies finibus.
-                <br>
-                Morbi dui dolor, dapibus non ante vitae, pharetra aliquet enim. Duis non tortor magna. In hac habitasse
-                platea dictumst. Sed tincidunt nec turpis vitae molestie. Cras eget nunc eget magna lobortis pharetra ac vel
-                elit. Aliquam fermentum tellus eget orci fermentum dictum. Proin elementum dapibus orci, suscipit luctus
-                elit aliquam eget. Maecenas lacus lacus, fermentum a mattis quis, convallis id urna. Quisque id justo
-                tempor, malesuada ex a, vestibulum dui. Morbi semper euismod arcu, eu finibus tellus.
+                Une histoire-utilisateur est l'énoncé de ce que cherche à faire un acteur et dans quel but. Il suffit de le formaliser de la façon suivante:
+En tant que < acteur >, 
+je veux < une certaine fonctionnalité >,
+de sorte que < objectif à atteindre décrivant la plus-value, besoin réel >. 
+Je peux vérifier cette histoire en : 
+• < liste des conditions d'acceptation >.
+
             </p>
         </div>
     </div>
@@ -43,17 +29,8 @@
         <h1 class="w-full bg-white text-center text-4xl font-bold underline p-2">Story-Map</h1>
         <div class="flex justify-center">
             <p class="mt-5 rounded p-2 w-2/3 bg-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut posuere dolor. Donec mollis lobortis
-                efficitur. Donec a nunc tellus. Nullam facilisis mi sapien, in pretium neque iaculis et. In euismod tempor
-                felis ac egestas. Nullam commodo magna vestibulum metus tempus, in vehicula eros mattis. Vestibulum ante
-                ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis porttitor diam eget finibus
-                dapibus. Maecenas rhoncus nibh sit amet elit sodales faucibus. Ut id elit ac massa ultricies finibus.
-                <br>
-                Morbi dui dolor, dapibus non ante vitae, pharetra aliquet enim. Duis non tortor magna. In hac habitasse
-                platea dictumst. Sed tincidunt nec turpis vitae molestie. Cras eget nunc eget magna lobortis pharetra ac vel
-                elit. Aliquam fermentum tellus eget orci fermentum dictum. Proin elementum dapibus orci, suscipit luctus
-                elit aliquam eget. Maecenas lacus lacus, fermentum a mattis quis, convallis id urna. Quisque id justo
-                tempor, malesuada ex a, vestibulum dui. Morbi semper euismod arcu, eu finibus tellus.
+                Cette représentation permet de mettre en perspective le développement du produit avec le parcours utilisateur. 
+Elle comporte deux axes, à l'horizontal, on trouve le flot de narration suivant les étapes du processus-métier. Tandis qu’à l’horizontal on trouve les besoins par objectifs, du plus prioritaire au moins prioritaires.
             </p>
         </div>
     </div>
@@ -61,17 +38,7 @@
         <h1 class="w-full bg-white text-center text-4xl font-bold underline p-2">Matrice</h1>
         <div class="flex justify-center">
             <p class="mt-5 rounded p-2 w-2/3 bg-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut posuere dolor. Donec mollis lobortis
-                efficitur. Donec a nunc tellus. Nullam facilisis mi sapien, in pretium neque iaculis et. In euismod tempor
-                felis ac egestas. Nullam commodo magna vestibulum metus tempus, in vehicula eros mattis. Vestibulum ante
-                ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis porttitor diam eget finibus
-                dapibus. Maecenas rhoncus nibh sit amet elit sodales faucibus. Ut id elit ac massa ultricies finibus.
-                <br>
-                Morbi dui dolor, dapibus non ante vitae, pharetra aliquet enim. Duis non tortor magna. In hac habitasse
-                platea dictumst. Sed tincidunt nec turpis vitae molestie. Cras eget nunc eget magna lobortis pharetra ac vel
-                elit. Aliquam fermentum tellus eget orci fermentum dictum. Proin elementum dapibus orci, suscipit luctus
-                elit aliquam eget. Maecenas lacus lacus, fermentum a mattis quis, convallis id urna. Quisque id justo
-                tempor, malesuada ex a, vestibulum dui. Morbi semper euismod arcu, eu finibus tellus.
+                C’est un tableau à doubles entrées, croisant les besoins identifiés avec les étapes du processus. Le but va être de voir si chaque étapes est bien croisé par un besoin.
             </p>
         </div>
     </div>
