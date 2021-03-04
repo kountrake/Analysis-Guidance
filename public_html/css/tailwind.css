@@ -183915,4 +183915,18 @@ video {
             animation: bounce 1s infinite;
   }
 }
+#mesLiens {
+  display: flex;
+  flex-direction : column;
+  position : absolute;
+  left : 0;
+  align-self : center;
+  text-align : center;
+  width : 320px;
+}
+
+.lienMenu{
+  margin : 0px;
+  margin-bottom : 50px;
+}
   

@@ -15,13 +15,13 @@
 
 ## Page d'inscription (Alexis)
 
-- [ ] Mettre les champs du formulaire en required afin qu'on ne puisse pas soumette de formulaire vide
-- [ ] Gérer les erreurs d'inscription
-- [ ] Autocompléter les champs Nom, Prenom et email avec les informations soumises avant la soumission du formulaire qui a retourné l'erreur
+- [x] Mettre les champs du formulaire en required afin qu'on ne puisse pas soumette de formulaire vide
+- [x] Gérer les erreurs d'inscription
+- [x] Autocompléter les champs Nom, Prenom et email avec les informations soumises avant la soumission du formulaire qui a retourné l'erreur
 
 ## Page d'accueil connectée (Alexis)
 
-- [ ] Ajouter les liens manquants conformément à la maquette
+- [x] Ajouter les liens manquants conformément à la maquette
 
 ## Page profil (Bastien)
 

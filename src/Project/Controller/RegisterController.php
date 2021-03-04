@@ -36,7 +36,10 @@ class RegisterController extends Controller
             header('Location: /dashboard');
             die();
         } catch (PasswordValidatorException | NameValidatorException | EmailValidatorException $e) {
-            //TODO Ajouter un systeme de traitement des erreurs
+                $this->view('register', ["error" => $e->getMessage(),
+            "prevEmail" => $_POST['email'],"prevNom" => $_POST['lastname'],"prevPrenom" => $_POST['firstname']]);
+                exit();
+            }
         }
     }
-}
+

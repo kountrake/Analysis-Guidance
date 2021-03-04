@@ -1,4 +1,14 @@
 <div class="flex justify-center w-full">
+<?php if ($auth) : ?>
+    <div id='mesLiens' >
+        <a class='lienMenu' href="/dashboard">Mes Projets</a>
+        <br/>
+        <a class='lienMenu' href="/personna">Nouveau Projet</a>
+        <br/>
+        <a class='lienMenu' href="/help">Aide</a>
+        <br/>
+    </div>
+    <?php endif; ?>
     <div class="bg-white w-2/3 mt-10 p-4 rounded">
         <h1 class="text-center text-4xl font-bold ">Présentation du site</h1>
         <h2 class="text-xl underline mt-14 py-3"> Que vous est-il possible de faire ?</h2>
