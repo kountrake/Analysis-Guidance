@@ -9,6 +9,6 @@ class PersonnaController extends Controller
 {
     public function index()
     {
-        $this->view('personna');
+            $this->viewcontrol('personna');
     }
 }

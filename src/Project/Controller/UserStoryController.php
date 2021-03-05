@@ -9,6 +9,6 @@ class UserStoryController extends Controller
 {
     public function index()
     {
-        $this->view('userstory');
+        $this->viewcontrol('userstory');
     }
 }

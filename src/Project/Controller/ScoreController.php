@@ -9,6 +9,6 @@ class ScoreController extends Controller
 {
     public function index()
     {
-        $this->view('score');
+        $this->viewcontrol('score');
     }
 }
