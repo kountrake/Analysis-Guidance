@@ -22,6 +22,7 @@ class Controller
         $content = ob_get_clean();
         require VIEWS . 'layout.php';
     }
+
     public function viewcontrol(string $path, array $params = null)
     {
         session_start();
@@ -38,11 +39,10 @@ class Controller
         if (isset($_SESSION['user'])) {
             require VIEWS . $path . '.php';
         } else {
-            require VIEWS . 'login.php';
+            header('Location: /login');
+            exit();
         }
         $content = ob_get_clean();
         require VIEWS . 'layout.php';
-
-        
     }
 }

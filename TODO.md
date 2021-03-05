@@ -32,11 +32,11 @@
 
 ## Page d'aide (Corentin)
 
-- [ ] Rédiger les différentes parties de l'aide
+- [x] Rédiger les différentes parties de l'aide
 
 ## Page personna (Lucas)
 
-- [ ] Intégrer la maquette
+- [x] Intégrer la maquette
 
 ## Page story map (Lucas)
 
@@ -52,4 +52,4 @@
 
 ## Authentification (Corentin)
 
-- [ ] Empêcher l'accès aux pages nécessitant une connexion si l'utilisateur n'est pas connecté
+- [x] Empêcher l'accès aux pages nécessitant une connexion si l'utilisateur n'est pas connecté

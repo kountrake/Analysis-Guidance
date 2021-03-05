@@ -54,6 +54,7 @@ class App
         $this->router->addRoute('GET', 'score', '/score', 'ScoreController@index');
         $this->router->addRoute('GET', 'userstory', '/userstory', 'UserStoryController@index');
         $this->router->addRoute('GET', 'personna', '/personna', 'PersonnaController@index');
+        $this->router->addRoute('GET', 'download', '/download', 'DownloadController@index');
         $route = $this->router->match($path, $request->getMethod());
         $route->execute();
     }

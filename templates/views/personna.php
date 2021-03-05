@@ -46,7 +46,10 @@
                 <h3 class="text-center underline text-xl">Caractéristiques</h3>
                 <form method="post" class="p-4">
                     <div class="mb-4 w-9/12 float-left">
-                        //TODO Il faut un name au champ
+                        <p>//TODO Il faut un name au champ <br>
+                            //TODO Plusieurs caractéristiques ? <br>
+                            // => Comment gérer l'ajout dynamique des multiples caractéristiques ? <br>
+                            // => Comment gérer l'ajout de ces multiples caractéristiques dans la BDD ?</p>
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                                id="usname" type="text">
                     </div>
