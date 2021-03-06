@@ -32,14 +32,6 @@
                                class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                                id="jeveux" type="text">
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-grey-darker text-sm font-bold mb-2" for="desorte">
-                            Situation familiale :
-                        </label>
-                        <input name="desorte"
-                               class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                               id="desorte" type="text">
-                    </div>
                 </form>
             </div>
             <div class="bg-white float-right w-5/12 pb-80">
