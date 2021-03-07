@@ -60,7 +60,22 @@ Cette page permettra de regrouper l'ensemble des informations correspondant à u
 ## Page story map
 
 - [ ] Intégrer la maquette (@Lucas)
+- [ ] Rajouter un bouton précédent => Le bouton suivant doit-il être également celui qui déclenche l'enregistrement des
+  informations du formulaire en BDD ? => Rappeler comment est construite cette maquette - Peut être besoin de la
+  retravailler afin que celle-ci soit suffisamment explicite d'elle même => Vérifier la concordance entre maquette et
+  BDD
 
 ## Page Matrice
 
 - [ ] Intégrer la maquette (@Valentin)
+- [ ] Rajouter un bouton précédent => Rappeler comment fonctionne cette maquette => Vérifier la concordance entre
+  maquette et BDD
+
+## Page score final
+
+=> Vers quelle page redirige le bouton fin de projet => Le bouton aller à mes projets redirige vers la page profile ?
+vers une page projet ? => Le détail du score ne semble pas possible d'être stocké et récupéré en BDD
+
+- Seul le score final semble être stocké actuellement
+- [ ] Rajouter un bouton précédent
+
