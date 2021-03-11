@@ -9,12 +9,6 @@
                 <h3 class="text-center underline text-xl">Expression du besoin</h3>
                 <form method="post" class="p-4">
                     <div class="mb-4">
-                        <label class="block text-grey-darker text-sm font-bold mb-2" for="usname">
-                            Nom User Story :
-                        </label>
-                        <input name ="usname" class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="usname" type="text">
-                    </div>
-                    <div class="mb-4">
                         <label class="block text-grey-darker text-sm font-bold mb-2" for="entantque">
                             En tant que :
                         </label>
