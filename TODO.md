@@ -6,7 +6,7 @@
 
 ## Page Inscription - route: /register
 
-- [ ] Ajouter critères du mot de passe
+- [x] Ajouter critères du mot de passe
 
 ## Page Mes projets - route: /myprojects
 

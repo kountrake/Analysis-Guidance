@@ -52,13 +52,19 @@ if (isset($prevPrenom)) {
             <label class="block text-grey-darker text-sm font-bold mb-2" for="password">
                 Mot de passe
             </label>
-            <input required name="password" class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker" id="password" type="password" placeholder="******************">
+            <input required name="password"
+                   class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker"
+                   id="password" type="password" placeholder="******************">
+            <p class="text-sm text-gray-500">Votre mot de passe doit contenir au minimum: une majuscule, une minuscule,
+                un chiffre, un caractère spécial et faire entre 6 et 20 caractère de long.</p>
         </div>
         <div class="mb-6">
             <label class="block text-grey-darker text-sm font-bold mb-2" for="password_confirm">
                 Confirmation du mot de passe
             </label>
-            <input required name="password_confirm" class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="password_confirm" type="password" placeholder="Confirmez votre mot de passe">
+            <input required name="password_confirm"
+                   class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
+                   id="password_confirm" type="password" placeholder="Confirmez votre mot de passe">
         </div>
         <div class="flex items-center justify-between">
             <button class="bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold hover:underline hover:bg-blue-600">
