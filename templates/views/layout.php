@@ -7,13 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/tailwind.css">
     <link rel="stylesheet" href="/css/style.css">
-    <title>Projet</title>
+    <title>Analysis Guidance</title>
 </head>
 <body class="bg-gray-200">
 
 <header class="flex flex-row justify-between px-20 bg-yellow-500">
     <ul class="flex flex-row">
-        <li class="p-4"><a href="/">Accueil</a></li>
+        <li class="p-4 text-xl text-white font-bold underline"><a href="/">Analysis Guidance</a></li>
     </ul>
     <?php if ($auth) : ?>
         <ul class="flex flex-row">
