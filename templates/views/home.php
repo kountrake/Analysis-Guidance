@@ -1,21 +1,25 @@
 <div class="flex justify-center w-full">
-<?php if ($auth) : ?>
-    <div id='mesLiens' >
-        <a class='lienMenu' href="/dashboard">Mes Projets</a>
-        <br/>
-        <a class='lienMenu' href="/personna">Nouveau Projet</a>
-        <br/>
-        <a class='lienMenu' href="/help">Aide</a>
-        <br/>
-    </div>
+    <?php if ($auth) : ?>
+        <div id='mesLiens'>
+            <a class='lienMenu' href="/myprojects">Mes Projets</a>
+            <br/>
+            <a class='lienMenu' href="/personna">Nouveau Projet</a>
+            <br/>
+            <a class='lienMenu' href="/help">Aide</a>
+            <br/>
+        </div>
     <?php endif; ?>
     <div class="bg-white w-2/3 mt-10 p-4 rounded">
         <h1 class="text-center text-4xl font-bold ">Présentation du site</h1>
         <h2 class="text-xl underline mt-14 py-3"> Que vous est-il possible de faire ?</h2>
         <p class="p-2">
-            Le but principal va être de vous permettre de faire une analyse fonctionnelle complète et la plus logique possible.   L’application va donc faire en sorte de vous aider à faire que l’analyse soit cohérente dans ses différentes parties. 
-Ces différentes parties que l’application va vous aider à rédiger seront : les personas, les users-stories, la story-map et la matrice.
-De plus, une aide est rédigée pour chaque partie pour aider un débutant ou une personne ayant besoin d’un rappel.
+            Le but principal va être de vous permettre de faire une analyse fonctionnelle complète et la plus logique
+            possible. L’application va donc faire en sorte de vous aider à faire que l’analyse soit cohérente dans ses
+            différentes parties.
+            Ces différentes parties que l’application va vous aider à rédiger seront : les personas, les users-stories,
+            la story-map et la matrice.
+            De plus, une aide est rédigée pour chaque partie pour aider un débutant ou une personne ayant besoin d’un
+            rappel.
 
         </p>
         <h2 class="text-xl underline py-3">Cadre dans lequel nous réalisons ce projet</h2>

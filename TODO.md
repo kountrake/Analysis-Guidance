@@ -2,7 +2,7 @@
 
 ## Page Accueil connecté
 
-- [ ] Le lien mes projets doit rediriger vers la page /myprojects
+- [x] Le lien mes projets doit rediriger vers la page /myprojects
 
 ## Page Inscription - route: /register
 
@@ -76,7 +76,7 @@ Cette page permet de regrouper l'ensemble des informations correspondant à un p
 
 ## Page score final
 
-- [ ] Le bouton fin de projet doit rediriger vers la page mes projets ?
+- [ ] Le bouton fin de projet doit rediriger vers la page mes projets
 - [ ] Rajouter un bouton précédent
 
 ## Dossier (@Corentin)
