@@ -2,48 +2,47 @@
 
 ## Page Accueil connecté
 
-- Le lien mes projets et mon compte sont les mêmes. Ne devrions-nous pas créer une simple page listant les différents
-  projets d'un utilisateur afin que le lien mes projets ait un réel intérêt ?
-    - => Création d'une maquette ?
+- [ ] Le lien mes projets doit rediriger vers la page /myprojects
 
-
-
-## Page Inscription
+## Page Inscription - route: /register
 
 - [ ] Ajouter critères du mot de passe
 
-## Page projet
+## Page Mes projets - route: /myprojects
 
-Cette page permettra de regrouper l'ensemble des informations correspondant à un projet
+Cette page fait le listing de l'ensemble des projets d'un utilisateur
 
-Deux routes: mesprojets + mesprojets/{id}
+- [ ] Intégration de la maquette
+- [ ] Faire le listing des projets d'un utilisateur
 
-Faire une maquette de cette page
+## Page projet - route: /mesprojets/{idprojet}
+
+Cette page permet de regrouper l'ensemble des informations correspondant à un projet
+
+- [ ] Faire une maquette de cette page
 - [ ] Une partie persona avec tous les différents personas + bouton modifier (+ bouton télécharger ?)
 - [ ] Une partie user story avec toutes les différentes US + bouton modifier (+ bouton télécharger ?)
 - [ ] Une partie story map + bouton modifier (+ bouton télécharger ?)
 - [ ] Une partie matrice ou simplement un lien (bouton) vers la page matrice chargeant les éléments de ce projet
-    - => Les différents boutons modifier redirige vers la page en question en chargeant les éléments du projets
-
-Intégration de la maquette
-
-Faire le listing des projets d'un utilisateur
+  - => Les différents boutons modifier redirige vers la page en question en chargeant les éléments du projets
 
 ## Page personna
 
-- Ne pas se préoccuper des boutons ajouter
 - [ ] Ajouter en BDD un champ âge
 - [ ] Ajouter sur le site un champ prénom
 - [ ] Le bouton suivant ne fonctionne pas
 - Cohérence site et BDD:
-    - Le champ caractéristique du site devrait être renommé en description et être un textarea afin que les deux
-      correspondent
-    - Le champ objectif ne devrait-il pas en être de même ? Une sorte de description des objectifs en un seul paragraphe
-    - Description et objectifs sont-ils repris plus tard dans l'analyse que propose le site ?
+  - [ ] Le champ caractéristique du site devrait être renommé en description et être un textarea sur le site et un text
+    sur la BDD afin que les deux correspondent
+  - [ ] Le champ objectif devient une description des objectifs en un seul paragraphe (en faire un textarea sur le site
+    et un text sur la BDD)
 
-- [ ] Rajouter un champ scénario en BDD permettant de stocker celui-ci (varchar(cb de char?))
-
-- [ ] Il n'y a actuellement aucun moyen de supprimer un persona ou d'en modifier les informations
+- [ ] Rajouter un champ scénario en BDD permettant de stocker celui-ci (varchar(cb de char?) ou text ?)
+- [ ] Supprimer les boutons Ajouter
+- [ ] Ajouter un bouton pour supprimer un persona
+- [ ] Ajouter un bouton modifier pour changer les informations d'un
+- [ ] Intégrer la fonctionnalité de suppression d'un persona
+- [ ] Intégrer la fonctionnalité de modification
 - [ ] Corriger les bugs CSS -> certains affichages ne sont pas correct et si l'on réduit la fenêtre en hauteur ça
   devient un peu le bordel
 - [ ] Mettre en place le bouton téléchargement
@@ -67,33 +66,20 @@ Faire le listing des projets d'un utilisateur
 ## Page story map
 
 - [ ] Intégrer la maquette (@Lucas)
-- [ ] Rajouter un bouton précédent 
-  => Le bouton suivant doit-il être également celui qui déclenche l'enregistrement des informations du formulaire 
-  en BDD ? 
-  => Rappeler comment est construite cette maquette - Peut être besoin de la retravailler afin que celle-ci soit 
-  suffisamment explicite d'elle-même 
-  => Vérifier la concordance entre maquette et BDD
+- [ ] Rajouter un bouton précédent => Le bouton suivant doit-il être également celui qui déclenche l'enregistrement des
+  informations du formulaire en BDD ? => Vérifier la concordance entre maquette et BDD
 
 ## Page Matrice
 
 - [ ] Intégrer la maquette (@Valentin)
-
-- [ ] Rajouter un bouton précédent 
-  
-  => Rappeler comment fonctionne cette maquette 
-  
-  => Vérifier la concordance entre maquette et BDD
+- [ ] Rajouter un bouton précédent => Vérifier la concordance entre maquette et BDD
 
 ## Page score final
 
-- [ ] Le bouton fin de projet doit re
-  => Le bouton aller à mes projets redirige vers la page profile ? Vers une page projet ?
-
+- [ ] Le bouton fin de projet doit rediriger vers la page mes projets ?
 - [ ] Rajouter un bouton précédent
 
-
-
-## Dossier
+## Dossier (@Corentin)
 
 - [ ] Rédaction
 - [ ] Is/is not
@@ -101,5 +87,5 @@ Faire le listing des projets d'un utilisateur
 - [ ] Experience map
 - [ ] Cout
 - [ ] MCD à corriger
-- [ ] Demander la date de rendu
+- [x] Demander la date de rendu
 
