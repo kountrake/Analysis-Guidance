@@ -47,9 +47,9 @@
                                   cols="33" id="usname"></textarea>
                     </div>
                     <div class="flex flex-col justify-around w-1/2 bg-white mb-4 p-4">
-                        <label for="scenarios" class="text-center underline text-xl mb-2">Scénarios</label>
-                        <textarea class="border border-red rounded w-full py-2 px-3 text-grey-darker" maxlength="300"
-                                  rows="5" cols="33"></textarea>
+                        <label for="scenarios" class="text-center underline text-xl mb-2">Scénario</label>
+                        <input type="text" class="border border-red rounded w-full py-2 px-3 text-grey-darker"
+                               id="scenarios">
                     </div>
                 </div>
                 <div class="flex justify-center">

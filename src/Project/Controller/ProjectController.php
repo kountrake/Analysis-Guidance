@@ -15,4 +15,9 @@ class ProjectController extends Controller
         $projects = $pm->getAllProjects($user->getId());
         $this->viewcontrol('projects', ['projects' => $projects]);
     }
+
+    public function show(int $id)
+    {
+        $this->viewcontrol('project', ['id' => $id]);
+    }
 }
