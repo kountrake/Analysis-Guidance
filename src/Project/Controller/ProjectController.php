@@ -18,6 +18,6 @@ class ProjectController extends Controller
 
     public function show(int $id)
     {
-        $this->viewcontrol('project', ['id' => $id]);
+        $this->view('project', ['id' => $id]);
     }
 }

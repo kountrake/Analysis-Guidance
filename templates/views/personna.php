@@ -6,6 +6,7 @@
     <div class="flex flex-col w-full px-8">
         <div class="my-4 mx-2">
             <form method="post">
+                <input type="hidden" name="projectId" value="<?= 1//$projectId  ?>">
                 <div class="flex flex-row justify-between">
                     <div class="flex flex-col justify-around w-1/2 bg-white p-4 mb-4 mr-4">
                         <h3 class="text-center underline text-xl">Identité</h3>
@@ -36,19 +37,22 @@
                     </div>
                     <div class="flex flex-col justify-around w-1/2 bg-white mb-4 p-4">
                         <label for="description" class="text-center underline text-xl">Description</label>
-                        <textarea class="border rounded w-full py-2 px-3 text-grey-darker" id="usname" maxlength="300"
+                        <textarea name="description" class="border rounded w-full py-2 px-3 text-grey-darker"
+                                  id="usname" maxlength="300"
                                   rows="9" cols="33"></textarea>
                     </div>
                 </div>
                 <div class="flex flex-row justify-between">
                     <div class="flex flex-col justify-around w-1/2 bg-white mb-4 p-4 mr-4">
                         <label for="objectifs" class="text-center underline text-xl mb-2">Objectifs</label>
-                        <textarea class="border rounded w-full py-2 px-3 text-grey-darker" maxlength="300" rows="5"
+                        <textarea name="objectifs" class="border rounded w-full py-2 px-3 text-grey-darker"
+                                  maxlength="300" rows="5"
                                   cols="33" id="usname"></textarea>
                     </div>
                     <div class="flex flex-col justify-around w-1/2 bg-white mb-4 p-4">
                         <label for="scenarios" class="text-center underline text-xl mb-2">Scénario</label>
-                        <input type="text" class="border border-red rounded w-full py-2 px-3 text-grey-darker"
+                        <input name="scenario" type="text"
+                               class="border border-red rounded w-full py-2 px-3 text-grey-darker"
                                id="scenarios">
                     </div>
                 </div>

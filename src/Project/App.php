@@ -24,12 +24,7 @@ class App
      */
     public function __construct()
     {
-//      $this->modules = [];
         $this->router = new Router();
-//        foreach ($this->modules as $module) {
-//            $temp = new $module($this->router);
-//            $temp->mapRoutes();
-//        }
     }
 
 
@@ -54,9 +49,11 @@ class App
         $this->router->addRoute('GET', 'score', '/score', 'ScoreController@index');
         $this->router->addRoute('GET', 'userstory', '/userstory', 'UserStoryController@index');
         $this->router->addRoute('GET', 'personna', '/personna', 'PersonnaController@index');
+        $this->router->addRoute('POST', 'personna_create', '/personna', 'PersonnaController@create');
         $this->router->addRoute('GET', 'download', '/download', 'DownloadController@index');
         $this->router->addRoute('GET', 'projects_show', '/myprojects', 'ProjectController@index');
         $this->router->addRoute('GET', 'project_show', '/myprojects/:id', 'ProjectController@show');
+        $this->router->addRoute('GET', 'project_create', '/project/create', 'ProjectController@create');
         $route = $this->router->match($path, $request->getMethod());
         $route->execute();
     }

@@ -9,7 +9,7 @@ class UserStoryController extends Controller
 {
     public function index()
     {
-        $this->viewcontrol('userstory');
+        $this->view('userstory');
     }
 
     public function userstory()

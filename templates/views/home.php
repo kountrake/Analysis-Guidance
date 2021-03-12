@@ -3,7 +3,7 @@
         <div id='mesLiens'>
             <a class='lienMenu' href="/myprojects">Mes Projets</a>
             <br/>
-            <a class='lienMenu' href="/personna">Nouveau Projet</a>
+            <a class='lienMenu' href="/project/create">Nouveau Projet</a>
             <br/>
             <a class='lienMenu' href="/help">Aide</a>
             <br/>
