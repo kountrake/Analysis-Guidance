@@ -28,22 +28,22 @@ Cette page permet de regrouper l'ensemble des informations correspondant à un p
 
 ## Page personna
 
-- [ ] Ajouter en BDD un champ âge
-- [ ] Ajouter sur le site un champ prénom
-- [ ] Le bouton suivant ne fonctionne pas
+- [x] Ajouter en BDD un champ âge
+- [x] Ajouter sur le site un champ prénom
+- [x] Le bouton suivant ne fonctionne pas
 - Cohérence site et BDD:
-  - [ ] Le champ caractéristique du site devrait être renommé en description et être un textarea sur le site et un text
+  - [x] Le champ caractéristique du site devrait être renommé en description et être un textarea sur le site et un text
     sur la BDD afin que les deux correspondent
-  - [ ] Le champ objectif devient une description des objectifs en un seul paragraphe (en faire un textarea sur le site
+  - [x] Le champ objectif devient une description des objectifs en un seul paragraphe (en faire un textarea sur le site
     et un text sur la BDD)
 
-- [ ] Rajouter un champ scénario en BDD permettant de stocker celui-ci (varchar(cb de char?) ou text ?)
-- [ ] Supprimer les boutons Ajouter
+- [x] Rajouter un champ scénario en BDD permettant de stocker celui-ci (varchar(cb de char?) ou text ?)
+- [x] Supprimer les boutons Ajouter
 - [ ] Ajouter un bouton pour supprimer un persona
 - [ ] Ajouter un bouton modifier pour changer les informations d'un
 - [ ] Intégrer la fonctionnalité de suppression d'un persona
 - [ ] Intégrer la fonctionnalité de modification
-- [ ] Corriger les bugs CSS -> certains affichages ne sont pas correct et si l'on réduit la fenêtre en hauteur ça
+- [x] Corriger les bugs CSS -> certains affichages ne sont pas correct et si l'on réduit la fenêtre en hauteur ça
   devient un peu le bordel
 - [ ] Mettre en place le bouton téléchargement
 
@@ -54,14 +54,14 @@ Cette page permet de regrouper l'ensemble des informations correspondant à un p
 - [ ] Mettre en place la fonctionnalité de création d'une User Story (@Papa Laye)
 - [ ] Mettre un menu déroulant pour le champ "en tant que" où les propositions sont les différents rôles parmi les
   personas
-- [ ] Mettre directement en place 3 champs je suis satisfait si
-- [ ] Ajouter un bouton précédent afin de revenir sur la page persona
+- [x] Mettre directement en place 3 champs je suis satisfait si
+- [x] Ajouter un bouton précédent afin de revenir sur la page persona
 - [ ] Mettre en place le bouton téléchargement
 - [ ] Toutes les US précédemment créées doivent être listées et résumées dans le bas de la page
-    - [ ] Rajouter un bouton modifier sur chacune d'elle ainsi qu'un bouton supprimer
-    - [ ] Mettre en place la fonctionnalité de modification
-    - [ ] Mettre en place la fonctionnalité de suppression
-- [ ] Le bouton suivant ne fonctionne pas. Il doit rediriger vers la page /storymap
+  - [ ] Rajouter un bouton modifier sur chacune d'elle ainsi qu'un bouton supprimer
+  - [ ] Mettre en place la fonctionnalité de modification
+  - [ ] Mettre en place la fonctionnalité de suppression
+- [x] Le bouton suivant ne fonctionne pas. Il doit rediriger vers la page /storymap
 
 ## Page story map
 
@@ -76,11 +76,12 @@ Cette page permet de regrouper l'ensemble des informations correspondant à un p
 
 ## Page score final
 
-- [ ] Le bouton fin de projet doit rediriger vers la page mes projets
-- [ ] Rajouter un bouton précédent
+- [x] Le bouton fin de projet doit rediriger vers la page mes projets
+- [x] Rajouter un bouton précédent
 
 ## Dossier (@Corentin)
 
+- [ ] Refaire les US
 - [ ] Rédaction
 - [ ] Is/is not
 - [ ] Does/does not

@@ -105,11 +105,12 @@ WHERE userid= :id');
         $values = array(':id' => $id);
         $stmt->execute($values);
     }
- public function userstory(string $usname,string $entanque,string $jeveux,string $desorte,string $satisfait)
+
+    public function userstory(string $entanque, string $jeveux, string $desorte, string $satisfait)
     {
-        $stmt = $this->db->getPDO()->prepare('INSERT INTO userstory VALUES (:usname,
-                                                :entantque, :jeveux, :desorte, :satisfait)');
-        $values = array(':usname'=>$usname, ':entanque'=>$entanque, ':jeveux'=>$jeveux, ':desorte'=>$desorte,':satisfait'=>$satisfait);
-        return $stmt->execute($values);
+        $stmt = $this->db->getPDO()->prepare('INSERT INTO userstory VALUES (:entantque, :jeveux, :desorte,
+                              :satisfait)');
+        $values = array(':entanque' => $entanque, ':jeveux' => $jeveux, ':desorte' => $desorte, ':satisfait' => $satisfait);
+        $stmt->execute($values);
     }
 }

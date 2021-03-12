@@ -3,7 +3,6 @@
 
 namespace Project\Controller;
 
-use Project\Item\User;
 use Project\Middleware\UserMiddleware;
 use Project\Validator\EmailValidatorException;
 use Project\Validator\NameValidatorException;
@@ -32,14 +31,14 @@ class RegisterController extends Controller
             $userMid = new UserMiddleware();
             $userMid->register($lastname, $firstname, $email, $password);
             session_start();
-            $_SESSION['user'] = new User($firstname, $lastname, $email);
+            $_SESSION['user'] = $userMid->login($email, $password);
             header('Location: /dashboard');
             die();
         } catch (PasswordValidatorException | NameValidatorException | EmailValidatorException $e) {
-                $this->view('register', ["error" => $e->getMessage(),
-            "prevEmail" => $_POST['email'],"prevNom" => $_POST['lastname'],"prevPrenom" => $_POST['firstname']]);
-                exit();
-            }
+            $this->view('register', ["error" => $e->getMessage(),
+                "prevEmail" => $_POST['email'], "prevNom" => $_POST['lastname'], "prevPrenom" => $_POST['firstname']]);
+            exit();
         }
     }
+}
 
