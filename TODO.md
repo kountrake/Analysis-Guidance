@@ -81,6 +81,7 @@ Cette page permet de regrouper l'ensemble des informations correspondant à un p
 
 ## Dossier (@Corentin)
 
+- [ ] Refaire les US
 - [ ] Rédaction
 - [ ] Is/is not
 - [ ] Does/does not
