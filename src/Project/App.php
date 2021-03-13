@@ -48,6 +48,7 @@ class App
         $this->router->addRoute('GET', 'score', '/score', 'ScoreController@index');
         $this->router->addRoute('GET', 'userstory', '/userstory', 'UserStoryController@index');
         $this->router->addRoute('GET', 'personna', '/personna', 'PersonnaController@index');
+        $this->router->addRoute('GET', 'personna_modify', '/personna/:id', 'PersonnaController@modify');
         $this->router->addRoute('POST', 'personna_create', '/personna', 'PersonnaController@create');
         $this->router->addRoute('GET', 'download', '/download', 'DownloadController@index');
         $this->router->addRoute('GET', 'projects_show', '/myprojects', 'ProjectController@index');

@@ -8,6 +8,7 @@
             <div class="bg-white rounded p-10">
                 <h3 class="text-center underline text-xl mb-5">Une erreur s'est produite...</h3>
                 <p class="text-center">Malheureusement une erreur s'est produite lors de votre dernière action. :(</p>
+                <p class="text-center text-xl text-red-700"><?= isset($error) ? $error : '' ?></p>
             </div>
         </div>
     </div>

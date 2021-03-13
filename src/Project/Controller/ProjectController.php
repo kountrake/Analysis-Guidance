@@ -4,6 +4,7 @@
 namespace Project\Controller;
 
 use Exception;
+use Project\Middleware\PersonnaMiddleware;
 use Project\Middleware\ProjectMiddleware;
 
 class ProjectController extends Controller
@@ -19,7 +20,18 @@ class ProjectController extends Controller
 
     public function show(int $id)
     {
-        $this->view('project', ['id' => $id]);
+        session_start();
+        try {
+            $user = $_SESSION['user'];
+            $pm = new ProjectMiddleware();
+            $pm->getProject($id, $user->getId());
+            $personnaMiddleware = new PersonnaMiddleware($id);
+            $personnas = $personnaMiddleware->getAllPersonnas();
+            $this->viewcontrol('project', ['personnas' => $personnas, 'id' => $id]);
+        } catch (Exception $exception) {
+            $this->view('error/oops', ['error' => $exception->getMessage()]);
+            die();
+        }
     }
 
     public function create()

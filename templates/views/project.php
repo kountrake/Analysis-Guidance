@@ -1,7 +1,7 @@
 <div class="w-full">
 
     <div class="flex justify-center bg-white w-full mt-10 p-4 ">
-        <h1 class="text-center text-4xl font-bold underline">Projet n° <?= $id ?></h1>
+        <h1 class="text-center text-4xl font-bold underline">Projet</h1>
     </div>
 
     <div class="flex justify-center bg-white w-full mt-10 p-4 ">
@@ -10,37 +10,34 @@
 
     <div class="flex flex-col w-full px-8">
         <div class="my-4 mx-2">
-            <div class="flex flex-col items-center">
-                <div class="flex flex-col justify-around w-full bg-white p-4 mb-4">
-                    <h3 class="text-center underline text-xl">Identité</h3>
-                    <p class="text-grey-darker text-sm font-bold mb-2">
-                        Nom :
-                    </p>
-                    <p class="text-grey-darker text-sm font-bold mb-2">
-                        Prénom :
-                    </p>
-                    <p class="text-grey-darker text-sm font-bold mb-2">
-                        Age :
-                    </p>
-                    <p class="text-grey-darker text-sm font-bold mb-2">
-                        Profession :
-                    </p>
-                </div>
-                <div class="flex flex-col justify-around w-full bg-white mb-4 p-4">
-                    <h3 class="text-center underline text-xl">Description</h3>
-                    <p>La description ...</p>
-                </div>
-            </div>
-            <div class="flex flex-row justify-between">
-                <div class="flex flex-col justify-around w-1/2 bg-white mb-4 p-4 mr-4">
-                    <h3 class="text-center underline text-xl">Objectifs</h3>
-                    <p>Les Objectifs ...</p>
-                </div>
-                <div class="flex flex-col justify-around w-1/2 bg-white mb-4 p-4">
-                    <h3 class="text-center underline text-xl">Scénario</h3>
-                    <p>Le scénario ...</p>
-                </div>
-            </div>
+            <?php if (isset($personnas)) : ?>
+                <?php $i = 1 ?>
+                <?php foreach ($personnas as $personna) : ?>
+                    <div class="flex justify-center bg-white w-full mt-10 p-4 ">
+                        <h3 class="text-center text-2xl font-bold">Personna n° <?= $i ?></h3>
+                    </div>
+                    <div class="w-full bg-white rounded mb-4 p-4">
+                        <h3 class="text-center underline text-xl">Identité</h3>
+                        <p class="p-2">Nom : <?= $personna->nom ?></p>
+                        <p class="p-2">Prénom : <?= $personna->prenom ?></p>
+                        <p class="p-2">Age : <?= $personna->age ?></p>
+                        <p class="p-2">Profession : <?= $personna->role ?></p>
+                    </div>
+                    <div class="bg-white rounded mb-4 p-4">
+                        <h3 class="text-center underline text-xl">Description</h3>
+                        <p class="p-2"><?= $personna->caractéristiques ?></p>
+                    </div>
+                    <div class="bg-white rounded mb-4 p-4">
+                        <h3 class="text-center underline text-xl">Objectifs</h3>
+                        <p class="p-2"><?= $personna->objectif ?></p>
+                    </div>
+                    <div class="bg-white rounded mb-4 p-4">
+                        <h3 class="text-center underline text-xl">Scénarios</h3>
+                        <p class="p-2"><?= $personna->scénario ?></p>
+                    </div>
+                    <?php $i++ ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
             <div class="flex justify-end">
                 <a href="/personna/<?= $id ?>"
                    class="bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold hover:underline hover:bg-blue-600">Modifier</a>

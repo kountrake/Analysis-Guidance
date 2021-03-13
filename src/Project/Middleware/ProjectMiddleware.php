@@ -27,12 +27,22 @@ class ProjectMiddleware
         return $stmt->fetchAll();
     }
 
+    /**
+     * @param int $projectId
+     * @param int $userId
+     * @return mixed
+     * @throws ProjectMiddlewareException
+     */
     public function getProject(int $projectId, int $userId)
     {
         $stmt = $this->db->getPDO()->prepare('SELECT * FROM projet WHERE idprojet=:projectId AND userid=:userId');
         $values = array(':projectId' => $projectId, ':userId' => $userId);
         $stmt->execute($values);
-        return $stmt->fetch();
+        $value = $stmt->fetch();
+        if (!$value) {
+            throw new ProjectMiddlewareException("Ce projet n'existe pas.");
+        }
+        return $value;
     }
 
     public function create(int $userId)

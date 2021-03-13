@@ -7,7 +7,9 @@ class Controller
 {
     public function view(string $path, array $params = null)
     {
-        session_start();
+        if (session_status() != 2) {
+            session_start();
+        }
         if (isset($_SESSION['user'])) {
             $auth = $_SESSION['user'];
         } else {

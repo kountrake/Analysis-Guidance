@@ -40,8 +40,22 @@ class PersonnaController extends Controller
             $personnas = $personnaMid->getAllPersonnas();
             $this->viewcontrol('personna', ['projectId' => $_POST['projectId'], 'personnas' => $personnas]);
         } catch (Exception $exception) {
-            var_dump($exception);
-            $this->view('oops');
+            $this->view('oops', ['error' => $exception->getMessage()]);
+        }
+    }
+
+    public function modify($id)
+    {
+        session_start();
+        try {
+            $user = $_SESSION['user'];
+            $pm = new ProjectMiddleware();
+            $pm->getProject($id, $user->getId());
+            $personnaMid = new PersonnaMiddleware($id);
+            $personnas = $personnaMid->getAllPersonnas();
+            $this->viewcontrol('personna', ['projectId' => $id, 'personnas' => $personnas]);
+        } catch (Exception $exception) {
+            $this->view('oops', ['error' => $exception->getMessage()]);
         }
     }
 }
