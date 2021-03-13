@@ -4,36 +4,44 @@
 namespace Project\Controller;
 
 use Exception;
+use Project\Middleware\PersonnaMiddleware;
 use Project\Middleware\ProjectMiddleware;
 
 class PersonnaController extends Controller
 {
     public function index()
     {
-        $this->view('personna');
+        session_start();
+        $pm = new ProjectMiddleware();
+        $projetId = $pm->getLastProjectId($_SESSION['user']->getId());
+        $personnaMid = new PersonnaMiddleware($projetId);
+        $personnas = $personnaMid->getAllPersonnas();
+        if (count($personnas) === 0) {
+            $this->viewcontrol('personna', ['projectId' => $projetId]);
+        } else {
+            $this->viewcontrol('personna', ['projectId' => $projetId, 'personnas' => $personnas]);
+        }
     }
 
     public function create()
     {
         session_start();
         try {
-            var_dump($_POST);
             $name = $_POST['name'];
             $firstname = $_POST['firstname'];
-            $role = $_POST['entantque'];
-            $jeveux = $_POST['jeveux'];
+            $age = $_POST['age'];
+            $role = $_POST['role'];
             $caracteristique = $_POST['description'];
             $objectifs = $_POST['objectifs'];
             $scenario = $_POST['scenario'];
-            $projet = new ProjectMiddleware();
-            $projectId = $projet->create($_SESSION['user']->getId());
-            $personnaMid = new PersonnaMiddleware();
+            $personnaMid = new PersonnaMiddleware($_POST['projectId']);
             $personnaMid
-                ->create($name, $firstname, $role, $jeveux, $caracteristique, $objectifs, $scenario, $projectId);
-            $personnas = $personnaMid->getAllPersonnas($projectId);
+                ->create($name, $firstname, $age, $role, $caracteristique, $objectifs, $scenario);
+            $personnas = $personnaMid->getAllPersonnas();
+            $this->viewcontrol('personna', ['projectId' => $_POST['projectId'], 'personnas' => $personnas]);
         } catch (Exception $exception) {
             var_dump($exception);
+            $this->view('oops');
         }
-        $this->viewcontrol();
     }
 }

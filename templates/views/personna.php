@@ -6,7 +6,7 @@
     <div class="flex flex-col w-full px-8">
         <div class="my-4 mx-2">
             <form method="post">
-                <input type="hidden" name="projectId" value="<?= 1//$projectId  ?>">
+                <input type="hidden" name="projectId" value="<?= $projectId ?>">
                 <div class="flex flex-row justify-between">
                     <div class="flex flex-col justify-around w-1/2 bg-white p-4 mb-4 mr-4">
                         <h3 class="text-center underline text-xl">Identité</h3>
@@ -25,13 +25,13 @@
                         <label class="text-grey-darker text-sm font-bold mb-2" for="entantque">
                             Age :
                         </label>
-                        <input name="entantque"
+                        <input name="age"
                                class="border rounded py-2 px-3 text-grey-darker"
                                id="entantque" type="text">
                         <label class="text-grey-darker text-sm font-bold mb-2" for="jeveux">
                             Profession :
                         </label>
-                        <input name="jeveux"
+                        <input name="role"
                                class="border rounded py-2 px-3 text-grey-darker"
                                id="jeveux" type="text">
                     </div>
@@ -64,24 +64,34 @@
             </form>
         </div>
 
-        <div class="w-full bg-white rounded mb-4 p-4">
-            <h3 class="text-center underline text-xl">Identité</h3>
-            <p class="p-2">Nom :</p>
-            <p class="p-2">Prénom :</p>
-            <p class="p-2">Age :</p>
-            <p class="p-2">Profession :</p>
-            <p class="p-2">Situation familiale :</p>
-        </div>
-        <div class="bg-white rounded mb-4 p-4">
-            <h3 class="text-center underline text-xl">Description</h3>
-        </div>
-        <div class="bg-white rounded mb-4 p-4">
-            <h3 class="text-center underline text-xl">Objectifs</h3>
-        </div>
-        <div class="bg-white rounded mb-4 p-4">
-            <h3 class="text-center underline text-xl">Scénarios</h3>
-        </div>
-
+        <?php if (isset($personnas)) : ?>
+            <?php $i = 1 ?>
+            <?php foreach ($personnas as $personna) : ?>
+                <div class="flex justify-center bg-white w-full mt-10 p-4 ">
+                    <h3 class="text-center text-2xl font-bold">Personna n° <?= $i ?></h3>
+                </div>
+                <div class="w-full bg-white rounded mb-4 p-4">
+                    <h3 class="text-center underline text-xl">Identité</h3>
+                    <p class="p-2">Nom : <?= $personna->nom ?></p>
+                    <p class="p-2">Prénom : <?= $personna->prenom ?></p>
+                    <p class="p-2">Age : <?= $personna->age ?></p>
+                    <p class="p-2">Profession : <?= $personna->role ?></p>
+                </div>
+                <div class="bg-white rounded mb-4 p-4">
+                    <h3 class="text-center underline text-xl">Description</h3>
+                    <p class="p-2"><?= $personna->caractéristiques ?></p>
+                </div>
+                <div class="bg-white rounded mb-4 p-4">
+                    <h3 class="text-center underline text-xl">Objectifs</h3>
+                    <p class="p-2"><?= $personna->objectif ?></p>
+                </div>
+                <div class="bg-white rounded mb-4 p-4">
+                    <h3 class="text-center underline text-xl">Scénarios</h3>
+                    <p class="p-2"><?= $personna->scénario ?></p>
+                </div>
+                <?php $i++ ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
         <div class="flex flew-row justify-around mb-4">
             <a href="/download"
                class="bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold hover:underline hover:bg-blue-600">
@@ -92,6 +102,5 @@
                 Suivant
             </a>
         </div>
-
     </div>
 </div>

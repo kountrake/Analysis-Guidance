@@ -60,6 +60,6 @@ class ProjectMiddleware
         $stmt = $this->db->getPDO()->prepare('SELECT MAX(idprojet) FROM projet WHERE userid=:userId');
         $values = array(':userId' => $userId);
         $stmt->execute($values);
-        return $stmt->fetch();
+        return $stmt->fetch()->max;
     }
 }

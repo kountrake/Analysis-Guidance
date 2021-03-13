@@ -7,7 +7,7 @@
         <?php if (empty($projects)) : ?>
             <div class="flex flex-col items-center bg-white rounded w-2/3 p-5">
                 <p class="mb-4"> Vous n'avez pour le moment aucun projet de créé. :(</p>
-                <a href="/personna"
+                <a href="/project/create"
                    class="block bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold hover:underline hover:bg-blue-600">Créer
                     un projet</a>
             </div>

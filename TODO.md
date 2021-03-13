@@ -36,7 +36,6 @@ Cette page permet de regrouper l'ensemble des informations correspondant à un p
     sur la BDD afin que les deux correspondent
   - [x] Le champ objectif devient une description des objectifs en un seul paragraphe (en faire un textarea sur le site
     et un text sur la BDD)
-
 - [x] Rajouter un champ scénario en BDD permettant de stocker celui-ci (varchar(cb de char?) ou text ?)
 - [x] Supprimer les boutons Ajouter
 - [ ] Ajouter un bouton pour supprimer un persona
