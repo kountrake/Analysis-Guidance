@@ -1,0 +1,27 @@
+body{
+  background-color: #737373; /*arrière plan de la fenêtre gris sombre*/
+}
+
+#window h1 {
+  width: 100%;
+  text-align: center;
+}
+
+#table_matrice {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #b3b3b3; /*couleur des cases matrice gris*/
+}
+
+#table_matrice td, #table_matrice th {
+  border: 1px solid #000000;
+  padding: 8px;
+}
+
+#table_matrice th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  color:  #d0d0e1;
+}
