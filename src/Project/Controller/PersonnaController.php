@@ -9,22 +9,22 @@ use Project\Middleware\ProjectMiddleware;
 
 class PersonnaController extends Controller
 {
-    public function index()
+    public function index($projectId)
     {
         session_start();
         $pm = new ProjectMiddleware();
-        $projetId = $pm->getLastProjectId($_SESSION['user']->getId());
-        $personnaMid = new PersonnaMiddleware($projetId);
+        $personnaMid = new PersonnaMiddleware($projectId);
         $personnas = $personnaMid->getAllPersonnas();
         if (count($personnas) === 0) {
-            $this->viewcontrol('personna', ['projectId' => $projetId]);
+            $this->viewcontrol('personna', ['projectId' => $projectId]);
         } else {
-            $this->viewcontrol('personna', ['projectId' => $projetId, 'personnas' => $personnas]);
+            $this->viewcontrol('personna', ['projectId' => $projectId, 'personnas' => $personnas]);
         }
     }
 
     public function create()
     {
+
         session_start();
         try {
             $name = $_POST['name'];
@@ -37,8 +37,8 @@ class PersonnaController extends Controller
             $personnaMid = new PersonnaMiddleware($_POST['projectId']);
             $personnaMid
                 ->create($name, $firstname, $age, $role, $caracteristique, $objectifs, $scenario);
-            $personnas = $personnaMid->getAllPersonnas();
-            $this->viewcontrol('personna', ['projectId' => $_POST['projectId'], 'personnas' => $personnas]);
+            header('Location: /personna/' . $_POST['projectId']);
+            exit();
         } catch (Exception $exception) {
             $this->view('oops', ['error' => $exception->getMessage()]);
         }
@@ -57,5 +57,54 @@ class PersonnaController extends Controller
         } catch (Exception $exception) {
             $this->view('oops', ['error' => $exception->getMessage()]);
         }
+    }
+
+    public function change()
+    {
+        try {
+            $idProject = $_POST['idProjet'];
+            $personnaMid = new PersonnaMiddleware($idProject);
+            $personna = $personnaMid->getPersonna($_POST['idPersonna']);
+            $this->viewcontrol('modify/personna', ['projectId' => $idProject, 'personna' => $personna]);
+        } catch (Exception $exception) {
+            $this->view('error/oops', ['error' => $exception->getMessage()]);
+        }
+    }
+
+    public function update()
+    {
+        try {
+            $idProject = $_POST['projectId'];
+            $idPersonna = $_POST['personnaId'];
+            $name = $_POST['name'];
+            $firstname = $_POST['firstname'];
+            $age = $_POST['age'];
+            $role = $_POST['role'];
+            $caracteristique = $_POST['description'];
+            $objectifs = $_POST['objectifs'];
+            $scenario = $_POST['scenario'];
+            $personnaMid = new PersonnaMiddleware($idProject);
+            $personnaMid->update($name, $firstname, $age, $role, $caracteristique, $objectifs, $scenario, $idPersonna);
+            header('Location: /personna/' . $idProject);
+            exit();
+        } catch (Exception $exception) {
+            $this->view('error/oops', ['error' => $exception->getMessage()]);
+        }
+    }
+
+    public function delete()
+    {
+        $pm = new PersonnaMiddleware($_POST['idProjet']);
+        $pm->delete($_POST['id']);
+        header('Location: /personna/' . $_POST['idProjet']);
+        exit();
+    }
+
+    public function redirect($idProjet)
+    {
+        $pm = new PersonnaMiddleware($_POST['idProjet']);
+        $pm->getAllPersonnas();
+        header('Location: /personna/' . $_POST['idProjet']);
+        exit();
     }
 }

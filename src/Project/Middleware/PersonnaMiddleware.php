@@ -32,7 +32,7 @@ class PersonnaMiddleware
     {
         $stmt = $this->db->getPDO()->prepare('SELECT * FROM personna 
                                                     WHERE idprojet=:projectId AND idpersonna=:personnaId');
-        $values = array(':projectId' => $this->projectId, ':userId' => $personnaId);
+        $values = array(':projectId' => $this->projectId, ':personnaId' => $personnaId);
         $stmt->execute($values);
         return $stmt->fetch();
     }
@@ -62,6 +62,25 @@ class PersonnaMiddleware
         $values = array(':nom' => $nom, ':prenom' => $prenom, ':age' => $age, ':role' => $role,
             ':scenario' => $scenario, ':objectif' => $objectif,
             ':caracteristiques' => $caracteristique, ':idprojet' => $this->projectId);
+        $stmt->execute($values);
+    }
+
+    public function update($name, $firstname, $age, $role, $caracteristique, $objectifs, $scenario, $idPersonna)
+    {
+        $stmt = $this->db->getPDO()->prepare('UPDATE personna 
+                SET nom = :nom, prenom = :prenom, age = :age, role = :role,
+                    scénario = :scenario, objectif = :objectif, caractéristiques = :caracteristiques 
+                WHERE idpersonna= :id');
+        $values = array(':nom' => $name, ':prenom' => $firstname, ':age' => $age, ':role' => $role,
+            ':scenario' => $scenario, ':objectif' => $objectifs,
+            ':caracteristiques' => $caracteristique, ':id' => $idPersonna);
+        $stmt->execute($values);
+    }
+
+    public function delete($id)
+    {
+        $stmt = $this->db->getPDO()->prepare('DELETE FROM personna WHERE idpersonna=:id');
+        $values = array(':id' => $id);
         $stmt->execute($values);
     }
 }

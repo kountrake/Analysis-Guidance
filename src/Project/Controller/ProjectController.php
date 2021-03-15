@@ -41,11 +41,20 @@ class ProjectController extends Controller
             $user = $_SESSION['user'];
             $pm = new ProjectMiddleware();
             $pm->create($user->getId());
+            header('Location: /personna/' . $pm->getLastProjectId($user->getId()));
+            exit();
         } catch (Exception $exception) {
             $this->view('oops');
             die();
         }
-        header('Location: /personna');
-        die();
+
+    }
+
+    public function delete()
+    {
+        $pm = new ProjectMiddleware();
+        $pm->delete($_POST['id']);
+        header('Location: /myprojects');
+        exit();
     }
 }
