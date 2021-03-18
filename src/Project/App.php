@@ -74,7 +74,11 @@ class App
         /*
          * Les routes de la page User Story
          */
-        $this->router->addRoute('GET', 'userstory', '/userstory', 'UserStoryController@index');
+        $this->router->addRoute('GET', 'userstory_index', '/userstory/:id', 'UserStoryController@index');
+        $this->router->addRoute('POST', 'userstory_add', '/userstory/add/:id', 'UserStoryController@create');
+        $this->router->addRoute('POST', 'userstory_change', '/userstory/change', 'UserStoryController@change');
+        $this->router->addRoute('POST', 'userstory_update', '/userstory/update', 'UserStoryController@update');
+        $this->router->addRoute('POST', 'userstory_delete', '/delete/userstory', 'UserStoryController@delete');
 
         /*
          * Les routes de la page Personna
