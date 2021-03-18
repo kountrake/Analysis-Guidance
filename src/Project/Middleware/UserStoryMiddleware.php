@@ -13,6 +13,7 @@ class UserStoryMiddleware
 
     /**
      * PersonnaMiddleware constructor.
+     * @param int $projectId
      */
     public function __construct(int $projectId)
     {
@@ -46,17 +47,18 @@ class UserStoryMiddleware
     }
 
     public function create(
-        string $nom,
-        string $prenom,
-        int $age,
-        string $role,
-        string $caracteristique,
-        string $objectif,
-        string $scenario
+        $entantque,
+        $jeveux,
+        $desorte,
+        $satisfait,
+        $critere1,
+        $critere2,
+        $critere3,
+        $idUserStory
     )
     {
         $stmt = $this->db->getPDO()->prepare(
-            'INSERT INTO personna (nom, prenom, age, role, scénario, objectif, caractéristiques, idprojet)
+            'INSERT INTO userstory (role, idprojet)
                    VALUES (:nom, :prenom, :age, :role, :scenario, :objectif, :caracteristiques, :idprojet)'
         );
         $values = array(':nom' => $nom, ':prenom' => $prenom, ':age' => $age, ':role' => $role,
