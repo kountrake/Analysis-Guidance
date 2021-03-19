@@ -14,6 +14,7 @@
     "require": {
         "guzzlehttp/psr7": "^1.7",
         "http-interop/response-sender": "^1.0",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "spipu/html2pdf": "^5.2"
     }
 }
