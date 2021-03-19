@@ -4,6 +4,7 @@
 namespace Project\Controller;
 
 use Exception;
+use Project\Middleware\PersonnaMiddleware;
 use Project\Middleware\ProjectMiddleware;
 use Project\Middleware\UserStoryMiddleware;
 
@@ -17,13 +18,19 @@ class UserStoryController extends Controller
             $pm->getProject($projectId, $_SESSION['user']->getId());
             $usMid = new UserStoryMiddleware($projectId);
             $us = $usMid->getAllUserStories();
+            $persmidd = new PersonnaMiddleware($projectId);
+            $roles = $persmidd->getAllRoles();
+            if (count($roles) === 0) {
+                $this->view('error/oops', ['error' => "Vous n'avez pas encore créé de personna. Merci de suivre ce lien : <a class='underline' href='/personna/". $projectId ."'>personna</a>"]);
+                exit();
+            }
             if (count($us) === 0) {
-                $this->viewcontrol('userstory', ['projectId' => $projectId]);
+                $this->viewcontrol('userstory', ['projectId' => $projectId, 'roles' => $roles]);
             } else {
-                $this->viewcontrol('userstory', ['projectId' => $projectId, 'userstories' => $us]);
+                $this->viewcontrol('userstory', ['projectId' => $projectId, 'roles' => $roles, 'userstories' => $us]);
             }
         } catch (Exception $e) {
-            $this->view('oops', ['error' => $e->getMessage()]);
+            $this->view('error/oops', ['error' => $e->getMessage()]);
         }
     }
 

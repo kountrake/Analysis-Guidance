@@ -83,4 +83,12 @@ class PersonnaMiddleware
         $values = array(':id' => $id);
         $stmt->execute($values);
     }
+
+    public function getAllRoles(): array
+    {
+        $stmt = $this->db->getPDO()->prepare('SELECT role FROM personna WHERE idprojet=:projectId');
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
+    }
 }
