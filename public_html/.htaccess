@@ -1,6 +1,0 @@
-RewriteEngine on
-RewriteCond %{HTTP:Authorization} .+
-RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /~naessens/index.php [QSA,L]

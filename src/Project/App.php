@@ -105,7 +105,9 @@ class App
         /*
          * Les routes pour la Story Map
          */
-        $this->router->addRoute('GET', 'storymap', '/storymap', 'StoryMapController@index');
+        $this->router->addRoute('GET', 'storymap', '/storymap/:id', 'StoryMapController@index');
+        $this->router->addRoute('POST', 'storymap_create', '/storymap/create', 'StoryMapController@create');
+        $this->router->addRoute('POST', 'storymap_update', '/storymap/update', 'StoryMapController@update');
 
         $route = $this->router->match($path, $request->getMethod());
         $route->execute();
