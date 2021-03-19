@@ -4,7 +4,8 @@
     </div>
 
     <div class="w-full px-8">
-        <form method="post" class="p-4 w-full">
+        <form method="post" class="p-4 w-full" action="/userstory/add/<?= $projectId ?>">
+            <input type="hidden" name="idProjet" value="<?= $projectId ?>">
             <div class="flex flex-row">
                 <div class="flex flex-col w-1/2 bg-white rounded p-2 mr-4">
                     <h3 class="text-center underline text-xl">Expression du besoin</h3>
@@ -65,11 +66,11 @@
             </div>
         </form>
 
-        <?php if (isset($us)) : ?>
+        <?php if (isset($userstories)) : ?>
             <?php $i = 1 ?>
-            <?php foreach ($us as $userstory) : ?>
+            <?php foreach ($userstories as $userstory) : ?>
                 <div class="mt-10 bg-white rounded">
-                    <h3 class="text-center underline text-xl">Us-$i </h3>
+                    <h3 class="text-center underline text-xl">Us - <?= $i ?> </h3>
                     <p class="p-2">
                         En tant que : <?= $userstory->entantque ?>
                     </p>

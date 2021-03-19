@@ -50,38 +50,43 @@ class UserStoryMiddleware
         $entantque,
         $jeveux,
         $desorte,
-        $satisfait,
         $critere1,
         $critere2,
-        $critere3,
-        $idUserStory
+        $critere3
     )
     {
         $stmt = $this->db->getPDO()->prepare(
-            'INSERT INTO userstory (role, idprojet)
-                   VALUES (:nom, :prenom, :age, :role, :scenario, :objectif, :caracteristiques, :idprojet)'
+            'INSERT INTO userstory (entantque, jeveux, desorte, critere1, critere2, critere3, idprojet)
+                   VALUES (:entantque, :jeveux, :desorte, :critere1, :critere2, :critere3, :idprojet)'
         );
-        $values = array(':nom' => $nom, ':prenom' => $prenom, ':age' => $age, ':role' => $role,
-            ':scenario' => $scenario, ':objectif' => $objectif,
-            ':caracteristiques' => $caracteristique, ':idprojet' => $this->projectId);
+        $values = array(':entantque' => $entantque, ':jeveux' => $jeveux, ':desorte' => $desorte,
+            ':critere1' => $critere1, ':critere2' => $critere2, ':critere3' => $critere3,
+            ':idprojet' => $this->projectId);
         $stmt->execute($values);
     }
 
-    public function update($name, $firstname, $age, $role, $caracteristique, $objectifs, $scenario, $idPersonna)
+    public function update(
+        $entantque,
+        $jeveux,
+        $desorte,
+        $critere1,
+        $critere2,
+        $critere3,
+        $idUs
+    )
     {
-        $stmt = $this->db->getPDO()->prepare('UPDATE personna 
-                SET nom = :nom, prenom = :prenom, age = :age, role = :role,
-                    scénario = :scenario, objectif = :objectif, caractéristiques = :caracteristiques 
-                WHERE idpersonna= :id');
-        $values = array(':nom' => $name, ':prenom' => $firstname, ':age' => $age, ':role' => $role,
-            ':scenario' => $scenario, ':objectif' => $objectifs,
-            ':caracteristiques' => $caracteristique, ':id' => $idPersonna);
+        $stmt = $this->db->getPDO()->prepare('UPDATE userstory 
+                SET entantque = :entantque, jeveux = :jeveux, desorte = :desorte,
+                    critere1 = :critere1, critere2 = :critere2, critere3 = :critere3 
+                WHERE idus= :id');
+        $values = array(':entantque' => $entantque, ':jeveux' => $jeveux, ':desorte' => $desorte,
+            ':critere1' => $critere1, ':critere2' => $critere2,':critere3' => $critere3, ':id' => $idUs);
         $stmt->execute($values);
     }
 
     public function delete($id)
     {
-        $stmt = $this->db->getPDO()->prepare('DELETE FROM personna WHERE idpersonna=:id');
+        $stmt = $this->db->getPDO()->prepare('DELETE FROM userstory WHERE idus=:id');
         $values = array(':id' => $id);
         $stmt->execute($values);
     }

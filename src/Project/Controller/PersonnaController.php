@@ -36,7 +36,7 @@ class PersonnaController extends Controller
             $scenario = $_POST['scenario'];
             $personnaMid = new PersonnaMiddleware($_POST['projectId']);
             $personnaMid
-                ->create($name, $firstname, $age, $role, $caracteristique, $objectifs, $scenario);
+                ->create($name, $firstname, intval($age), $role, $caracteristique, $objectifs, $scenario);
             header('Location: /personna/' . $_POST['projectId']);
             exit();
         } catch (Exception $exception) {

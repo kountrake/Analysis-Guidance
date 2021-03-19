@@ -50,21 +50,32 @@
     </div>
 
     <div class="mx-10">
-        <div class="bg-white rounded mb-4">
-            <h3 class="text-center underline text-xl">Us-00X</h3>
-            <p class="p-2">
-                En tant que
-            </p>
-            <p class="p-2">
-                Je veux :
-            </p>
-            <p class="p-2">
-                De sorte que :
-            </p>
-            <p class="p-2">
-                Je suis satisfait si :
-            </p>
-        </div>
+        <?php if (isset($userstories)) : ?>
+            <?php $i = 1 ?>
+            <?php foreach ($userstories as $userstory) : ?>
+                <div class="mt-10 bg-white rounded">
+                    <h3 class="text-center underline text-xl">Us - <?= $i ?> </h3>
+                    <p class="p-2">
+                        En tant que : <?= $userstory->entantque ?>
+                    </p>
+                    <p class="p-2">
+                        Je veux : <?= $userstory->jeveux ?>
+                    </p>
+                    <p class="p-2">
+                        De sorte que : <?= $userstory->desorte ?>
+                    </p>
+                    <p class="p-2">
+                        Je suis satisfait si :
+                    </p>
+                    <ul>
+                        <li><?= $userstory->critere1 ?></li>
+                        <li><?= $userstory->critere2 ?></li>
+                        <li><?= $userstory->critere3 ?></li>
+                    </ul>
+                </div>
+                <?php $i++ ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
         <div class="flex justify-end">
             <a href="/userstory/<?= $id ?>"
                class="bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold hover:underline hover:bg-blue-600">Modifier</a>

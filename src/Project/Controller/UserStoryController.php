@@ -32,19 +32,18 @@ class UserStoryController extends Controller
         session_start();
         try {
             $idProject = $_POST['idProjet'];
-            $entantque = $_POST['entanque'];
+            $entantque = $_POST['entantque'];
             $jeveux = $_POST['jeveux'];
             $desorte = $_POST['desorte'];
-            $satisfait = $_POST['satisfait'];
             $critere1 = $_POST['critere1'];
             $critere2 = $_POST['critere2'];
             $critere3 = $_POST['critere3'];
             $usMid = new UserStoryMiddleware($idProject);
-            $usMid->create($entantque, $jeveux, $desorte, $satisfait, $critere1, $critere2, $critere3);
+            $usMid->create($entantque, $jeveux, $desorte, $critere1, $critere2, $critere3);
             header('Location: /userstory/' . $idProject);
             exit();
         } catch (Exception $exception) {
-            $this->view('oops', ['error' => $exception->getMessage()]);
+            $this->view('error/oops', ['error' => $exception->getMessage()]);
         }
     }
 
@@ -59,7 +58,7 @@ class UserStoryController extends Controller
             $us = $usMid->getAllUserStories();
             $this->viewcontrol('userstory', ['projectId' => $id, 'us' => $us]);
         } catch (Exception $exception) {
-            $this->view('oops', ['error' => $exception->getMessage()]);
+            $this->view('error/oops', ['error' => $exception->getMessage()]);
         }
     }
 
@@ -68,8 +67,8 @@ class UserStoryController extends Controller
         try {
             $idProject = $_POST['idProjet'];
             $usMid = new UserStoryMiddleware($idProject);
-            $us = $usMid->getUserStory($_POST['idUserStory']);
-            $this->viewcontrol('modify/userstory', ['projectId' => $idProject, 'userstory' => $us]);
+            $us = $usMid->getUserStory($_POST['idus']);
+            $this->viewcontrol('modify/userstory', ['projectId' => $idProject, 'us' => $us]);
         } catch (Exception $exception) {
             $this->view('error/oops', ['error' => $exception->getMessage()]);
         }
@@ -80,15 +79,14 @@ class UserStoryController extends Controller
         try {
             $idProject = $_POST['projectId'];
             $idUserStory = $_POST['userstoryId'];
-            $entantque = $_POST['entanque'];
+            $entantque = $_POST['entantque'];
             $jeveux = $_POST['jeveux'];
             $desorte = $_POST['desorte'];
-            $satisfait = $_POST['satisfait'];
             $critere1 = $_POST['critere1'];
             $critere2 = $_POST['critere2'];
             $critere3 = $_POST['critere3'];
             $usMid = new UserStoryMiddleware($idProject);
-            $usMid->update($entantque, $jeveux, $desorte, $satisfait, $critere1, $critere2, $critere3, $idUserStory);
+            $usMid->update($entantque, $jeveux, $desorte, $critere1, $critere2, $critere3, $idUserStory);
             header('Location: /userstory/' . $idProject);
             exit();
         } catch (Exception $exception) {
