@@ -20,7 +20,7 @@ class PersonnaTest extends TestCase
             "étudiant",
             "connait plutôt la théorie de l'analyse fonctionnelle, trouver parfois le travail répétitif",
             "trouver un moyen d'assurer la cohérence inter-axe, pouvoir pré-mâcher son travail sur certains axes grâce à d'autres",
-            "sc");
+            "test test test");
 
     }
 
