@@ -13,9 +13,13 @@
                         <label class="block text-grey-darker text-sm font-bold mb-2" for="entantque">
                             En tant que :
                         </label>
-                        <input name="entantque"
-                               class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                               id="entantque" type="text">
+                        <select name="entantque"
+                                id="entantque"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker">
+                            <?php foreach ($roles as $role) : ?>
+                                <option value="<?= $role->role ?>"><?= $role->role ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="mb-4">
                         <label class="block text-grey-darker text-sm font-bold mb-2" for="jeveux">
@@ -101,7 +105,7 @@
                         <input type="hidden" name="idProjet" value="<?= $projectId ?>">
                         <input type="hidden" name="idus" value="<?= $userstory->idus ?>">
                         <button class="bg-red-700 rounded border-2 border-red-800 py-2 px-5  text-white text-semi-bold hover:underline hover:bg-red-600">
-                            Supprimer le projet
+                            Supprimer la user story
                         </button>
                     </form>
                 </div>
@@ -113,7 +117,7 @@
             <a href="/personna/<?= $projectId ?>"
                class="bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold
                hover:underline hover:bg-blue-600">Précédent</a>
-            <a href="/download"
+            <a href="/download/userstory/<?= $projectId ?>"
                class="bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold
                hover:underline hover:bg-blue-600">Télécharger</a>
             <a href="/storymap"

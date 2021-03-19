@@ -6,6 +6,7 @@ namespace Project\Controller;
 use Exception;
 use Project\Middleware\PersonnaMiddleware;
 use Project\Middleware\ProjectMiddleware;
+use Project\Middleware\UserStoryMiddleware;
 
 class ProjectController extends Controller
 {
@@ -27,7 +28,9 @@ class ProjectController extends Controller
             $pm->getProject($id, $user->getId());
             $personnaMiddleware = new PersonnaMiddleware($id);
             $personnas = $personnaMiddleware->getAllPersonnas();
-            $this->viewcontrol('project', ['personnas' => $personnas, 'id' => $id]);
+            $usMiddleware = new UserStoryMiddleware($id);
+            $userstories = $usMiddleware->getAllUserStories();
+            $this->viewcontrol('project', ['personnas' => $personnas, 'userstories' => $userstories, 'id' => $id]);
         } catch (Exception $exception) {
             $this->view('error/oops', ['error' => $exception->getMessage()]);
             die();

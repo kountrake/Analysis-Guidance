@@ -92,7 +92,9 @@ class App
         /*
          * Les routes pour le téléchargement
          */
-        $this->router->addRoute('GET', 'download', '/download', 'DownloadController@index');
+        $this->router->addRoute('GET', 'download', '/download/:id', 'DownloadController@index');
+        $this->router->addRoute('GET', 'download_personna', '/download/personna/:id', 'DownloadController@gethtmlPersonna');
+        $this->router->addRoute('GET', 'download_userstory', '/download/userstory/:id', 'DownloadController@gethtmlUserStory');
 
         /*
          * Les routes pour la gestions des projets
@@ -105,7 +107,9 @@ class App
         /*
          * Les routes pour la Story Map
          */
-        $this->router->addRoute('GET', 'storymap', '/storymap', 'StoryMapController@index');
+        $this->router->addRoute('GET', 'storymap', '/storymap/:id', 'StoryMapController@index');
+        $this->router->addRoute('POST', 'storymap_create', '/storymap/create', 'StoryMapController@create');
+        $this->router->addRoute('POST', 'storymap_update', '/storymap/update', 'StoryMapController@update');
 
         $route = $this->router->match($path, $request->getMethod());
         $route->execute();
