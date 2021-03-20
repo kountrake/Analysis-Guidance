@@ -90,4 +90,22 @@ class UserStoryMiddleware
         $values = array(':id' => $id);
         $stmt->execute($values);
     }
+
+    public function getAllRoles(): array
+    {
+        $stmt = $this->db->getPDO()->prepare('SELECT distinct(entantque) FROM userstory 
+                                                    WHERE idprojet=:projectId');
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
+    }
+
+    public function getAllJeVeux(): array
+    {
+        $stmt = $this->db->getPDO()->prepare('SELECT distinct(jeveux) FROM userstory 
+                                                    WHERE idprojet=:projectId');
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
+    }
 }
