@@ -1,0 +1,114 @@
+CREATE TABLE Utilisateur(
+   UserId Serial,
+   Mdp VARCHAR(50) NOT NULL,
+   Prenom VARCHAR(50) NOT NULL,
+   Nom VARCHAR(50) NOT NULL,
+   Mail VARCHAR(50) NOT NULL,
+   PRIMARY KEY(UserId),
+   UNIQUE(Mail)
+);
+
+CREATE TABLE Projet(
+   IdProjet Serial,
+   Date_Creation timestamp NOT NULL,
+   Date_Sauvegarde timestamp ,
+   Score_Moyen_Personna DECIMAL(15,2),
+   Score_Matrice DECIMAL(15,2),
+   Score_Moyen_UserStory DECIMAL(15,2),
+   Score_StoryMap DECIMAL(15,2),
+   Score INT,
+   UserId int NOT NULL,
+   PRIMARY KEY(IdProjet),
+   FOREIGN KEY(UserId) REFERENCES Utilisateur(UserId)
+   ON DELETE CASCADE
+);
+
+CREATE TABLE Personna(
+   IdPersonna Serial,
+   Nom VARCHAR(50),
+   Prenom VARCHAR(50),
+   Role VARCHAR(50) NOT NULL,
+   Score_Persona DECIMAL(15,2),
+   Caractéristiques TEXT,
+   age INT NOT NULL,
+   Objectif TEXT,
+   Scénario VARCHAR(255) NOT NULL,
+   IdProjet INT NOT NULL,
+   PRIMARY KEY(IdPersonna),
+   FOREIGN KEY(IdProjet) REFERENCES Projet(IdProjet)
+   ON DELETE CASCADE
+);
+
+CREATE TABLE UserStory(
+   IdUS Serial,
+   Role VARCHAR(50) NOT NULL,
+   Score_UserStory DECIMAL(15,2),
+   Fonctionnalité TEXT NOT NULL,
+   Benefice TEXT NOT NULL,
+   IdProjet INT NOT NULL,
+   PRIMARY KEY(IdUS),
+   FOREIGN KEY(IdProjet) REFERENCES Projet(IdProjet)
+   ON DELETE CASCADE
+);
+
+CREATE TABLE VerificationBenefice(
+   IdVeriffication Serial,
+   Description TEXT,
+   IdUS INT NOT NULL,
+   PRIMARY KEY(IdVeriffication),
+   FOREIGN KEY(IdUS) REFERENCES UserStory(IdUS)
+   ON DELETE CASCADE
+);
+
+CREATE TABLE StoryMap(
+   IdBut Serial,
+   Role VARCHAR(50) NOT NULL,
+   IdProjet INT NOT NULL,
+   PRIMARY KEY(IdBut),
+   FOREIGN KEY(IdProjet) REFERENCES Projet(IdProjet)
+   ON DELETE CASCADE
+);
+
+CREATE TABLE FlotNarattion(
+   IdActivite Serial,
+   Activite VARCHAR(50) NOT NULL,
+   IdBut INT NOT NULL,
+   PRIMARY KEY(IdActivite),
+   FOREIGN KEY(IdBut) REFERENCES StoryMap(IdBut)
+   ON DELETE CASCADE
+);
+
+CREATE TABLE Story(
+   IdStory Serial,
+   Description VARCHAR(50) NOT NULL,
+   Priorité INT NOT NULL,
+   IdActivite INT NOT NULL,
+   PRIMARY KEY(IdStory),
+   FOREIGN KEY(IdActivite) REFERENCES FlotNarattion(IdActivite)
+   ON DELETE CASCADE
+);
+
+CREATE TABLE EtapesMatrice(
+   IdEtape Serial,
+   description VARCHAR(50) NOT NULL,
+   IdProjet INT NOT NULL,
+   PRIMARY KEY(IdEtape),
+   FOREIGN KEY(IdProjet) REFERENCES Projet(IdProjet)
+   ON DELETE CASCADE
+);
+
+CREATE TABLE ExigencesMatrice(
+   IdExigence Serial,
+   Description VARCHAR(50) NOT NULL,
+   PRIMARY KEY(IdExigence)
+);
+
+CREATE TABLE Correspond(
+   IdEtape INT,
+   IdExigence INT,
+   coche BOOL,
+   PRIMARY KEY(IdEtape, IdExigence),
+   FOREIGN KEY(IdEtape) REFERENCES EtapesMatrice(IdEtape),
+   FOREIGN KEY(IdExigence) REFERENCES ExigencesMatrice(IdExigence)
+   ON DELETE CASCADE
+);
