@@ -17,11 +17,11 @@ class PersonnaController extends Controller
         $personnas = $personnaMid->getAllPersonnas();
         if (count($personnas) === 0) {
             $this->viewcontrol('personna', ['projectId' => $projectId]);
-            $pm->update_score_persona($projectId,0);
+            $pm->update_score_persona(0,$projectId);
         } else {
             $this->viewcontrol('personna', ['projectId' => $projectId, 'personnas' => $personnas]);
             foreach($personnas as $value){
-                if((strlen($value->objectif)>50) and (strlen($personna_last->caractéristiques)>50) and (strlen($personna_last->scénario)>50))
+                if((strlen($value->objectif)>50) and (strlen($value->caractéristiques)>50) and (strlen($value->scénario)>50))
                 {$personnaMid->update_score($value->idpersonna,5);}
                 else
                 $personnaMid->update_score($value->idpersonna,2);
