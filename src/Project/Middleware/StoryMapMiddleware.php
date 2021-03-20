@@ -3,7 +3,6 @@
 
 namespace Project\Middleware;
 
-
 use Project\Db\Db;
 
 class StoryMapMiddleware
@@ -47,9 +46,7 @@ class StoryMapMiddleware
         return $stmt->fetch();
     }
 
-    public function create_role(
-        string $role,
-    )
+    public function createRole(string $role)
     {
         $stmt = $this->db->getPDO()->prepare(
             'INSERT INTO storymap (role,idprojet)
@@ -59,35 +56,31 @@ class StoryMapMiddleware
         $stmt->execute($values);
     }
 
-    public function create_activite(
-            string $activite,
-            int $idbut
-        )
-        {
-            $stmt = $this->db->getPDO()->prepare(
-                'INSERT INTO flotnarattion (activite,idbut)
-                       VALUES (:activite,:idbut)'
-            );
-            $values = array(':activite' => $activite,';idbut' => $idbut);
-            $stmt->execute($values);
-        }
+    public function createActivite(string $activite, int $idbut)
+    {
+        $stmt = $this->db->getPDO()->prepare(
+            'INSERT INTO flotnarattion (activite,idbut)
+                   VALUES (:activite,:idbut)'
+        );
+        $values = array(':activite' => $activite,':idbut' => $idbut);
+        $stmt->execute($values);
+    }
 
 
-    public function create_story(
-            string $story,
-            int $priorite,
-            int $idactivite
-        )
-        {
+    public function createStory(
+        string $story,
+        int $priorite,
+        int $idactivite
+    ) {
             $stmt = $this->db->getPDO()->prepare(
-                'INSERT INTO story (story, priorité, idactivite)
+                'INSERT INTO story (description, priorité, idactivite)
                        VALUES (:story, :priorite, :idactivite)'
             );
             $values = array(':story' => $story,':priorite' => $priorite, ':idactivite' => $idactivite);
             $stmt->execute($values);
-        }
+    }
 
-    public function update_role($role, $idBut)
+    public function updateRole($role, $idBut)
     {
         $stmt = $this->db->getPDO()->prepare('UPDATE storymap
                 SET role = :role
@@ -96,7 +89,7 @@ class StoryMapMiddleware
         $stmt->execute($values);
     }
 
-    public function update_activite($activite, $idactivite)
+    public function updateActivite($activite, $idactivite)
     {
         $stmt = $this->db->getPDO()->prepare('UPDATE flotnarattion
                 SET activite = :activite
@@ -105,10 +98,10 @@ class StoryMapMiddleware
         $stmt->execute($values);
     }
 
-    public function update_story($story, $priorite, $idstory)
+    public function updateStory($story, $priorite, $idstory)
     {
         $stmt = $this->db->getPDO()->prepare('UPDATE story
-                SET story = :story, priorite = :priorite
+                SET description = :story, priorité = :priorite
                 WHERE idstory= :id');
         $values = array(':story' => $story, ':id' => $idstory);
         $stmt->execute($values);
@@ -119,5 +112,31 @@ class StoryMapMiddleware
         $stmt = $this->db->getPDO()->prepare('DELETE FROM storymap WHERE idbut=:id');
         $values = array(':id' => $id);
         $stmt->execute($values);
+    }
+
+    public function getLastRoleId()
+    {
+        $stmt = $this->db->getPDO()->prepare('SELECT MAX(idbut) FROM storymap WHERE idprojet=:projectId');
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+        return $stmt->fetch();
+    }
+
+    public function getAllRoles(): array
+    {
+        $stmt = $this->db->getPDO()->prepare('SELECT * FROM storymap 
+                                                    WHERE idprojet=:projectId');
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
+    }
+
+    public function getAllActivites(int $idbut): array
+    {
+        $stmt = $this->db->getPDO()->prepare('SELECT * FROM flotnarattion 
+                                                    WHERE idbut=:idbut');
+        $values = array(':idbut' => $idbut);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
     }
 }

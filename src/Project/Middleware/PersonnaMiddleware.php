@@ -45,6 +45,14 @@ class PersonnaMiddleware
         return $stmt->fetch();
     }
 
+    public function getFirstPersonna()
+    {
+        $stmt = $this->db->getPDO()->prepare('SELECT MIN(idpersonna) FROM personna WHERE idprojet=:projectId');
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+        return $stmt->fetch();
+    }
+
     public function create(
         string $nom,
         string $prenom,
@@ -75,6 +83,23 @@ class PersonnaMiddleware
             ':scenario' => $scenario, ':objectif' => $objectifs,
             ':caracteristiques' => $caracteristique, ':id' => $idPersonna);
         $stmt->execute($values);
+    }
+
+    public function update_score($id_p,$score)
+    {
+        $stmt = $this->db->getPDO()->prepare('UPDATE personna 
+                SET Score_Persona = :Score_Persona
+                WHERE idpersonna= :id');
+        $values = array(':Score_Persona' => $score, ':id' => $id_p);
+        $stmt->execute($values);
+    }
+
+    public function getscore_moyen()
+    {
+        $stmt = $this->db->getPDO()->prepare('SELECT avg(Score_Persona) as sco FROM personna WHERE idprojet=:projectId');
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
     }
 
     public function delete($id)
