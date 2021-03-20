@@ -6,6 +6,8 @@ use Exception;
 use Project\Middleware\PersonnaMiddleware;
 use Project\Middleware\UserStoryMiddleware;
 use Project\Middleware\ProjectMiddleware;
+use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Html2Pdf;
 
 class DownloadController extends Controller
 {
@@ -34,7 +36,7 @@ class DownloadController extends Controller
             $url = 'http://localhost:8000/personna/15';//url('personna/'.$id);
             $html = file_get_contents($url);
 */
-            $html2pdf = new \Spipu\Html2Pdf\Html2Pdf('P', 'Legal', 'en', true, 'UTF-8', array(25.4, 20.4, 25.4, 20.4));
+            $html2pdf = new Html2Pdf('P', 'Legal', 'en', true, 'UTF-8', array(25.4, 20.4, 25.4, 20.4));
             $html2pdf->pdf->SetTitle('PDF PROJET N°'.$id);
             $html2pdf->WriteHTML($this->gethtmlPersonna($id) /*$this->render('personna', ['projectId' => $id])*/ /*$html*/);
             $html2pdf->Output('PDF-PROJET-N'.$id.'.pdf');
@@ -47,16 +49,15 @@ class DownloadController extends Controller
     public function gethtmlPersonna($idproj)
     {
         try {
-            $html2pdf = new \Spipu\Html2Pdf\Html2Pdf('P', 'Legal', 'en', true, 'UTF-8', array(25.4, 20.4, 25.4, 20.4));
+            $html2pdf = new Html2Pdf('P', 'Legal', 'en', true, 'UTF-8', array(25.4, 20.4, 25.4, 20.4));
             $html2pdf->pdf->SetTitle('PDF PROJET N°'.$idproj.' - Persona');
             $html2pdf->WriteHTML($this->getHTMLPersonnas($idproj));
             $html2pdf->Output('PDF-PROJET-N'.$idproj.'-Persona.pdf');
-        }
-        catch (HTML2PDF_exception $e) {
+        } catch (Exception $e) {
             echo $e;
-            exit;
+            exit();
+        }
     }
-}
 
     public function getHTMLPersonnas($idproj)
     {
@@ -69,7 +70,8 @@ class DownloadController extends Controller
             $personnaMid = new PersonnaMiddleware($idproj);
             $personnas = $personnaMid->getAllPersonnas();
         } catch (Exception $exception) {
-            $this->view('oops', ['error' => $exception->getMessage()]);
+            $this->view('error/oops', ['error' => $exception->getMessage()]);
+            exit();
         }
          if (isset($personnas))
          {
@@ -105,7 +107,7 @@ class DownloadController extends Controller
     public function gethtmlUserStory($idproj)
     {
         try {
-            $html2pdf = new \Spipu\Html2Pdf\Html2Pdf('P', 'Legal', 'en', true, 'UTF-8', array(25.4, 20.4, 25.4, 20.4));
+            $html2pdf = new Html2Pdf('P', 'Legal', 'en', true, 'UTF-8', array(25.4, 20.4, 25.4, 20.4));
             $html2pdf->pdf->SetTitle('PDF PROJET N°'.$idproj.' - US');
             $html2pdf->WriteHTML($this->getHTMLUserStorys($idproj));
             $html2pdf->Output('PDF-PROJET-N'.$idproj.'-US.pdf');

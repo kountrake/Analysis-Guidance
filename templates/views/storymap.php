@@ -12,7 +12,7 @@
                     <select id="monSelect" name="theme1">
                         <?php if (isset($userstories)) : ?>
                             <?php foreach ($userstories as $userstory) : ?>
-                                <option value="valeur1"><?= $userstory->entantque ?></option>
+                                <option value="<?= $userstory->idus ?>"><?= $userstory->entantque ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </select>
@@ -80,7 +80,7 @@
                         <?php if (isset($userstories)) : ?>
                             <?php $i = 1 ?>
                             <?php foreach ($userstories as $userstory) : ?>
-                                <option value="valeur1"><?= $userstory->jeveux ?></option>
+                                <option value=""><?= $userstory->jeveux ?></option>
                                 <?php $i++ ?>
                             <?php endforeach; ?>
                         <?php endif; ?>
