@@ -75,16 +75,39 @@ class StoryMapController extends Controller
 
     public function createActivite()
     {
-//        echo '<pre>';
-//        var_dump($_POST);
-//        echo '</pre>';
-//        die();
-        $projectId = $_POST['projectId'];
-        $i = 1;
-        foreach ($roles as $role) {
-            foreach ($activites[$i] as $activite) {
-
+        try {
+            $projectId = $_POST['projectId'];
+            $smMid = new StoryMapMiddleware($projectId);
+            $roles = $smMid->getAllRoles();
+            $activites = [];
+            foreach ($roles as $role) {
+                $activites[] = $smMid->getAllActivites($role->idbut);
             }
+            $i = 0;
+            foreach ($roles as $role) {
+                foreach ($activites[$i] as $activite) {
+                    $smMid->createStory(
+                        $_POST[$role->role . '_' . $activite->activite . '_1'],
+                        intval($_POST[$role->role . '_' . $activite->activite . 'priorite_1']),
+                        $activite->idactivite
+                    );
+                    $smMid->createStory(
+                        $_POST[$role->role . '_' . $activite->activite . '_2'],
+                        intval($_POST[$role->role . '_' . $activite->activite . 'priorite_2']),
+                        $activite->idactivite
+                    );
+                    $smMid->createStory(
+                        $_POST[$role->role . '_' . $activite->activite . '_3'],
+                        intval($_POST[$role->role . '_' . $activite->activite . 'priorite_3']),
+                        $activite->idactivite
+                    );
+                }
+                $i++;
+            }
+            header('Location: /storymap/'.$projectId);
+            exit();
+        } catch (Exception $exception) {
+            $this->view('error/oops', ['error' => $exception->getMessage()]);
         }
     }
 }

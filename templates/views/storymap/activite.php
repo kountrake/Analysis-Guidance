@@ -21,16 +21,28 @@
                                 <input name="<?= $role->role . '_' . $activite->activite . '_1' ?>"
                                        class="border shadow rounded w-full py-2 px-3 text-grey-darker"
                                        type="text">
+                                <p class="block text-grey-darker text-sm font-bold mb-2">priorité:</p>
+                                <input name="<?= $role->role . '_' . $activite->activite . 'priorite_1' ?>"
+                                       class="border shadow rounded w-full py-2 px-3 text-grey-darker"
+                                       type="text">
                             </div>
                             <div class="mb-4">
                                 <p class="block text-grey-darker text-sm font-bold mb-2">Story2</p>
                                 <input name="<?= $role->role . '_' . $activite->activite . '_2' ?>"
                                        class="border shadow rounded w-full py-2 px-3 text-grey-darker"
                                        type="text">
+                                <p class="block text-grey-darker text-sm font-bold mb-2">priorité:</p>
+                                <input name="<?= $role->role . '_' . $activite->activite . 'priorite_2' ?>"
+                                       class="border shadow rounded w-full py-2 px-3 text-grey-darker"
+                                       type="text">
                             </div>
                             <div class="mb-4">
                                 <p class="block text-grey-darker text-sm font-bold mb-2">Story3</p>
                                 <input name="<?= $role->role . '_' . $activite->activite . '_3' ?>"
+                                       class="border shadow rounded w-full py-2 px-3 text-grey-darker"
+                                       type="text">
+                                <p class="block text-grey-darker text-sm font-bold mb-2">priorité:</p>
+                                <input name="<?= $role->role . '_' . $activite->activite . 'priorite_3' ?>"
                                        class="border shadow rounded w-full py-2 px-3 text-grey-darker"
                                        type="text">
                             </div>
