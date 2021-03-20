@@ -13,8 +13,8 @@ class StoryMapController extends Controller
     {
         session_start();
         $storymapMid = new StoryMapMiddleware($projectId);
-        $storymap = $storymapMid->getStorymap(123);
-        if (!$storymap) {
+        //$storymap = $storymapMid->getStorymap(123);
+        if (true) {
             $this->viewcontrol('storymap', ['projectId' => $projectId]);
         } else {
             $this->viewcontrol('storymap', ['projectId' => $projectId, 'storymap' => $storymap]);

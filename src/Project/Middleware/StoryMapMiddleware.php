@@ -39,11 +39,7 @@ class StoryMapMiddleware
 
     public function getStoryMap(int $storymapId)
     {
-        $stmt = $this->db->getPDO()->prepare('SELECT * FROM flotnarattion
-                                                    WHERE idprojet=:projectId AND idbut=:storymapId');
-        $values = array(':projectId' => $this->projectId, ':storymapId' => $storymapId);
-        $stmt->execute($values);
-        return $stmt->fetch();
+        return 1;
     }
 
     public function createRole(string $role)
