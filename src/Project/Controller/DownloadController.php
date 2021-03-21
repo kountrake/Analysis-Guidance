@@ -31,7 +31,7 @@ class DownloadController extends Controller
               }
         }
 }';
-        print $jsonExample;*/      
+        print $jsonExample;*/
         try {
             /*
             $url = 'http://localhost:8000/personna/15';//url('personna/'.$id);
@@ -41,12 +41,11 @@ class DownloadController extends Controller
             $html2pdf->pdf->SetTitle('PDF PROJET N°'.$id);
             $html2pdf->WriteHTML($this->gethtmlPersonna($id) /*$this->render('personna', ['projectId' => $id])*/ /*$html*/);
             $html2pdf->Output('PDF-PROJET-N'.$id.'.pdf');
-        }
-        catch (HTML2PDF_exception $e) {
+        } catch (HTML2PDF_exception $e) {
             echo $e;
             exit;
+        }
     }
-}
     public function gethtmlPersonna($idproj)
     {
         try {
@@ -74,8 +73,7 @@ class DownloadController extends Controller
             $this->view('error/oops', ['error' => $exception->getMessage()]);
             exit();
         }
-         if (isset($personnas))
-         {
+        if (isset($personnas)) {
             $i = 1;
             foreach ($personnas as $personna) {
                 $html= $html . '<div style="border:solid";>
@@ -116,54 +114,51 @@ class DownloadController extends Controller
             $html2pdf->pdf->SetTitle('PDF PROJET N°'.$idproj.' - US');
             $html2pdf->WriteHTML($this->getHTMLUserStorys($idproj));
             $html2pdf->Output('PDF-PROJET-N'.$idproj.'-US.pdf');
-        }
-        catch (HTML2PDF_exception $e) {
+        } catch (HTML2PDF_exception $e) {
             echo $e;
             exit;
+        }
     }
-}
     public function getHTMLUserStorys($idproj)
     {
         $html='';
         session_start();
-        try{
+        try {
             $user = $_SESSION['user'];
             $pm = new ProjectMiddleware();
             $pm->getProject($idproj, $user->getId());
             $usMid = new UserStoryMiddleware($idproj);
-            $us = $usMid->getAllUserStories();
-        }
-        catch(Exception $exception) {
+            $userstories = $usMid->getAllUserStories();
+        } catch (Exception $exception) {
             $this->view('oops', ['error' => $exception->getMessage()]);
         }
-         if (isset($us))
-         {
-            $i = 1;
+        if (isset($userstories)) {
+            $nbUs = 1;
             $html = '';
-            foreach ($us as $User) {
+            for ($i = 0; $i < count($userstories); $i+=3) {
                 $html= $html . '<div class="mt-10 bg-white rounded" style="border:solid;">
-                <u><h3 class="text-center underline text-xl" style="text-align: center;">Us - '.$i.'</h3></u>
+                <u><h3 class="text-center underline text-xl" style="text-align: center;">Us - '.$nbUs.'</h3></u>
                 <p class="p-2" style="margin-left:25px;">
-                    En tant que :'.$User->entantque .'
+                    En tant que :'.$userstories[$i]->entantque .'
                 </p>
                 <p class="p-2"style="margin-left:25px;">
-                    Je veux : '.$User->jeveux .'
+                    Je veux : '.$userstories[$i]->jeveux .'
                 </p>
                 <p class="p-2"style="margin-left:25px;">
-                    De sorte que : '.$User->desorte.' 
+                    De sorte que : '.$userstories[$i]->desorte.' 
                 </p>
                 <p class="p-2"style="margin-left:25px;">
                     Je suis satisfait si :
                 </p>
                 <ul>
-                    <li>'. $User->critere1 .'</li>
-                    <li>'. $User->critere2 .'</li>
-                    <li>'.  $User->critere3 .'</li>
+                    <li>'. $userstories[$i]->critere1 .'</li>
+                    <li>'. $userstories[$i+1]->critere2 .'</li>
+                    <li>'.  $userstories[$i+2]->critere3 .'</li>
                 </ul>
             </div><br>';
                         $i++;
-                    }
-                }
+            }
+        }
         return $html;
     }
 
@@ -174,18 +169,17 @@ class DownloadController extends Controller
             $html2pdf->pdf->SetTitle('PDF PROJET N°'.$idproj.' - STORY MAP');
             $html2pdf->WriteHTML($this->getHTMLStoryMaps($idproj));
             $html2pdf->Output('PDF-PROJET-N'.$idproj.'-STORYMAP.pdf');
-        }
-        catch (HTML2PDF_exception $e) {
+        } catch (HTML2PDF_exception $e) {
             echo $e;
             exit;
+        }
     }
-}
 
     public function getHTMLStoryMaps($idproj)
     {
         $html='';
         session_start();
-        try{
+        try {
             $user = $_SESSION['user'];
             $pm = new ProjectMiddleware();
             $pm->getProject($idproj, $user->getId());
@@ -194,8 +188,7 @@ class DownloadController extends Controller
             $activites = $storymapMid->activitiesFromRoles($roles);
             $stories = $storymapMid->storiesFromActivities($activites);
             $columns = $storymapMid->createColumns($roles, $activites, $stories);
-        }
-        catch(Exception $exception) {
+        } catch (Exception $exception) {
             $this->view('oops', ['error' => $exception->getMessage()]);
         }
             $html = '
@@ -210,43 +203,38 @@ class DownloadController extends Controller
                             $columns[0]->role->role.'
                         </div>
                         <div class="p-4 border-b border-black">';
-                           foreach ($columns[0]->activites as $activite)
-                           {
-                                $html=$html. $activite->activite. '<br>';
-                           }
+        foreach ($columns[0]->activites as $activite) {
+             $html=$html. $activite->activite. '<br>';
+        }
                            $html=$html.'
                         </div>
                         <div class="p-4">';
-                            foreach ($columns[0]->stories as $story)
-                            {
-                                $html=$html. $story->description. '<br>';
-                            }
+        foreach ($columns[0]->stories as $story) {
+            $html=$html. $story->description. '<br>';
+        }
                             $html=$html.'
                         </div>
                     </div>';
-                    for ($i = 1; $i < count($columns); $i++)
-                    {
-                        $html=$html.'
+        for ($i = 1; $i < count($columns); $i++) {
+            $html=$html.'
                         <div class="flex flex-col border-t border-b border-black justify-items-start">
                             <div class="border-b border-black p-4">'.
-                                $columns[$i]->role->role .'
+                    $columns[$i]->role->role .'
                             </div>
                             <div class="p-4 border-b border-black">';
-                            foreach ($columns[$i]->activites as $activite)
-                            {
-                                $html=$html. $activite->activite. '<br>' ;
-                            }
-                            $html=$html.'
+            foreach ($columns[$i]->activites as $activite) {
+                        $html=$html. $activite->activite. '<br>' ;
+            }
+                $html=$html.'
                             </div>
                             <div class="p-4">';
-                            foreach ($columns[$i]->stories as $story)
-                            {
+            foreach ($columns[$i]->stories as $story) {
                                 $html=$html.$story->description. '<br>';
-                            }
-                            $html=$html.'
+            }
+                                    $html=$html.'
                             </div>
                         </div>';
-                    }
+        }
                     $html=$html.'
                     <div class="flex flex-col items-stretch content-between border border-black border-l-0 item-center">
                         <div class="border-b border-black p-4">
@@ -262,5 +250,4 @@ class DownloadController extends Controller
                 </div></div>';
         return $html;
     }
-
 }

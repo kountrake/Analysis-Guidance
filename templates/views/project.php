@@ -51,30 +51,30 @@
 
     <div class="mx-10">
         <?php if (isset($userstories)) : ?>
-            <?php $i = 1 ?>
-            <?php foreach ($userstories as $userstory) : ?>
+            <?php $nbUs = 1 ?>
+            <?php for ($i = 0; $i < count($userstories); $i+=3) : ?>
                 <div class="mt-10 bg-white rounded">
-                    <h3 class="text-center underline text-xl">Us - <?= $i ?> </h3>
+                    <h3 class="text-center underline text-xl">Us - <?= $nbUs ?> </h3>
                     <p class="p-2">
-                        En tant que : <?= $userstory->entantque ?>
+                        En tant que : <?= $userstories[$i]->entantque ?>
                     </p>
                     <p class="p-2">
-                        Je veux : <?= $userstory->jeveux ?>
+                        Je veux : <?= $userstories[$i]->jeveux ?>
                     </p>
                     <p class="p-2">
-                        De sorte que : <?= $userstory->desorte ?>
+                        De sorte que : <?= $userstories[$i]->desorte ?>
                     </p>
                     <p class="p-2">
                         Je suis satisfait si :
                     </p>
                     <ul>
-                        <li><?= $userstory->critere1 ?></li>
-                        <li><?= $userstory->critere2 ?></li>
-                        <li><?= $userstory->critere3 ?></li>
+                        <li><?= $userstories[$i]->description ?></li>
+                        <li><?= $userstories[$i+1]->description ?></li>
+                        <li><?= $userstories[$i+2]->description ?></li>
                     </ul>
                 </div>
-                <?php $i++ ?>
-            <?php endforeach; ?>
+                <?php $nbUs++?>
+            <?php endfor; ?>
         <?php endif; ?>
         <div class="flex justify-end">
             <a href="/userstory/<?= $id ?>"
