@@ -71,46 +71,46 @@
         </form>
 
         <?php if (isset($userstories)) : ?>
-            <?php $i = 1 ?>
-            <?php foreach ($userstories as $userstory) : ?>
+            <?php $nbUs = 1 ?>
+            <?php for ($i = 0; $i < count($userstories); $i+=3) : ?>
                 <div class="mt-10 bg-white rounded">
-                    <h3 class="text-center underline text-xl">Us - <?= $i ?> </h3>
+                    <h3 class="text-center underline text-xl">Us - <?= $nbUs ?> </h3>
                     <p class="p-2">
-                        En tant que : <?= $userstory->entantque ?>
+                        En tant que : <?= $userstories[$i]->entantque ?>
                     </p>
                     <p class="p-2">
-                        Je veux : <?= $userstory->jeveux ?>
+                        Je veux : <?= $userstories[$i]->jeveux ?>
                     </p>
                     <p class="p-2">
-                        De sorte que : <?= $userstory->desorte ?>
+                        De sorte que : <?= $userstories[$i]->desorte ?>
                     </p>
                     <p class="p-2">
                         Je suis satisfait si :
                     </p>
                     <ul>
-                        <li><?= $userstory->critere1 ?></li>
-                        <li><?= $userstory->critere2 ?></li>
-                        <li><?= $userstory->critere3 ?></li>
+                        <li><?= $userstories[$i]->description ?></li>
+                        <li><?= $userstories[$i+1]->description ?></li>
+                        <li><?= $userstories[$i+2]->description ?></li>
                     </ul>
                 </div>
                 <div class="flex flex-row justify-end">
                     <form method="post" action="/userstory/change">
                         <input type="hidden" name="idProjet" value="<?= $projectId ?>">
-                        <input type="hidden" name="idus" value="<?= $userstory->idus ?>">
+                        <input type="hidden" name="idus" value="<?= $userstories[$i]->idus ?>">
                         <button class="bg-yellow-700 rounded border-2 border-yellow-800 py-2 px-5 mr-4 text-white text-semi-bold hover:underline hover:bg-yellow-600">
                             Modifier
                         </button>
                     </form>
                     <form method="post" action="/delete/userstory">
                         <input type="hidden" name="idProjet" value="<?= $projectId ?>">
-                        <input type="hidden" name="idus" value="<?= $userstory->idus ?>">
+                        <input type="hidden" name="idus" value="<?= $userstories[$i]->idus ?>">
                         <button class="bg-red-700 rounded border-2 border-red-800 py-2 px-5  text-white text-semi-bold hover:underline hover:bg-red-600">
                             Supprimer la user story
                         </button>
                     </form>
                 </div>
-                <?php $i++ ?>
-            <?php endforeach; ?>
+                <?php $nbUs++?>
+            <?php endfor; ?>
         <?php endif; ?>
 
         <div class="flex flex-row justify-around mt-4">

@@ -54,21 +54,6 @@ class UserStoryController extends Controller
         }
     }
 
-    public function modify($id)
-    {
-        session_start();
-        try {
-            $user = $_SESSION['user'];
-            $pm = new ProjectMiddleware();
-            $pm->getProject($id, $user->getId());
-            $usMid = new UserStoryMiddleware($id);
-            $us = $usMid->getAllUserStories();
-            $this->viewcontrol('userstory', ['projectId' => $id, 'us' => $us]);
-        } catch (Exception $exception) {
-            $this->view('error/oops', ['error' => $exception->getMessage()]);
-        }
-    }
-
     public function change()
     {
         try {
