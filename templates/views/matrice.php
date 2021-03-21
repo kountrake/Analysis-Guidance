@@ -36,14 +36,14 @@
     </div>
 
     <div class="flex flex-row justify-end">
-      <form method="post" action="/personna/change">
+      <form method="post" action="/matrice/change">
         <input type="hidden" name="idProjet" value="<?= $projectId ?>">
-        <input type="hidden" name="idPersonna" value="<?= $personna->idpersonna ?>">
+        <input type="hidden" name="idMatrice" value="<?= $matrice->idpersonna ?>">
         <button class="bg-yellow-700 rounded border-2 border-yellow-800 py-2 px-5 mr-4 text-white text-semi-bold hover:underline hover:bg-yellow-600">
           Modifier
         </button>
       </form>
-      <form method="post" action="/delete/personna">
+      <form method="post" action="/delete/matrice">
         <input type="hidden" name="idProjet" value="<?= $projectId ?>">
         <input type="hidden" name="id" value="<?= $personna->idpersonna ?>">
         <button class="bg-red-700 rounded border-2 border-red-800 py-2 px-5  text-white text-semi-bold hover:underline hover:bg-red-600">

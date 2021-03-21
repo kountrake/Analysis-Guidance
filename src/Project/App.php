@@ -90,6 +90,11 @@ class App
         $this->router->addRoute('POST', 'personna_delete', '/delete/personna', 'PersonnaController@delete');
 
         /*
+         * Les routes de la page Matrice
+         */
+        $this->router->addRoute('GET', 'matrice_index', '/matrice/:id', 'MatriceController@index');
+
+        /*
          * Les routes pour le téléchargement
          */
         $this->router->addRoute('GET', 'download', '/download/:id', 'DownloadController@index');

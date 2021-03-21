@@ -19,7 +19,56 @@ class MatriceMiddleware
         $this->projectId = $projectId;
     }
 
+    //récupère les etapes du projet pour construire la matrice
+    public function getEtapesFromStoryMap(){
+        $stmt = $this->db->getPDO()->prepare(
+            'SELECT activite 
+                FROM storymap stom
+                JOIN flotnaration flon ON stom.idbut = flon.idbut
+                WHERE idprojet=:projectId'
+            );
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
+    }
 
+    //recupere les exigences du projet pour construire la matrice
+    public function getExigencesFromStoryMap(){
+        $stmt = $this->db->getPDO()->prepare(
+            'SELECT description
+                FROM storymap stom
+                JOIN flotnaration flon ON stom.idbut = flon.idbut
+                JOIN story stor ON flon.idactivite = stor.idactivite
+                WHERE idprojet=:projectId'
+            );
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
+    }
+
+    //forme et renvoie le tableau $couverture qui indique quelle etape et couvertte par quelles exigences ( tableau en 2D clé : étape => valeurs[exigences] )
+    public function getCouvertureFromStoryMap($etapes){
+        $couverture = array();
+
+        for ($i = 0; $i < sizeof($etapes); $i += 1) {
+            $stmt = $this->db->getPDO()->prepare(
+                'SELECT description
+                FROM storymap stom
+                JOIN flotnaration flon ON stom.idbut = flon.idbut
+                JOIN story stor ON flon.idactivite = stor.idactivite
+                WHERE idprojet = :projectId
+                AND activite = :etape'
+            );
+            $values = array(':projectId' => $this->projectId, ':etape' => $etapes[$i]);
+            $resRequete = $stmt->execute($values);
+
+            $couverture[$etapes[i]] = $resRequete;
+        }
+
+        return $couverture;
+    }
+
+    //récupère la matrice du projet
     public function getMatrix()
     {
         $stmt = $this->db->getPDO()->prepare(
