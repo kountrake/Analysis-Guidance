@@ -73,6 +73,14 @@ class ProjectMiddleware
         return $stmt->fetch()->max;
     }
 
+    public function getoneProject(int $userId,int $idprojet): array
+    {
+        $stmt = $this->db->getPDO()->prepare('SELECT * FROM projet WHERE userid=:userId and idprojet=:idprojet');
+        $values = array(':userId' => $userId,':idprojet' => $idprojet);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
+    }
+
     public function update_score_persona($Score_Moyen_Personna,$projectId)
     {
         $stmt = $this->db->getPDO()->prepare('UPDATE projet 
@@ -88,6 +96,15 @@ class ProjectMiddleware
                 SET Score_Moyen_UserStory = :Score_Moyen_UserStory
                 WHERE IdProjet= :IdProjet');
         $values = array(':Score_Moyen_UserStory' => $Score_Moyen_UserStory, ':IdProjet' => $projectId);
+        $stmt->execute($values);
+    }
+    
+    public function update_score($score,$projectId)
+    {
+        $stmt = $this->db->getPDO()->prepare('UPDATE projet 
+                SET score = :score
+                WHERE IdProjet= :IdProjet');
+        $values = array(':score' => $score, ':IdProjet' => $projectId);
         $stmt->execute($values);
     }
 }
