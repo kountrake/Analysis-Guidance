@@ -108,4 +108,21 @@ class UserStoryMiddleware
         $stmt->execute($values);
         return $stmt->fetchAll();
     }
+
+    public function update_score_us($id_us,$score)
+    {
+        $stmt = $this->db->getPDO()->prepare('UPDATE userstory 
+                SET score_userstory = :score_userstory
+                WHERE idus= :idus');
+        $values = array(':score_userstory' => $score, ':idus' => $id_us);
+        $stmt->execute($values);
+    }
+
+    public function getscore_moyen_us()
+    {
+        $stmt = $this->db->getPDO()->prepare('SELECT avg(score_userstory) as sco FROM UserStory WHERE idprojet=:projectId');
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
+    }
 }
