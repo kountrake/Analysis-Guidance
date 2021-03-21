@@ -55,7 +55,7 @@
             class="block bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold hover:underline hover:bg-blue-600">
                 Précédent
             </a>
-            <a href="/download"
+            <a href="/download/storymap/<?= $projectId ?>"
             class="bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold hover:underline hover:bg-blue-600">
                 Télécharger
             </a>
