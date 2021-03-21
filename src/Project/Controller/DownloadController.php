@@ -62,7 +62,9 @@ class DownloadController extends Controller
     public function getHTMLPersonnas($idproj)
     {
         $html='';
-        session_start();
+        if (session_status() != 2) {
+            session_start();
+        }
         try {
             $user = $_SESSION['user'];
             $pm = new ProjectMiddleware();
@@ -104,7 +106,7 @@ class DownloadController extends Controller
                     $i++;
             }
         }
-        return $html;
+        return $html.'<br>';
     }
 
     public function gethtmlUserStory($idproj)
@@ -122,7 +124,9 @@ class DownloadController extends Controller
     public function getHTMLUserStorys($idproj)
     {
         $html='';
-        session_start();
+        if (session_status() != 2) {
+            session_start();
+        }
         try {
             $user = $_SESSION['user'];
             $pm = new ProjectMiddleware();
@@ -156,7 +160,7 @@ class DownloadController extends Controller
                     <li>'.  $userstories[$i+2]->description .'</li>
                 </ul>
             </div><br>';
-                        $i++;
+                        $nbUs++;
             }
         }
         return $html;
@@ -178,7 +182,9 @@ class DownloadController extends Controller
     public function getHTMLStoryMaps($idproj)
     {
         $html='';
-        session_start();
+        if (session_status() != 2) {
+            session_start();
+        }
         try {
             $user = $_SESSION['user'];
             $pm = new ProjectMiddleware();
@@ -192,62 +198,55 @@ class DownloadController extends Controller
             $this->view('oops', ['error' => $exception->getMessage()]);
         }
             $html = '
-            <div class="flex justify-center bg-white w-full mt-10 p-4 mb-12" style="text-align:center;">
-                <u><h1 class="text-center text-4xl font-bold underline">Story Map</h1></u>
+            <div class="">
+                <u><h1 class="text-center text-4xl font-bold underline" style="text-align:center;">Story Map</h1></u>
             </div>
             <br>
-            <div class="flex flex-col w-full px-8 pr-40 bg-white">
-                <div class="flex flex-row m-4">
-                    <div class="flex flex-col border border-black border-r-0 justify-items-center">
-                        <div class="border-b border-black p-4 text-center">'.
-                            $columns[0]->role->role.'
-                        </div>
-                        <div class="p-4 border-b border-black">';
-        foreach ($columns[0]->activites as $activite) {
-             $html=$html. $activite->activite. '<br>';
-        }
-                           $html=$html.'
-                        </div>
-                        <div class="p-4">';
-        foreach ($columns[0]->stories as $story) {
-            $html=$html. $story->description. '<br>';
-        }
+            <div class="Tout">';
+                    for ($i = 0; $i < count($columns); $i++)
+                    {
+                        $html=$html.'<br>
+                        <div class="Colonne" style="width:92%;">
+                            <div class="1erligne" style="border:solid">
+                            <u><h3 style="text-align:center;">Thème</h3></u>'.'<div style="margin-left:15px;">'.
+                                $columns[$i]->role->role .'</div><br>
+                            </div>
+                            <div class="2emeligne" style="border:solid">
+                            <u><h3 style="text-align:center;">Epics</h3></u>';
+                            foreach ($columns[$i]->activites as $activite)
+                            {
+                                $html=$html.'<div style="margin-left:15px;">'. $activite->activite. '</div><br>' ;
+                            }
                             $html=$html.'
-                        </div>
-                    </div>';
-        for ($i = 1; $i < count($columns); $i++) {
-            $html=$html.'
-                        <div class="flex flex-col border-t border-b border-black justify-items-start">
-                            <div class="border-b border-black p-4">'.
-                    $columns[$i]->role->role .'
                             </div>
-                            <div class="p-4 border-b border-black">';
-            foreach ($columns[$i]->activites as $activite) {
-                        $html=$html. $activite->activite. '<br>' ;
-            }
-                $html=$html.'
-                            </div>
-                            <div class="p-4">';
-            foreach ($columns[$i]->stories as $story) {
-                                $html=$html.$story->description. '<br>';
+                            <div class="3emeligne" style="border:solid">
+                            <u><h3 style="text-align:center;">V1</h3></u>';
+                            foreach ($columns[$i]->stories as $story)
+                            {
+                                $html=$html.'<div style="margin-left:15px;">'.$story->description. '</div><br>';
             }
                                     $html=$html.'
                             </div>
                         </div>';
         }
-                    $html=$html.'
-                    <div class="flex flex-col items-stretch content-between border border-black border-l-0 item-center">
-                        <div class="border-b border-black p-4">
-                            Thèmes
-                        </div>
-                        <div class="p-4 border-b border-black">
-                            Epics
-                        </div>
-                        <div class="p-4">
-                            V1
-                        </div>
-                    </div>
-                </div></div>';
+                    $html=$html.'</div>';
         return $html;
     }
+
+    public function gethtmlProject($idproj)
+    {
+        try {
+            $html2pdf = new Html2Pdf('P', 'Legal', 'en', true, 'UTF-8', array(25.4, 20.4, 25.4, 20.4));
+            $html2pdf->pdf->SetTitle('PDF PROJET N°'.$idproj.' - Persona');
+            $html=($this->getHTMLPersonnas($idproj));
+            $html=$html.($this->getHTMLUserStorys($idproj));
+            $html=$html.($this->getHTMLStoryMaps($idproj));
+            $html2pdf->WriteHTML($html);
+            $html2pdf->Output('PDF-PROJET-N'.$idproj.'-Persona.pdf');
+        } catch (Exception $e) {
+            echo $e;
+            exit();
+        }
+    }
+
 }
