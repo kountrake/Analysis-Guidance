@@ -4,6 +4,9 @@
 namespace Project\Controller;
 
 use \Exception;
+use Project\Item\StorymapColumn;
+use Project\Middleware\ProjectMiddleware;
+use Project\Middleware\ProjectMiddlewareException;
 use Project\Middleware\StoryMapMiddleware;
 use Project\Middleware\UserStoryMiddleware;
 
@@ -12,12 +15,16 @@ class StoryMapController extends Controller
     public function index(string $projectId)
     {
         session_start();
-        $storymapMid = new StoryMapMiddleware($projectId);
-        //$storymap = $storymapMid->getStorymap(123);
-        if (true) {
-            $this->viewcontrol('storymap', ['projectId' => $projectId]);
-        } else {
-            $this->viewcontrol('storymap', ['projectId' => $projectId, 'storymap' => $storymap]);
+        try {
+            $pm = new ProjectMiddleware();
+            $pm->getProject($projectId, $_SESSION['user']->getId());
+            $storymapMid = new StoryMapMiddleware($projectId);
+            $roles = $storymapMid->getAllRoles();
+            $activites = $storymapMid->activitiesFromRoles($roles);
+            $stories = $storymapMid->storiesFromActivities($activites);
+            $columns = $storymapMid->createColumns($roles, $activites, $stories);
+            $this->viewcontrol('storymap', ['projectId' => $projectId, 'columns' => $columns]);
+        } catch (ProjectMiddlewareException $e) {
         }
     }
 

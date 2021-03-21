@@ -4,6 +4,7 @@
 namespace Project\Middleware;
 
 use Project\Db\Db;
+use Project\Item\StorymapColumn;
 
 class StoryMapMiddleware
 {
@@ -134,5 +135,61 @@ class StoryMapMiddleware
         $values = array(':idbut' => $idbut);
         $stmt->execute($values);
         return $stmt->fetchAll();
+    }
+
+    public function getAllStories(int $idactivite): array
+    {
+        $stmt = $this->db->getPDO()->prepare('SELECT * FROM story 
+                                                    WHERE idactivite=:idactivite
+                                                    ORDER BY priorité DESC');
+        $values = array(':idactivite' => $idactivite);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
+    }
+
+    public function activitiesFromRoles($roles): array
+    {
+        $activities = [];
+        foreach ($roles as $role) {
+            $activities[] = $this->getAllActivites($role->idbut);
+        }
+        return $activities;
+    }
+
+    public function storiesFromActivities($activities): array
+    {
+        $stories = [];
+        foreach ($activities as $activity) {
+            foreach ($activity as $a) {
+                $stories[] = $this->getAllStories($a->idactivite);
+            }
+        }
+        return $stories;
+    }
+
+
+    /**
+     * @param array $roles
+     * @param array $activites
+     * @param array $stories
+     * @return array
+     */
+    public function createColumns(array $roles, array $activites, array $stories): array
+    {
+        $columns = [];
+        $i = 0;
+        $j = 0;
+        foreach ($roles as $role) {
+            $tmp = [];
+            foreach ($activites[$i] as $activite) {
+                for ($cpt = 0; $cpt < 3; $cpt++) {
+                    $tmp[] = $stories[$j][$cpt];
+                }
+                $j++;
+            }
+            $columns[] = new StorymapColumn($role, $activites[$i], $tmp);
+            $i++;
+        }
+        return $columns;
     }
 }
