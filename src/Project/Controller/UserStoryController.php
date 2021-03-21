@@ -31,12 +31,11 @@ class UserStoryController extends Controller
                 $this->viewcontrol('userstory', ['projectId' => $projectId, 'roles' => $roles, 'userstories' => $us]);
                 foreach($us as $value){
                     $score_critere=2;
-                    if((strlen($value->critere1)>0))
-                    {$score_critere=$score_critere+1;}
-                    if((strlen($value->critere2)>0))
-                    {$score_critere=$score_critere+1;}
-                    if((strlen($value->critere3)>0))
-                    {$score_critere=$score_critere+1;}
+                    $critere = $usMid->getBenefice($value->idus);
+                    foreach($critere as $criteres){
+                        if((strlen($criteres->description)>0))
+                            {$score_critere=$score_critere+1;}
+                    }
                     $usMid->update_score_us($value->idus,$score_critere);
                 } 
                 $pm->update_score_moyUS($usMid->getscore_moyen_us()[0]->sco,$projectId);
