@@ -38,7 +38,7 @@ class StorymapColumn
     }
     /**
      * @return array
-     * 
+     *
     */
     
     public function getStories(): array
@@ -46,4 +46,3 @@ class StorymapColumn
         return $this->stories;
     }
 }
-

@@ -6,6 +6,7 @@ namespace Project\Controller;
 use Exception;
 use Project\Middleware\PersonnaMiddleware;
 use Project\Middleware\ProjectMiddleware;
+use Project\Middleware\StoryMapMiddleware;
 use Project\Middleware\UserStoryMiddleware;
 
 class ProjectController extends Controller
@@ -30,7 +31,21 @@ class ProjectController extends Controller
             $personnas = $personnaMiddleware->getAllPersonnas();
             $usMiddleware = new UserStoryMiddleware($id);
             $userstories = $usMiddleware->getAllUserStories();
-            $this->viewcontrol('project', ['projectId' => $id, 'personnas' => $personnas, 'userstories' => $userstories, 'id' => $id]);
+            $storymapMid = new StoryMapMiddleware($id);
+            $roles = $storymapMid->getAllRoles();
+            $activites = $storymapMid->activitiesFromRoles($roles);
+            $stories = $storymapMid->storiesFromActivities($activites);
+            $columns = $storymapMid->createColumns($roles, $activites, $stories);
+            $this->viewcontrol(
+                'project',
+                [
+                    'projectId' => $id,
+                    'personnas' => $personnas,
+                    'userstories' => $userstories,
+                    'columns' => $columns,
+                    'id' => $id
+                ]
+            );
         } catch (Exception $exception) {
             $this->view('error/oops', ['error' => $exception->getMessage()]);
             die();
@@ -50,7 +65,6 @@ class ProjectController extends Controller
             $this->view('oops');
             die();
         }
-
     }
 
     public function delete()

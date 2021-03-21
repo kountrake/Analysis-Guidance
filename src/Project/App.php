@@ -100,6 +100,8 @@ class App
         $this->router->addRoute('GET', 'download', '/download/:id', 'DownloadController@index');
         $this->router->addRoute('GET', 'download_personna', '/download/personna/:id', 'DownloadController@gethtmlPersonna');
         $this->router->addRoute('GET', 'download_userstory', '/download/userstory/:id', 'DownloadController@gethtmlUserStory');
+        $this->router->addRoute('GET', 'download_storymap', '/download/storymap/:id', 'DownloadController@gethtmlStoryMap');
+        $this->router->addRoute('GET', 'download_project', '/download/project/:id', 'DownloadController@gethtmlProject');
 
         /*
          * Les routes pour la gestions des projets
@@ -119,6 +121,9 @@ class App
         $this->router->addRoute('POST', 'storymap_activite_create', '/storymap/activite/create', 'StoryMapController@createActivite');
         $this->router->addRoute('POST', 'storymap_create', '/storymap/create', 'StoryMapController@create');
         $this->router->addRoute('POST', 'storymap_update', '/storymap/update', 'StoryMapController@update');
+
+        //TODO Route à supprimer avant de rendre le projet
+        $this->router->addRoute('GET', 'test', '/test/:id', 'TestController@test');
 
         $route = $this->router->match($path, $request->getMethod());
         $route->execute();

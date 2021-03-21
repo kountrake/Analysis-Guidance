@@ -4,7 +4,6 @@
 namespace Project\Controller;
 
 use \Exception;
-use Project\Item\StorymapColumn;
 use Project\Middleware\ProjectMiddleware;
 use Project\Middleware\ProjectMiddlewareException;
 use Project\Middleware\StoryMapMiddleware;
@@ -30,7 +29,10 @@ class StoryMapController extends Controller
 
     public function role($projectId)
     {
+        session_start();
         try {
+            $pm = new ProjectMiddleware();
+            $pm->getProject($projectId, $_SESSION['user']->getId());
             $usMid = new UserStoryMiddleware($projectId);
             $roles = $usMid->getAllRoles();
             $jeveux = $usMid->getAllJeVeux();
@@ -42,7 +44,6 @@ class StoryMapController extends Controller
 
     public function createRole()
     {
-        var_dump($_POST);
         try {
             $projectId = $_POST['projectId'];
             $usMid = new UserStoryMiddleware($projectId);
@@ -64,7 +65,10 @@ class StoryMapController extends Controller
 
     public function activite($projectId)
     {
+        session_start();
         try {
+            $pm = new ProjectMiddleware();
+            $pm->getProject($projectId, $_SESSION['user']->getId());
             $smMid = new StoryMapMiddleware($projectId);
             $roles = $smMid->getAllRoles();
             $activites = [];
@@ -94,18 +98,18 @@ class StoryMapController extends Controller
             foreach ($roles as $role) {
                 foreach ($activites[$i] as $activite) {
                     $smMid->createStory(
-                        $_POST[$role->role . '_' . $activite->activite . '_1'],
-                        intval($_POST[$role->role . '_' . $activite->activite . 'priorite_1']),
+                        $_POST[$role->idbut . '_' . $activite->idactivite . '_1'],
+                        intval($_POST[$role->idbut . '_' . $activite->idactivite . 'priorite_1']),
                         $activite->idactivite
                     );
                     $smMid->createStory(
-                        $_POST[$role->role . '_' . $activite->activite . '_2'],
-                        intval($_POST[$role->role . '_' . $activite->activite . 'priorite_2']),
+                        $_POST[$role->idbut . '_' . $activite->idactivite . '_2'],
+                        intval($_POST[$role->idbut . '_' . $activite->idactivite . 'priorite_2']),
                         $activite->idactivite
                     );
                     $smMid->createStory(
-                        $_POST[$role->role . '_' . $activite->activite . '_3'],
-                        intval($_POST[$role->role . '_' . $activite->activite . 'priorite_3']),
+                        $_POST[$role->idbut . '_' . $activite->idactivite . '_3'],
+                        intval($_POST[$role->idbut . '_' . $activite->idactivite . 'priorite_3']),
                         $activite->idactivite
                     );
                 }

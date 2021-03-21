@@ -6,7 +6,7 @@
     <div class="w-full px-8">
         <form method="post" class="p-4 w-full" action="/userstory/update">
             <input type="hidden" name="projectId" value="<?= $projectId ?>">
-            <input type="hidden" name="userstoryId" value="<?= isset($us) ? $us->idus : '' ?>">
+            <input type="hidden" name="userstoryId" value="<?= isset($us) ? $us[0]->idus : '' ?>">
             <div class="flex flex-row">
                 <div class="flex flex-col w-1/2 bg-white rounded p-2 mr-4">
                     <h3 class="text-center underline text-xl">Expression du besoin</h3>
@@ -15,7 +15,7 @@
                             En tant que :
                         </label>
                         <input name="entantque"
-                               value="<?= $us->entantque ?>"
+                               value="<?= $us[0]->entantque ?>"
                                class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                                id="entantque" type="text">
                     </div>
@@ -24,7 +24,7 @@
                             Je veux :
                         </label>
                         <input name="jeveux"
-                               value="<?= $us->jeveux ?>"
+                               value="<?= $us[0]->jeveux ?>"
                                class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                                id="jeveux" type="text">
                     </div>
@@ -33,7 +33,7 @@
                             De sorte que :
                         </label>
                         <input name="desorte"
-                               value="<?= $us->desorte ?>"
+                               value="<?= $us[0]->desorte ?>"
                                class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                                id="desorte" type="text">
                     </div>
@@ -45,7 +45,7 @@
                             <label class="block text-grey-darker text-sm font-bold mb-2" for="critere1">Critère
                                 1:</label>
                             <input name="critere1"
-                                   value="<?= $us->critere1 ?>"
+                                   value="<?= $us[0]->description ?>"
                                    class="border shadow rounded w-full py-2 px-3 text-grey-darker"
                                    id="critere1" type="text">
                         </div>
@@ -53,7 +53,7 @@
                             <label class="block text-grey-darker text-sm font-bold mb-2" for="critere2">Critère
                                 2:</label>
                             <input name="critere2"
-                                   value="<?= $us->critere2 ?>"
+                                   value="<?= $us[1]->description ?>"
                                    class="border shadow rounded w-full py-2 px-3 text-grey-darker"
                                    id="critere2" type="text">
                         </div>
@@ -61,7 +61,7 @@
                             <label class="block text-grey-darker text-sm font-bold mb-2" for="critere3">Critère
                                 3:</label>
                             <input name="critere3"
-                                   value="<?= $us->critere3 ?>"
+                                   value="<?= $us[2]->description ?>"
                                    class="border shadow rounded w-full py-2 px-3 text-grey-darker"
                                    id="critere3" type="text">
                         </div>
