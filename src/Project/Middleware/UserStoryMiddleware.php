@@ -241,4 +241,16 @@ class UserStoryMiddleware
             $stmt->execute($values);
         }
     }
+
+
+    public function getBenefice($idUs): array
+    {
+            $stmt = $this->db->getPDO()->prepare(
+                'SELECT * From verificationbenefice
+                       Where idus=:idus'
+            );
+            $values = array(':idus' => $idUs);
+            $stmt->execute($values);
+            return $stmt->fetchAll();
+    }
 }

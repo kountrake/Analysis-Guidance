@@ -69,7 +69,7 @@ class App
         /*
          * La route de la page score
          */
-        $this->router->addRoute('GET', 'score', '/score', 'ScoreController@index');
+        $this->router->addRoute('GET', 'score', '/score/:id', 'ScoreController@index');
 
         /*
          * Les routes de la page User Story
