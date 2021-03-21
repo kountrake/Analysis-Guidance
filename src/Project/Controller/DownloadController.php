@@ -151,9 +151,9 @@ class DownloadController extends Controller
                     Je suis satisfait si :
                 </p>
                 <ul>
-                    <li>'. $userstories[$i]->critere1 .'</li>
-                    <li>'. $userstories[$i+1]->critere2 .'</li>
-                    <li>'.  $userstories[$i+2]->critere3 .'</li>
+                    <li>'. $userstories[$i]->description .'</li>
+                    <li>'. $userstories[$i+1]->description .'</li>
+                    <li>'.  $userstories[$i+2]->description .'</li>
                 </ul>
             </div><br>';
                         $i++;
