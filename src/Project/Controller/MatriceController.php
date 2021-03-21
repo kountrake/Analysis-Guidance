@@ -17,14 +17,33 @@ class MatriceController extends Controller
             $pm = new ProjectMiddleware();
             $pm->getProject($projectId, $_SESSION['user']->getId());
             $matriceMid = new MatriceMiddleware($projectId);
+
             $etapes = $matriceMid -> getEtapesFromStoryMap();
             $exigences = $matriceMid -> getExigencesFromStoryMap();
             $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);
 
-            $this->viewcontrol('matrice', ['projectId' => $projectId]);
+            $matriceMid -> create($etapes, $exigences);
+            $matriceMid -> initiateMatrixValues($couverture);
+            $matriceMid -> getMatrix();
+
+            $this->viewcontrol('matrice', ['projectId' => $projectId, 'matriceHtml' => $matriceHtml]);
         } catch (ProjectMiddlewareException $e) {
         }
     }
 
+    //
+
+
+    //charge l'affichage de la matrice dans l'index html
+    public function loadMatrix($matrice)
+    {
+        foreach ($matrice as $row) {
+            echo('<tr> \n');
+            foreach ($row as $case) {
+                echo('<td>'.$case.'</td>\n');
+            }
+            echo('</tr>\n');
+        }
+    }
 
 }

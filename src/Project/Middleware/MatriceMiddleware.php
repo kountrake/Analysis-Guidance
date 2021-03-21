@@ -2,6 +2,9 @@
 
 namespace Project\Middleware;
 
+use phpDocumentor\Reflection\Types\False_;
+use Project\Db\Db;
+
 class MatriceMiddleware
 {
 
@@ -24,7 +27,7 @@ class MatriceMiddleware
         $stmt = $this->db->getPDO()->prepare(
             'SELECT activite 
                 FROM storymap stom
-                JOIN flotnaration flon ON stom.idbut = flon.idbut
+                JOIN flotnarattion flon ON stom.idbut = flon.idbut
                 WHERE idprojet=:projectId'
             );
         $values = array(':projectId' => $this->projectId);
@@ -37,7 +40,7 @@ class MatriceMiddleware
         $stmt = $this->db->getPDO()->prepare(
             'SELECT description
                 FROM storymap stom
-                JOIN flotnaration flon ON stom.idbut = flon.idbut
+                JOIN flotnarattion flon ON stom.idbut = flon.idbut
                 JOIN story stor ON flon.idactivite = stor.idactivite
                 WHERE idprojet=:projectId'
             );
@@ -54,7 +57,7 @@ class MatriceMiddleware
             $stmt = $this->db->getPDO()->prepare(
                 'SELECT description
                 FROM storymap stom
-                JOIN flotnaration flon ON stom.idbut = flon.idbut
+                JOIN flotnarattion flon ON stom.idbut = flon.idbut
                 JOIN story stor ON flon.idactivite = stor.idactivite
                 WHERE idprojet = :projectId
                 AND activite = :etape'
@@ -68,20 +71,34 @@ class MatriceMiddleware
         return $couverture;
     }
 
-    //récupère la matrice du projet
-    public function getMatrix()
+    //récupère la matrice du projet (seulement les cases qui contiennent TRUE)
+    public function getCouvertureFromMatrix()
     {
         $stmt = $this->db->getPDO()->prepare(
-            'SELECT etm.idetape, etm.description, exm.idexigence, exm.description 
+            'SELECT etm.description, exm.description, coche
                 FROM etapesmatrice etm 
                 JOIN correspond cor ON etm.etapidetape=cor.idetape 
                 JOIN exigencesmatrice exm ON cor.idexigence = exm.idexigence 
-                WHERE idprojet=:projectId');
+                WHERE idprojet=:projectId
+                AND coche = TRUE');
         $values = array(':projectId' => $this->projectId);
         $stmt->execute($values);
         return $stmt->fetchAll();
     }
 
+    //convertis le résultat de la requête sql en un array php à deux dimensions
+    //todo à finir
+    public function dataToArray($etapes, $exigences, $couverture)
+    {
+        $result = array();
+        $result['etapes'] = $etapes;
+        foreach ($exigences as $exigence) {
+            foreach ($etapes as $etape) {
+                $result[$exigence] = -1 ;
+            }
+
+        }
+    }
 
     //factorisation de l'INSERT dans les tables EtapesMatrice et ExigencesMatrice
     public function simpleInsertMatrix($values, $tableName)
