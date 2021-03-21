@@ -30,7 +30,7 @@ class ProjectController extends Controller
             $personnas = $personnaMiddleware->getAllPersonnas();
             $usMiddleware = new UserStoryMiddleware($id);
             $userstories = $usMiddleware->getAllUserStories();
-            $this->viewcontrol('project', ['personnas' => $personnas, 'userstories' => $userstories, 'id' => $id]);
+            $this->viewcontrol('project', ['projectId' => $id, 'personnas' => $personnas, 'userstories' => $userstories, 'id' => $id]);
         } catch (Exception $exception) {
             $this->view('error/oops', ['error' => $exception->getMessage()]);
             die();

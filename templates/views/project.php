@@ -110,7 +110,7 @@
 
     <div class="flex justify-around bg-white w-full mt-10 p-4 mb-4">
         <form method="post" action="/myprojects/delete">
-            <input type="hidden" name="id" value="<?= 1 //$project->getId()  ?>">
+            <input type="hidden" name="id" value="<?= $projectId ?>">
             <button class="bg-red-700 rounded border-2 border-red-800 py-2 px-5  text-white text-semi-bold hover:underline hover:bg-red-600">
                 Supprimer le projet
             </button>
