@@ -62,7 +62,9 @@ class DownloadController extends Controller
     public function getHTMLPersonnas($idproj)
     {
         $html='';
-        session_start();
+        if (session_status() != 2) {
+            session_start();
+        }
         try {
             $user = $_SESSION['user'];
             $pm = new ProjectMiddleware();
@@ -104,7 +106,7 @@ class DownloadController extends Controller
                     $i++;
             }
         }
-        return $html;
+        return $html.'<br>';
     }
 
     public function gethtmlUserStory($idproj)
@@ -122,7 +124,9 @@ class DownloadController extends Controller
     public function getHTMLUserStorys($idproj)
     {
         $html='';
-        session_start();
+        if (session_status() != 2) {
+            session_start();
+        }
         try {
             $user = $_SESSION['user'];
             $pm = new ProjectMiddleware();
@@ -178,7 +182,9 @@ class DownloadController extends Controller
     public function getHTMLStoryMaps($idproj)
     {
         $html='';
-        session_start();
+        if (session_status() != 2) {
+            session_start();
+        }
         try {
             $user = $_SESSION['user'];
             $pm = new ProjectMiddleware();
@@ -192,15 +198,15 @@ class DownloadController extends Controller
             $this->view('oops', ['error' => $exception->getMessage()]);
         }
             $html = '
-            <div class="flex justify-center bg-white w-full mt-10 p-4 mb-12" style="text-align:center;">
-                <u><h1 class="text-center text-4xl font-bold underline">Story Map</h1></u>
+            <div class="">
+                <u><h1 class="text-center text-4xl font-bold underline" style="text-align:center;">Story Map</h1></u>
             </div>
             <br>
             <div class="Tout">';
                     for ($i = 0; $i < count($columns); $i++)
                     {
                         $html=$html.'<br>
-                        <div class="Colonne">
+                        <div class="Colonne" style="width:92%;">
                             <div class="1erligne" style="border:solid">
                             <u><h3 style="text-align:center;">Thème</h3></u>'.'<div style="margin-left:15px;">'.
                                 $columns[$i]->role->role .'</div><br>
@@ -226,4 +232,21 @@ class DownloadController extends Controller
                     $html=$html.'</div>';
         return $html;
     }
+
+    public function gethtmlProject($idproj)
+    {
+        try {
+            $html2pdf = new Html2Pdf('P', 'Legal', 'en', true, 'UTF-8', array(25.4, 20.4, 25.4, 20.4));
+            $html2pdf->pdf->SetTitle('PDF PROJET N°'.$idproj.' - Persona');
+            $html=($this->getHTMLPersonnas($idproj));
+            $html=$html.($this->getHTMLUserStorys($idproj));
+            $html=$html.($this->getHTMLStoryMaps($idproj));
+            $html2pdf->WriteHTML($html);
+            $html2pdf->Output('PDF-PROJET-N'.$idproj.'-Persona.pdf');
+        } catch (Exception $e) {
+            echo $e;
+            exit();
+        }
+    }
+
 }

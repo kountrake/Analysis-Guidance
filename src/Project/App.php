@@ -96,6 +96,7 @@ class App
         $this->router->addRoute('GET', 'download_personna', '/download/personna/:id', 'DownloadController@gethtmlPersonna');
         $this->router->addRoute('GET', 'download_userstory', '/download/userstory/:id', 'DownloadController@gethtmlUserStory');
         $this->router->addRoute('GET', 'download_storymap', '/download/storymap/:id', 'DownloadController@gethtmlStoryMap');
+        $this->router->addRoute('GET', 'download_project', '/download/project/:id', 'DownloadController@gethtmlProject');
 
         /*
          * Les routes pour la gestions des projets
