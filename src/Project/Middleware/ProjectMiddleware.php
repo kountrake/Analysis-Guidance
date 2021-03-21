@@ -81,4 +81,13 @@ class ProjectMiddleware
         $values = array(':Score_Moyen_Personna' => $Score_Moyen_Personna, ':IdProjet' => $projectId);
         $stmt->execute($values);
     }
+
+    public function update_score_moyUS($Score_Moyen_UserStory,$projectId)
+    {
+        $stmt = $this->db->getPDO()->prepare('UPDATE projet 
+                SET Score_Moyen_UserStory = :Score_Moyen_UserStory
+                WHERE IdProjet= :IdProjet');
+        $values = array(':Score_Moyen_UserStory' => $Score_Moyen_UserStory, ':IdProjet' => $projectId);
+        $stmt->execute($values);
+    }
 }
