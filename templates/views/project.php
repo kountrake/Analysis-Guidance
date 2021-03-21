@@ -86,8 +86,52 @@
         <h2 class="text-center text-2xl font-bold underline">Story Map</h2>
     </div>
     <div class="mx-10">
-        <div class="bg-white rounded mb-4">
-            La superbe story map
+        <div class="flex justify-center bg-white">
+            <div class="flex flex-row m-4">
+                <div class="flex flex-col border border-black border-r-0 justify-items-center">
+                    <div class="border-b border-black p-4 text-center">
+                        <?= $columns[0]->role->role ?>
+                    </div>
+                    <div class="p-4 border-b border-black">
+                        <?php foreach ($columns[0]->activites as $activite) : ?>
+                            <p><?= $activite->activite ?></p>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="p-4">
+                        <?php foreach ($columns[0]->stories as $story) : ?>
+                            <p><?= $story->description ?></p>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php for ($i = 1; $i < count($columns); $i++) : ?>
+                    <div class="flex flex-col border-t border-b border-black justify-items-start">
+                        <div class="border-b border-black p-4">
+                            <?= $columns[$i]->role->role ?>
+                        </div>
+                        <div class="p-4 border-b border-black">
+                            <?php foreach ($columns[$i]->activites as $activite) : ?>
+                                <p><?= $activite->activite ?></p>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="p-4">
+                            <?php foreach ($columns[$i]->stories as $story) : ?>
+                                <p><?= $story->description ?></p>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endfor; ?>
+                <div class="flex flex-col items-stretch content-between border border-black border-l-0 item-center">
+                    <div class="border-b border-black p-4">
+                        Thèmes
+                    </div>
+                    <div class="p-4 border-b border-black">
+                        Epics
+                    </div>
+                    <div class="p-4">
+                        V1
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="flex justify-end">
             <a href="/storymap/<?= $id ?>"
