@@ -13,7 +13,7 @@ class ScoreController extends Controller
         $pm = new ProjectMiddleware();
         $projects=$pm->getoneProject($user->getId(),$projectId);
         $projects=$projects[0];
-        $score_avg=($projects->score_moyen_personna+$projects->score_moyen_userstory+$projects->score_storymap+$projects->score_matrice)/4;
+        $score_avg=($projects->score_moyen_personna+$projects->score_moyen_userstory+$projects->score_storymap+$projects->score_matrice);
         $pm->update_score($score_avg,$projectId);
         $projects=$pm->getoneProject($user->getId(),$projectId);
         $projects=$projects[0];
