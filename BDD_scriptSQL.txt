@@ -16,7 +16,7 @@ CREATE TABLE Projet(
    Score_Matrice DECIMAL(15,2),
    Score_Moyen_UserStory DECIMAL(15,2),
    Score_StoryMap DECIMAL(15,2),
-   Score INT,
+   Score DECIMAL(15,2),
    UserId int NOT NULL,
    PRIMARY KEY(IdProjet),
    FOREIGN KEY(UserId) REFERENCES Utilisateur(UserId)
