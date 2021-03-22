@@ -4,6 +4,7 @@
 namespace Project\Controller;
 
 use Exception;
+use Project\Middleware\MatriceMiddleware;
 use Project\Middleware\PersonnaMiddleware;
 use Project\Middleware\ProjectMiddleware;
 use Project\Middleware\StoryMapMiddleware;
@@ -36,6 +37,11 @@ class ProjectController extends Controller
             $activites = $storymapMid->activitiesFromRoles($roles);
             $stories = $storymapMid->storiesFromActivities($activites);
             $columns = $storymapMid->createColumns($roles, $activites, $stories);
+            $matriceMid = new MatriceMiddleware($id);
+            $etapes = $matriceMid->getEtapesFromStoryMap();
+            $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);
+            $couvertureId = $matriceMid->getCouvertureIdFromCorrespond($couverture);
+            $correspond = $matriceMid->getCorrespond();
             $this->viewcontrol(
                 'project',
                 [
@@ -43,6 +49,9 @@ class ProjectController extends Controller
                     'personnas' => $personnas,
                     'userstories' => $userstories,
                     'columns' => $columns,
+                    'couverture' => $couverture,
+                    'couvertureId' => $couvertureId,
+                    'correspond' => $correspond,
                     'id' => $id
                 ]
             );

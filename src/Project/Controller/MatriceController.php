@@ -121,4 +121,33 @@ class MatriceController extends Controller
         }
 
     }
+
+    public function delete()
+    {
+        session_start();
+        try {
+            $projectId = $_POST['projectId'];
+            $pm = new ProjectMiddleware();
+            $pm->getProject($projectId, $_SESSION['user']->getId());
+            $matriceMid = new MatriceMiddleware($projectId);
+            $matriceMid->delete();
+            header('Location: /myprojects/'.$projectId);
+            exit();
+        } catch (Exception $exception) {
+            $this->view('error/oops', ['error' => $exception->getMessage()]);
+            exit();
+        }
+    }
+
+    //charge l'affichage de la matrice dans l'index html
+    public function loadMatrix($matrice)
+    {
+        foreach ($matrice as $key => $values) {
+            echo('<tr> \n<tr>\n'.$key.'\n</tr>\n');
+            foreach ($values as $case) {
+                echo('<td> test </td>\n');
+            }
+            echo('</tr>\n');
+        }
+    }
 }
