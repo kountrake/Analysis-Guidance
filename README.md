@@ -157,3 +157,9 @@ Les middlewares permettent de faire du traitement d'informations. Ils sont appel
 
 ## Remarques
 
+Presque l'intégralité des fonctionnalités du projet ont été implémentés. Quelques difficultés inattendues nous ont
+contraints à revoir à la dernière minutes certains points. De plus, le style de certaines pages n'est pas parfait ou ne
+correspond pas à la maquette.
+Un dernier commit a semble t-il causé plusieurs erreurs que nous résolvons ce mardi 23 mars 2021.
+
+Bien à vous, l'équipe 3.
