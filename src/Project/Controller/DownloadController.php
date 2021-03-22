@@ -232,6 +232,7 @@ class DownloadController extends Controller
             $html=($this->getHTMLPersonnas($idproj));
             $html=$html.($this->getHTMLUserStorys($idproj));
             $html=$html.($this->getHTMLStoryMaps($idproj));
+            //$html=$html.($this->getHTMLMatrices($idproj));
             $html2pdf->WriteHTML($html);
             $html2pdf->Output('PDF-PROJET-N'.$idproj.'.pdf');
         } catch (Exception $e) {
@@ -240,4 +241,46 @@ class DownloadController extends Controller
         }
     }
 
+      /**
+     * Création du fichier PDF d'une Matrice
+     */
+    public function gethtmlMatrice($idproj)
+    {
+        try {
+            $html2pdf = new Html2Pdf('P', 'Legal', 'en', true, 'UTF-8', array(25.4, 20.4, 25.4, 20.4));
+            $html2pdf->pdf->SetTitle('PDF PROJET N°'.$idproj.' - MATRICE');
+            $html2pdf->WriteHTML($this->getHTMLStoryMaps($idproj));
+            $html2pdf->Output('PDF-PROJET-N'.$idproj.'-MATRICE.pdf');
+        } catch (HTML2PDF_exception $e) {
+            $this->view('error/oops', ['error' => $e->getMessage()]);
+            exit();
+        }
+    }
+
+    
+    /**
+     * Création du contenu du PDF de la Matrice
+     */
+    public function getHTMLMatrices($idproj)
+    {
+        $html='';
+        if (session_status() != 2) {
+            session_start();
+        }
+        try {
+            $user = $_SESSION['user'];
+            $pm = new ProjectMiddleware();
+            $pm->getProject($idproj, $user->getId());
+            $matriceMid = new MatriceMiddleware($idproj);
+            $roles = $storymapMid->getAllRoles();
+            $activites = $storymapMid->activitiesFromRoles($roles);
+            $stories = $storymapMid->storiesFromActivities($activites);
+            $columns = $storymapMid->createColumns($roles, $activites, $stories);
+        } catch (Exception $exception) {
+            $this->view('oops', ['error' => $exception->getMessage()]);
+            exit();
+        }
+            $html = '';
+            return $html;
+    }
 }
