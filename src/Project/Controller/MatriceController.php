@@ -14,11 +14,17 @@ class MatriceController extends Controller
     {
         session_start();
         try {
+            $nombre=0;
+            $score=0;
             $pm = new ProjectMiddleware();
             $pm->getProject($projectId, $_SESSION['user']->getId());
             $matriceMid = new MatriceMiddleware($projectId);
+<<<<<<< HEAD
 
             $etapes = $matriceMid -> getEtapesFromStoryMap();
+=======
+            $etapes = pg_fetch_array( $matriceMid -> getEtapesFromStoryMap() );
+>>>>>>> 9c6ddc6b04ad2f648776cacc580eb1f6efc52256
             $exigences = $matriceMid -> getExigencesFromStoryMap();
 
             /*
@@ -27,10 +33,8 @@ class MatriceController extends Controller
             echo $stringue;
             */
             $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);
-
             $matriceMid -> create($etapes, $exigences);
             $matriceMid -> initiateMatrixValues($couverture);
-
             $matrix = $matriceMid -> matrixDataToToArray($etapes, $exigences, $couverture);
             $this->loadMatrix($matrix);
             $this->viewcontrol('matrice', [
@@ -40,6 +44,15 @@ class MatriceController extends Controller
                 'couverture' => $couverture,
                 'matrix' => $matrix
                 ]);
+            $exigencesbis = $matriceMid -> GetAllExigence();
+            foreach($exigencesbis as $listage)
+            {$nombre=$nombre+1;
+            $valide=$matriceMid ->GetnumberTrueByExigence($listage->exi);
+            if($valide->cou!=0){$score=$score+1;}
+            }
+            if($nombre!=0)
+            {$pm->update_score_matrice($score*5/$nombre,$projectId);}
+            else{$pm->update_score_matrice(0,$projectId);}
         } catch (ProjectMiddlewareException $e) {
         }
     }

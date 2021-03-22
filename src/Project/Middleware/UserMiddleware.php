@@ -20,11 +20,12 @@ class UserMiddleware
     }
 
     /**
-     * @param string $email
-     * @param string $password
+     * $email et $password sont des paramètres de la fonction  login() déja enregistrer dans la base qui permettent de s'identifier
+     * @param string $email adresse email pour se connecter
+     * @param string $password mot de passe pour se connecter
      * @return User|null
      */
-    public function login(string $email, string $password)
+    public function login(string $email, string $password): ?User
     {
         $email = htmlspecialchars($email);
         $password = htmlspecialchars($password);
@@ -47,10 +48,11 @@ class UserMiddleware
     }
 
     /**
-     * @param string $lastname
-     * @param string $firstname
-     * @param string $email
-     * @param string $password
+    * differents paramètres qui permettent l'enregistrement des infoprmations de l'utilisateur
+     * @param string $lastname nom de l'utilisateur inscrit dans la base
+     * @param string $firstname prénom de l'utilisateur inscrit dans la base
+     * @param string $email adresse email de l'utilisateur inscrit dans la base
+     * @param string $password mot de passe de l'utilisateur inscrit dans la base
      */
     public function register(string $lastname, string $firstname, string $email, string $password)
     {
@@ -62,10 +64,11 @@ class UserMiddleware
     }
 
     /**
-     * @param string $lastname
-     * @param string $firstname
-     * @param string $email
-     * @param int $id
+     * paramètre permettant à partir de la fonction updateInfo de modifier des information de l'utilisateur
+     * @param string $lastname nom de l'utilisateur
+     * @param string $firstname prénom de l'utilisateur
+     * @param string $email adresse email de l'utilisateur
+     * @param int $id identification de l'utilisateur
      */
     public function updateInfo(string $lastname, string $firstname, string $email, int $id)
     {
@@ -76,10 +79,11 @@ WHERE userid= :id');
     }
 
     /**
-     * @param string $previous
-     * @param string $new
-     * @param string $confirm
-     * @param int $id
+     * paramètre permettant la modification de l'actuel mot de passe suite à un changement ou à un oubli
+     * @param string $previous ancien mot de passe enregistré dans la base de donnée
+     * @param string $new nouveau mot de passe enregistré dans la base de donnée
+     * @param string $confirm la confirmation du mot de passe saisi
+     * @param int $id identification  de l'utilisateur
      * @return bool
      */
     public function updatePassword(string $previous, string $new, string $confirm, int $id): bool
@@ -99,7 +103,11 @@ WHERE userid= :id');
         return false;
     }
 
-    public function deleteAccount($id)
+    /**
+     * param $id dans la fonction deleteAccount() permet la suppression du compte
+     * @param int $id identification  de  l'utilisateur
+     */
+    public function deleteAccount(int $id)
     {
         $stmt = $this->db->getPDO()->prepare('DELETE FROM utilisateur WHERE userid=:id');
         $values = array(':id' => $id);

@@ -3,7 +3,6 @@
 
 namespace Project\Middleware;
 
-use phpDocumentor\Reflection\Types\Mixed_;
 use Project\Db\Db;
 
 class UserStoryMiddleware
@@ -23,7 +22,7 @@ class UserStoryMiddleware
     }
 
     /**
-     * @return array
+     * @return array Un tableau contenant toutes les users stories d'un projet
      */
     public function getAllUserStories(): array
     {
@@ -38,10 +37,10 @@ class UserStoryMiddleware
     }
 
     /**
-     * @param int $userStoryId
-     * @return mixed
+     * @param string $userStoryId L'ID de la user story à récupérer
+     * @return mixed La user story si elle existe, sinon false
      */
-    public function getUserStory(int $userStoryId)
+    public function getUserStory(string $userStoryId)
     {
         $stmt = $this->db->getPDO()->prepare('SELECT * FROM  userstory
                     INNER JOIN verificationbenefice ON userstory.idus = verificationbenefice.idus 
@@ -52,20 +51,21 @@ class UserStoryMiddleware
     }
 
     /**
-     * @param $entantque
-     * @param $jeveux
-     * @param $desorte
-     * @param $critere1
-     * @param $critere2
-     * @param $critere3
+     * Les différents paramètres permettant de créer une user story
+     * @param $entantque string Le champ en tant que
+     * @param $jeveux string Le champ je veux
+     * @param $desorte string Le champ de sorte que
+     * @param $critere1 string Le premier critère de satisfaction
+     * @param $critere2 string Le second critère de satisfaction
+     * @param $critere3 string Le troisième critère de satisfaction
      */
     public function create(
-        $entantque,
-        $jeveux,
-        $desorte,
-        $critere1,
-        $critere2,
-        $critere3
+        string $entantque,
+        string $jeveux,
+        string $desorte,
+        string $critere1,
+        string $critere2,
+        string $critere3
     ) {
         $this->createUserstory($entantque, $jeveux, $desorte);
         $idUs = $this->getLastIdUs()->max;
@@ -73,22 +73,23 @@ class UserStoryMiddleware
     }
 
     /**
-     * @param $entantque
-     * @param $jeveux
-     * @param $desorte
-     * @param $critere1
-     * @param $critere2
-     * @param $critere3
-     * @param $idUs
+     * Les différents paramètres permettant de mettre à jour une user story
+     * @param $entantque string Le champ en tant que
+     * @param $jeveux string Le champ je veux
+     * @param $desorte string Le champ de sorte que
+     * @param $critere1 string Le premier critère de satisfaction
+     * @param $critere2 string Le second critère de satisfaction
+     * @param $critere3 string Le troisième critère de satisfaction
+     * @param $idUs string L'ID de la user story à mettre à jour
      */
     public function update(
-        $entantque,
-        $jeveux,
-        $desorte,
-        $critere1,
-        $critere2,
-        $critere3,
-        $idUs
+        string $entantque,
+        string $jeveux,
+        string $desorte,
+        string $critere1,
+        string $critere2,
+        string $critere3,
+        string $idUs
     ) {
         $this->updateUserstory($entantque, $jeveux, $desorte, $idUs);
         $idVerifications = $this->getIdVerification($idUs);
@@ -96,9 +97,9 @@ class UserStoryMiddleware
     }
 
     /**
-     * @param $id
+     * @param $id string L'ID de la user story à supprimer
      */
-    public function delete($id)
+    public function delete(string $id)
     {
         $stmt = $this->db->getPDO()->prepare('DELETE FROM userstory WHERE idus=:id');
         $values = array(':id' => $id);
@@ -106,7 +107,7 @@ class UserStoryMiddleware
     }
 
     /**
-     * @return array
+     * @return array Retourne l'ensemble des roles d'un projet
      */
     public function getAllRoles(): array
     {
@@ -118,7 +119,7 @@ class UserStoryMiddleware
     }
 
     /**
-     * @return array
+     * @return array Retourne un tableau contenant tous les je veux d'un projet
      */
     public function getAllJeVeux(): array
     {
@@ -130,8 +131,8 @@ class UserStoryMiddleware
     }
 
     /**
-     * @param $id_us
-     * @param $score
+     * @param $id_us string Met à jour le score d'une user story
+     * @param $score float Le score
      */
     public function update_score_us($id_us, $score)
     {
@@ -143,23 +144,24 @@ class UserStoryMiddleware
     }
 
     /**
-     * @return array
+     * @return mixed Retourne le score moyen
      */
     public function getscore_moyen_us()
     {
         $stmt = $this->db->getPDO()->prepare('SELECT avg(score_userstory) as sco FROM UserStory WHERE idprojet=:projectId');
         $values = array(':projectId' => $this->projectId);
         $stmt->execute($values);
-        return $stmt->fetchAll();
+        return $stmt->fetch();
     }
 
     /**
-     * @param $entantque
-     * @param $jeveux
-     * @param $desorte
-     * @param $idUs
+     * Met à jour la table userstory
+     * @param $entantque string le champ en tant que
+     * @param $jeveux string le champ je veux
+     * @param $desorte string le champ de sorte que
+     * @param $idUs int L'ID de la user story à mettre à jour
      */
-    public function updateUserstory($entantque, $jeveux, $desorte, $idUs): void
+    public function updateUserstory(string $entantque, string $jeveux, string $desorte, int $idUs): void
     {
         $stmt = $this->db->getPDO()->prepare('UPDATE userstory 
                 SET entantque = :entantque, jeveux = :jeveux, desorte = :desorte
@@ -169,10 +171,11 @@ class UserStoryMiddleware
     }
 
     /**
-     * @param $critere1
-     * @param $critere2
-     * @param $critere3
-     * @param $idverification
+     * Met à jour la table verificationBenefice
+     * @param $critere1 string Le premier critere de satisfaction
+     * @param $critere2 string Le second critere de satisfaction
+     * @param $critere3 string Le troisième critere de satisfaction
+     * @param $idverification int L'ID où il faut faire la mise à jour
      */
     public function updateVerificationBenefice($critere1, $critere2, $critere3, $idverification)
     {
@@ -189,7 +192,8 @@ class UserStoryMiddleware
     }
 
     /**
-     * @param $idUs
+     * Récupère l'ID dans la table verefication benefice
+     * @param $idUs int
      * @return mixed
      */
     private function getIdVerification($idUs)
@@ -202,11 +206,12 @@ class UserStoryMiddleware
     }
 
     /**
-     * @param $entantque
-     * @param $jeveux
-     * @param $desorte
+     * Crée une user story  dans la base userstory
+     * @param $entantque string le champ en tant que
+     * @param $jeveux string le champ je veux
+     * @param $desorte string le champ de sorte que
      */
-    public function createUserstory($entantque, $jeveux, $desorte): void
+    public function createUserstory(string $entantque, string $jeveux, string $desorte): void
     {
         $stmt = $this->db->getPDO()->prepare(
             'INSERT INTO userstory (entantque, jeveux, desorte, idprojet)
@@ -217,6 +222,9 @@ class UserStoryMiddleware
         $stmt->execute($values);
     }
 
+    /**
+     * @return mixed Le dernier id d'une user story d'un projet
+     */
     private function getLastIdUs()
     {
         $stmt = $this->db->getPDO()->prepare('SELECT max(idus) FROM userstory 
@@ -226,7 +234,14 @@ class UserStoryMiddleware
         return $stmt->fetch();
     }
 
-    public function createVerificationBenefice($critere1, $critere2, $critere3, $idUs)
+    /**
+     * Crée dans la table verification benefice les trois critere de satisfaction d'une user story
+     * @param $critere1 string premier critere
+     * @param $critere2 string second critere
+     * @param $critere3 string troisieme critere
+     * @param $idUs int l'ID de la user story
+     */
+    public function createVerificationBenefice(string $critere1, string $critere2, string $critere3, int $idUs)
     {
         $criteres = [];
         $criteres[] = $critere1;
@@ -243,6 +258,10 @@ class UserStoryMiddleware
     }
 
 
+    /**
+     * @param $idUs int l'idée de la user story
+     * @return array recupere sous forme de tableau tous les benefices liés à une user story
+     */
     public function getBenefice($idUs): array
     {
             $stmt = $this->db->getPDO()->prepare(

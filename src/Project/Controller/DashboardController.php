@@ -35,7 +35,8 @@ class DashboardController extends Controller
                 $userMid->updatePassword($previous, $new, $confirm, $id);
             }
         } catch (PasswordValidatorException $e) {
-            //TODO Ajouter un systeme de traitement des erreurs
+            $this->view('error/oops', ['error' => $e->getMessage()]);
+            exit();
         }
         header('Location: /dashboard');
         die();
@@ -62,7 +63,8 @@ class DashboardController extends Controller
                 $_SESSION['user'] = $user;
             }
         } catch (NameValidatorException | EmailValidatorException $e) {
-            //TODO Ajouter un systeme de traitement des erreurs
+            $this->view('error/oops', ['error' => $e->getMessage()]);
+            exit();
         }
         header('Location: /dashboard');
         die();
@@ -74,11 +76,12 @@ class DashboardController extends Controller
             $userMid = new UserMiddleware();
             $userMid->deleteAccount($_POST['id']);
         } catch (Exception $e) {
-            //TODO Ajouter un systeme de traitement des erreurs
+            $this->view('error/oops', ['error' => $e->getMessage()]);
+            exit();
         }
         session_start();
         session_destroy();
         header('Location: /');
-        die();
+        exit();
     }
 }

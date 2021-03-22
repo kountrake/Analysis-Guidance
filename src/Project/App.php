@@ -2,6 +2,7 @@
 
 namespace Project;
 
+use Project\Router\RouteAlreadyExistsException;
 use Project\Router\Router;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -11,12 +12,9 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class App
 {
-
     /**
-     * @var array
+     * @var Router
      */
-    //private $modules;
-
     private $router;
 
     /**
@@ -30,6 +28,7 @@ class App
 
     /**
      * @param ServerRequestInterface $request
+     * @throws RouteAlreadyExistsException
      */
     public function run(ServerRequestInterface $request)
     {
@@ -97,7 +96,6 @@ class App
         /*
          * Les routes pour le téléchargement
          */
-        $this->router->addRoute('GET', 'download', '/download/:id', 'DownloadController@index');
         $this->router->addRoute('GET', 'download_personna', '/download/personna/:id', 'DownloadController@gethtmlPersonna');
         $this->router->addRoute('GET', 'download_userstory', '/download/userstory/:id', 'DownloadController@gethtmlUserStory');
         $this->router->addRoute('GET', 'download_storymap', '/download/storymap/:id', 'DownloadController@gethtmlStoryMap');
@@ -119,11 +117,7 @@ class App
         $this->router->addRoute('POST', 'storymap_role_create', '/storymap/role/create', 'StoryMapController@createRole');
         $this->router->addRoute('GET', 'storymap_activite', '/storymap/activite/:id', 'StoryMapController@activite');
         $this->router->addRoute('POST', 'storymap_activite_create', '/storymap/activite/create', 'StoryMapController@createActivite');
-        $this->router->addRoute('POST', 'storymap_create', '/storymap/create', 'StoryMapController@create');
-        $this->router->addRoute('POST', 'storymap_update', '/storymap/update', 'StoryMapController@update');
-
-        //TODO Route à supprimer avant de rendre le projet
-        $this->router->addRoute('GET', 'test', '/test/:id', 'TestController@test');
+        $this->router->addRoute('POST', 'storymap_delete', '/storymap/delete', 'StoryMapController@delete');
 
         $route = $this->router->match($path, $request->getMethod());
         $route->execute();

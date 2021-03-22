@@ -87,7 +87,7 @@
                     <p class="p-2">
                         Je suis satisfait si :
                     </p>
-                    <ul>
+                    <ul class="pl-10 list-disc">
                         <li><?= $userstories[$i]->description ?></li>
                         <li><?= $userstories[$i+1]->description ?></li>
                         <li><?= $userstories[$i+2]->description ?></li>
