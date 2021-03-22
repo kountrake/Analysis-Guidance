@@ -111,6 +111,15 @@ class StoryMapMiddleware
         return $stmt->fetchAll();
     }
 
+    public function getNumberStories(int $idactivite)
+    {
+        $stmt = $this->db->getPDO()->prepare('SELECT Count(*) as cou FROM story NATURAL JOIN FlotNarattion NATURAL JOIN StoryMap                                                    
+                                                    WHERE StoryMap.idprojet=:idactivite');
+        $values = array(':idactivite' => $idactivite);
+        $stmt->execute($values);
+        return $stmt->fetch();
+    }
+
     public function activitiesFromRoles($roles): array
     {
         $activities = [];

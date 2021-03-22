@@ -99,6 +99,15 @@ class ProjectMiddleware
         $stmt->execute($values);
     }
     
+    public function update_score_sm($Score_StoryMap,$projectId)
+    {
+        $stmt = $this->db->getPDO()->prepare('UPDATE projet 
+                SET Score_StoryMap = :Score_StoryMap
+                WHERE IdProjet= :IdProjet');
+        $values = array(':Score_StoryMap' => $Score_StoryMap, ':IdProjet' => $projectId);
+        $stmt->execute($values);
+    }
+
     public function update_score($score,$projectId)
     {
         $stmt = $this->db->getPDO()->prepare('UPDATE projet 

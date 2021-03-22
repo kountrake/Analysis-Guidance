@@ -9,21 +9,15 @@
       <div class="flex flex-row justify-between">
         <table id="table_matrice">
           <tbody>
-            <tr>
-              <td>"dessin de croix"</td>
-              <td>UC1</td>
-              <td>UC2</td>
-            </tr>
-            <tr>
-              <td>Fonctionnalité 1</td>
-              <td> </td>
-              <td> </td>
-            </tr>
-            <tr>
-              <td>Fonctionnalité 2</td>
-              <td> </td>
-              <td> </td>
-            </tr>
+                <?php
+                    //echo($matrix);
+                    //echo ($projectId);
+                    //var_dump($etapes);
+                    //var_dump($exigences);
+                    //var_dump($couverture);
+                    //var_dump($matrix);
+                    //die();
+                ?>
           </tbody>
         </table>
 
@@ -38,14 +32,12 @@
     <div class="flex flex-row justify-end">
       <form method="post" action="/matrice/change">
         <input type="hidden" name="idProjet" value="<?= $projectId ?>">
-        <input type="hidden" name="idMatrice" value="<?= $matrice->idpersonna ?>">
         <button class="bg-yellow-700 rounded border-2 border-yellow-800 py-2 px-5 mr-4 text-white text-semi-bold hover:underline hover:bg-yellow-600">
           Modifier
         </button>
       </form>
       <form method="post" action="/delete/matrice">
         <input type="hidden" name="idProjet" value="<?= $projectId ?>">
-        <input type="hidden" name="id" value="<?= $personna->idpersonna ?>">
         <button class="bg-red-700 rounded border-2 border-red-800 py-2 px-5  text-white text-semi-bold hover:underline hover:bg-red-600">
           Supprimer le projet
         </button>

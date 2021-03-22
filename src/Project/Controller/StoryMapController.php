@@ -23,6 +23,9 @@ class StoryMapController extends Controller
             $stories = $storymapMid->storiesFromActivities($activites);
             $columns = $storymapMid->createColumns($roles, $activites, $stories);
             $this->viewcontrol('storymap', ['projectId' => $projectId, 'columns' => $columns]);
+            $Score_StoryMap = $storymapMid->getNumberStories($projectId);
+            if(($Score_StoryMap->cou)<5){$pm->update_score_sm($Score_StoryMap->cou,$projectId);}
+            else{$pm->update_score_sm(5,$projectId);}
         } catch (ProjectMiddlewareException $e) {
         }
     }
