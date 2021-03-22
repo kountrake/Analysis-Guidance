@@ -10,8 +10,13 @@
         <table id="table_matrice">
           <tbody>
                 <?php
-                    var_dump($projectId);
-                    die();
+                    //echo($matrix);
+                    //echo ($projectId);
+                    //var_dump($etapes);
+                    //var_dump($exigences);
+                    //var_dump($couverture);
+                    //var_dump($matrix);
+                    //die();
                 ?>
           </tbody>
         </table>

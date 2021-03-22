@@ -18,28 +18,33 @@ class MatriceController extends Controller
             $pm->getProject($projectId, $_SESSION['user']->getId());
             $matriceMid = new MatriceMiddleware($projectId);
 
-            $etapes = $matriceMid -> getEtapesFromStoryMap();
+            $etapes = pg_fetch_array( $matriceMid -> getEtapesFromStoryMap() );
             $exigences = $matriceMid -> getExigencesFromStoryMap();
             $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);
 
             $matriceMid -> create($etapes, $exigences);
             $matriceMid -> initiateMatrixValues($couverture);
-            $matriceMid -> getMatrix();
 
-            $this->viewcontrol('matrice', ['projectId' => $projectId, 'matriceHtml' => $matriceHtml]);
+            $matrix = $matriceMid -> matrixDataToToArray($etapes, $exigences, $couverture);
+            $this->loadMatrix($matrix);
+            $this->viewcontrol('matrice', [
+                'projectId' => $projectId,
+                'etapes' => $etapes,
+                'exigences' => $exigences,
+                'couverture' => $couverture,
+                'matrix' => $matrix
+                ]);
         } catch (ProjectMiddlewareException $e) {
         }
     }
-
-    //
 
 
     //charge l'affichage de la matrice dans l'index html
     public function loadMatrix($matrice)
     {
-        foreach ($matrice as $row) {
-            echo('<tr> \n');
-            foreach ($row as $case) {
+        foreach ($matrice as $key => $values) {
+            echo('<tr> \n<tr>\n'.$key.'\n</tr>\n');
+            foreach ($values as $case) {
                 echo('<td>'.$case.'</td>\n');
             }
             echo('</tr>\n');
