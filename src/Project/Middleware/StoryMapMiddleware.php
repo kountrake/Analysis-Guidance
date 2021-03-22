@@ -8,11 +8,12 @@ use Project\Item\StorymapColumn;
 
 class StoryMapMiddleware
 {
-    private $db;
-    private $projectId;
+    private Db $db;
+    private int $projectId;
 
     /**
      * StoryMapMiddleware constructor.
+     * @param int $projectId
      */
     public function __construct(int $projectId)
     {
@@ -21,6 +22,10 @@ class StoryMapMiddleware
     }
 
 
+    /**
+     * Retourne toutes les userStory comprises dans la table userstory
+     * @return array
+     */
     public function getAllUserStories(): array
     {
         $stmt = $this->db->getPDO()->prepare('SELECT * FROM userstory WHERE idprojet=:projectId');
@@ -29,7 +34,12 @@ class StoryMapMiddleware
         return $stmt->fetchAll();
     }
 
-    public function getUserStory(int $userStoryId)
+    /**
+     * Return une simple userStory comprise dans la table userstory
+     * @param string $userStoryId
+     * @return mixed
+     */
+    public function getUserStory(string $userStoryId): mixed
     {
         $stmt = $this->db->getPDO()->prepare('SELECT * FROM userstory
                                                     WHERE idprojet=:projectId AND idus=:userStoryId');
@@ -38,6 +48,10 @@ class StoryMapMiddleware
         return $stmt->fetch();
     }
 
+    /**
+     * Crée un role dans la table storymap
+     * @param string $role
+     */
     public function createRole(string $role)
     {
         $stmt = $this->db->getPDO()->prepare(
@@ -48,7 +62,12 @@ class StoryMapMiddleware
         $stmt->execute($values);
     }
 
-    public function createActivite(string $activite, int $idbut)
+    /**
+     * Crée une activité à lier à une Storymap dans la table flotnarattion
+     * @param string $activite
+     * @param string $idbut
+     */
+    public function createActivite(string $activite, string $idbut)
     {
         $stmt = $this->db->getPDO()->prepare(
             'INSERT INTO flotnarattion (activite,idbut)
@@ -58,7 +77,13 @@ class StoryMapMiddleware
         $stmt->execute($values);
     }
 
-    public function createStory(string $story, int $priorite, int $idactivite)
+    /**
+     * Crée une story à lier à une activité dans la table story
+     * @param string $story
+     * @param int $priorite
+     * @param string $idactivite
+     */
+    public function createStory(string $story, int $priorite, string $idactivite)
     {
             $stmt = $this->db->getPDO()->prepare(
                 'INSERT INTO story (description, priorité, idactivite)
@@ -68,6 +93,9 @@ class StoryMapMiddleware
             $stmt->execute($values);
     }
 
+    /**
+     * Supprime le projet de la table Storymap et de toutes celles liées
+     */
     public function delete()
     {
         $stmt = $this->db->getPDO()->prepare('DELETE FROM storymap WHERE idprojet=:id');
@@ -75,7 +103,11 @@ class StoryMapMiddleware
         $stmt->execute($values);
     }
 
-    public function getLastRoleId()
+    /**
+     * Retourne le dernier role crée d'un projet
+     * @return mixed
+     */
+    public function getLastRoleId(): mixed
     {
         $stmt = $this->db->getPDO()->prepare('SELECT MAX(idbut) FROM storymap WHERE idprojet=:projectId');
         $values = array(':projectId' => $this->projectId);
@@ -83,6 +115,10 @@ class StoryMapMiddleware
         return $stmt->fetch();
     }
 
+    /**
+     * Retourne tout les roles crées dans un projet
+     * @return array
+     */
     public function getAllRoles(): array
     {
         $stmt = $this->db->getPDO()->prepare('SELECT * FROM storymap 
@@ -92,7 +128,12 @@ class StoryMapMiddleware
         return $stmt->fetchAll();
     }
 
-    public function getAllActivites(int $idbut): array
+    /**
+     * Retourne toutes les activités d'une storymap
+     * @param string $idbut
+     * @return array
+     */
+    public function getAllActivites(string $idbut): array
     {
         $stmt = $this->db->getPDO()->prepare('SELECT * FROM flotnarattion 
                                                     WHERE idbut=:idbut');
@@ -101,7 +142,12 @@ class StoryMapMiddleware
         return $stmt->fetchAll();
     }
 
-    public function getAllStories(int $idactivite): array
+    /**
+     * Retourne toutes les story liées à une activité
+     * @param string $idactivite
+     * @return array
+     */
+    public function getAllStories(string $idactivite): array
     {
         $stmt = $this->db->getPDO()->prepare('SELECT * FROM story 
                                                     WHERE idactivite=:idactivite
@@ -111,7 +157,12 @@ class StoryMapMiddleware
         return $stmt->fetchAll();
     }
 
-    public function getNumberStories(int $idactivite)
+    /**
+     * Retourne le nombre de story d'une activité
+     * @param string $idactivite
+     * @return mixed
+     */
+    public function getNumberStories(string $idactivite): mixed
     {
         $stmt = $this->db->getPDO()->prepare('SELECT Count(*) as cou FROM story NATURAL JOIN FlotNarattion NATURAL JOIN StoryMap                                                    
                                                     WHERE StoryMap.idprojet=:idactivite');
@@ -120,6 +171,11 @@ class StoryMapMiddleware
         return $stmt->fetch();
     }
 
+    /**
+     * Retourne toutes les activités de chaque role en paramètre
+     * @param $roles
+     * @return array
+     */
     public function activitiesFromRoles($roles): array
     {
         $activities = [];
@@ -129,6 +185,11 @@ class StoryMapMiddleware
         return $activities;
     }
 
+    /**
+     * Retourne toutes les story de chaque activité en paramètre
+     * @param $activities
+     * @return array
+     */
     public function storiesFromActivities($activities): array
     {
         $stories = [];
@@ -141,6 +202,7 @@ class StoryMapMiddleware
     }
 
     /**
+     *  Retourne une colonne de la storymap
      * @param array $roles
      * @param array $activites
      * @param array $stories

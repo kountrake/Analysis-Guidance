@@ -24,9 +24,14 @@ class StoryMapController extends Controller
             $columns = $storymapMid->createColumns($roles, $activites, $stories);
             $this->viewcontrol('storymap', ['projectId' => $projectId, 'columns' => $columns]);
             $Score_StoryMap = $storymapMid->getNumberStories($projectId);
-            if(($Score_StoryMap->cou)<5){$pm->update_score_sm($Score_StoryMap->cou,$projectId);}
-            else{$pm->update_score_sm(5,$projectId);}
+            if (($Score_StoryMap->cou)<5) {
+                $pm->update_score_sm($Score_StoryMap->cou, $projectId);
+            } else {
+                $pm->update_score_sm(5, $projectId);
+            }
         } catch (ProjectMiddlewareException $e) {
+            $this->view('error/oops', ['error' => $e->getMessage()]);
+            exit();
         }
     }
 
@@ -42,6 +47,7 @@ class StoryMapController extends Controller
             $this->viewcontrol('storymap/role', ['projectId' => $projectId, 'roles' => $roles, 'jeveux' => $jeveux]);
         } catch (Exception $exception) {
             $this->view('error/oops', ['error' => $exception->getMessage()]);
+            exit();
         }
     }
 
@@ -63,6 +69,7 @@ class StoryMapController extends Controller
             exit();
         } catch (Exception $exception) {
             $this->view('error/oops', ['error' => $exception->getMessage()]);
+            exit();
         }
     }
 
@@ -84,6 +91,7 @@ class StoryMapController extends Controller
             );
         } catch (Exception $exception) {
             $this->view('error/oops', ['error' => $exception->getMessage()]);
+            exit();
         }
     }
 
@@ -122,6 +130,7 @@ class StoryMapController extends Controller
             exit();
         } catch (Exception $exception) {
             $this->view('error/oops', ['error' => $exception->getMessage()]);
+            exit();
         }
     }
 
@@ -138,6 +147,7 @@ class StoryMapController extends Controller
             exit();
         } catch (Exception $exception) {
             $this->view('error/oops', ['error' => $exception->getMessage()]);
+            exit();
         }
     }
 }
