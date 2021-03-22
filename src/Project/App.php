@@ -92,6 +92,8 @@ class App
          * Les routes de la page Matrice
          */
         $this->router->addRoute('GET', 'matrice_index', '/matrice/:id', 'MatriceController@index');
+        $this->router->addRoute('GET', 'matrice_add', '/matrice/correspond/:id', 'MatriceController@correspond');
+        $this->router->addRoute('POST', 'matrice_create', '/matrice/correspond/create', 'MatriceController@create');
 
         /*
          * Les routes pour le téléchargement

@@ -21,9 +21,13 @@ class MatriceMiddleware
         $this->projectId = $projectId;
     }
 
-<<<<<<< HEAD
 
-    //transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
+    /**
+     * transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
+     * @param $resReq
+     * @param $property
+     * @return array
+     */
     public function requestObjectToArray($resReq, $property)
     {
         $res = array();
@@ -37,12 +41,9 @@ class MatriceMiddleware
     }
 
 
-    /*
+    /**
      * récupère les etapes du projet pour construire la matrice
-=======
-    /* 
      * @return array les etapes du projet pour construire la matrice
->>>>>>> 9c6ddc6b04ad2f648776cacc580eb1f6efc52256
      */
     public function getEtapesFromStoryMap()
     {
