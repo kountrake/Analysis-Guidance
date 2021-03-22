@@ -14,32 +14,10 @@ class DownloadController extends Controller
 {
     public function index($id)
     {
-        /*
-        header('Content-type: text/plain');
-        header('Content-Disposition: attachment; filename="projet.json"');
-        //TODO Il faut créer le Middleware permettant de générer le JSON et le mettre dans le print ci dessous
-        $jsonExample = '{
-        "menu": {
-              "id": "file",
-              "value": "File",
-              "popup": {
-                  "menuitem": [
-                      {"value": "New", "onclick": "CreateNewDoc()"},
-                      {"value": "Open", "onclick": "OpenDoc()"},
-                      {"value": "Close", "onclick": "CloseDoc()"}
-                  ]
-              }
-        }
-}';
-        print $jsonExample;*/
         try {
-            /*
-            $url = 'http://localhost:8000/personna/15';//url('personna/'.$id);
-            $html = file_get_contents($url);
-*/
             $html2pdf = new Html2Pdf('P', 'Legal', 'en', true, 'UTF-8', array(25.4, 20.4, 25.4, 20.4));
             $html2pdf->pdf->SetTitle('PDF PROJET N°'.$id);
-            $html2pdf->WriteHTML($this->gethtmlPersonna($id) /*$this->render('personna', ['projectId' => $id])*/ /*$html*/);
+            $html2pdf->WriteHTML($this->gethtmlPersonna($id));
             $html2pdf->Output('PDF-PROJET-N'.$id.'.pdf');
         } catch (HTML2PDF_exception $e) {
             echo $e;

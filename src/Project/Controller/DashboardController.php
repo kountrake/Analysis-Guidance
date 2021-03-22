@@ -79,6 +79,6 @@ class DashboardController extends Controller
         session_start();
         session_destroy();
         header('Location: /');
-        die();
+        exit();
     }
 }
