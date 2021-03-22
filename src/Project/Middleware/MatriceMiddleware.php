@@ -133,6 +133,29 @@ class MatriceMiddleware
     }
 
 
+    public function getEtapesIdFromEtapes() {
+        $stmt = $this->db->getPDO()->prepare(
+            'SELECT activite 
+                FROM storymap stom
+                JOIN flotnarattion flon ON stom.idbut = flon.idbut
+                WHERE idprojet=:projectId'
+        );
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+
+        /*echo '<pre>';
+        var_dump($stmt->fetchAll());
+        die();
+        echo '</pre>';*/
+
+        $resReq = $stmt->fetchAll();
+
+        //transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
+        return $this->requestObjectToArray($resReq, 'activite');
+    }
+
+    //public function gExigenceset
+
     /*
      * @return array récupère la matrice du projet (seulement les cases qui contiennent TRUE)
      */
