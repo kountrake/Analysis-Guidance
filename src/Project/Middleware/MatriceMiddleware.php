@@ -21,8 +21,28 @@ class MatriceMiddleware
         $this->projectId = $projectId;
     }
 
+<<<<<<< HEAD
+
+    //transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
+    public function requestObjectToArray($resReq, $property)
+    {
+        $res = array();
+        for ($i=0; $i < sizeof($resReq); $i+=1) {
+            $string = $resReq[$i] -> $property;
+            if (!in_array($string, $res)) {
+                array_push($res, $string);
+            }
+        }
+        return $res;
+    }
+
+
+    /*
+     * récupère les etapes du projet pour construire la matrice
+=======
     /* 
      * @return array les etapes du projet pour construire la matrice
+>>>>>>> 9c6ddc6b04ad2f648776cacc580eb1f6efc52256
      */
     public function getEtapesFromStoryMap()
     {
@@ -34,8 +54,18 @@ class MatriceMiddleware
         );
         $values = array(':projectId' => $this->projectId);
         $stmt->execute($values);
-        return $stmt->fetchAll();
+
+        /*echo '<pre>';
+        var_dump($stmt->fetchAll());
+        die();
+        echo '</pre>';*/
+
+        $resReq = $stmt->fetchAll();
+
+        //transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
+        return $this->requestObjectToArray($resReq, 'activite');
     }
+
 
     /*
      * @return array recupere les exigences du projet pour construire la matrice
@@ -51,8 +81,19 @@ class MatriceMiddleware
         );
         $values = array(':projectId' => $this->projectId);
         $stmt->execute($values);
-        return $stmt->fetchAll();
+
+        /*
+        echo '<pre>';
+        var_dump($stmt->fetchAll());
+        die();
+        echo '</pre>';
+        */
+        $resReq = $stmt->fetchAll();
+
+        //transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
+        return $this->requestObjectToArray($resReq, 'description');
     }
+
 
     /*
      * forme et renvoie le tableau $couverture qui indique quelle etape et couvertte par quelles exigences
@@ -72,13 +113,24 @@ class MatriceMiddleware
                 AND activite = :etape'
             );
             $values = array(':projectId' => $this->projectId, ':etape' => $etapes[$i]);
-            $resRequete = $stmt->execute($values);
 
-            $couverture[$etapes[$i]] = $resRequete;
+            $stmt->execute($values);
+
+            $resReq = $stmt->fetchAll();
+            $arrayReq = $this->requestObjectToArray($resReq, 'description');
+
+            $couverture[$etapes[$i]] = $arrayReq;
         }
 
+        /*
+        echo '<pre>';
+        var_dump($couverture);
+        die();
+        echo '</pre>';
+        */
         return $couverture;
     }
+
 
     /*
      * @return array récupère la matrice du projet (seulement les cases qui contiennent TRUE)
@@ -97,6 +149,7 @@ class MatriceMiddleware
         $stmt->execute($values);
         return $stmt->fetchAll();
     }
+
 
     /*
      * convertis le résultat de la requête sql en un array php à deux dimensions
@@ -125,21 +178,6 @@ class MatriceMiddleware
         return $result;
     }
 
-    /*
-     * factorisation de l'INSERT dans les tables EtapesMatrice et ExigencesMatrice
-     */
-    public function simpleInsertMatrix($values, $tableName)
-    {
-        for ($i = 0; $i < sizeof($values); $i += 1) {
-            $stmt = $this->db->getPDO()->prepare(
-                'INSERT INTO :tableName (description, idprojet)
-                     VALUES (:description, :projectId);'
-            );
-            $values = array('tableName' => $tableName, ':description' => $values[$i], ':projectId' => $this->projectId);
-            $stmt->execute($values);
-        }
-    }
-
 
     /*
      * créé la matrice dans la BDD avec les cases précochées par rapport au classement des exigences dans la storyMap
@@ -149,10 +187,24 @@ class MatriceMiddleware
     public function create($etapes, $exigences)
     {
         //renseigne les etapes de la matrice de couverture du projet dans la table EtapesMatrice
-        $this->simpleInsertMatrix($etapes, 'EtapesMatrice');
+        for ($i = 0; $i < sizeof($etapes); $i += 1) {
+            $stmt = $this->db->getPDO()->prepare(
+                'INSERT INTO etapesMatrice (description, idprojet)
+                     VALUES (:description, :projectId);'
+            );
+            $values = array(':description' => $etapes[$i], ':projectId' => $this->projectId);
+            $stmt->execute($values);
+        }
 
         //renseigne les exigences de la matrice de couverture du projet dans la table ExigencesMatrice
-        $this->simpleInsertMatrix($exigences, 'ExigencesMatrice');
+        for ($i = 0; $i < sizeof($exigences); $i += 1) {
+            $stmt = $this->db->getPDO()->prepare(
+                'INSERT INTO exigencesMatrice (description)
+                     VALUES (:description);'
+            );
+            $values = array(':description' => $exigences[$i]);
+            $stmt->execute($values);
+        }
 
         /*
          * renseigne les correspondances entre les exigences et les étapes
@@ -161,12 +213,23 @@ class MatriceMiddleware
         for ($k = 0; $k < sizeof($etapes); $k += 1) {
             for ($l = 0; $l < sizeof($exigences); $l += 1) {
                 $stmt = $this->db->getPDO()->prepare(
-                    'INSERT INTO Correspond (idEtape, idExigence)
-                        SELECT idEtape, idExigence, FALSE
-                        FROM EtapesMatrice
-                        CROSS JOIN ExigenceMatrice;'
+                    'INSERT INTO Correspond (idEtape, idExigence, coche)
+                            VALUES (
+                                    (SELECT idEtape
+                                     FROM etapesMatrice
+                                     WHERE description = :descEtape
+                                     AND idprojet = :idprojet),
+                                    
+                                    (SELECT idExigence
+                                     FROM exigencesMatrice
+                                     WHERE description = :descExigence
+                                     AND idprojet = :idprojet),
+                                    
+                                    FALSE
+                                     )'
                 );
-                $stmt->execute();
+                $values = array(':descEtape' => $etapes[$k], ':descExigence' => $exigences[$l], ':idprojet' => $this->projectId);
+                $stmt->execute($values);
             }
         }
     }
@@ -205,6 +268,7 @@ class MatriceMiddleware
         }
     }
 
+
     /*
      * repasse toutes les cases de la matrice d'un projet à false
      */
@@ -233,6 +297,7 @@ class MatriceMiddleware
         }
     }
 
+
     /*
      * remet à FALSE, puis met à jour les cases indiquées
      * dans $couverture en utilisant reset() et initiateMatrixValues($couverture)
@@ -242,6 +307,7 @@ class MatriceMiddleware
         $this -> reset($etapes, $exigences);
         $this -> initiateMatrixValues($couverture);
     }
+
 
     /*
      * supprime de la BDD les données des tables etapesMatrice/exigencesMatrice

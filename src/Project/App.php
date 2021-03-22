@@ -2,6 +2,7 @@
 
 namespace Project;
 
+use Project\Router\RouteAlreadyExistsException;
 use Project\Router\Router;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -11,12 +12,9 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class App
 {
-
     /**
-     * @var array
+     * @var Router
      */
-    //private $modules;
-
     private $router;
 
     /**
@@ -30,6 +28,7 @@ class App
 
     /**
      * @param ServerRequestInterface $request
+     * @throws RouteAlreadyExistsException
      */
     public function run(ServerRequestInterface $request)
     {

@@ -39,7 +39,7 @@ class UserStoryController extends Controller
                     }
                     $usMid->update_score_us($value->idus, $score_critere);
                 }
-                $pm->update_score_moyUS($usMid->getscore_moyen_us()[0]->sco, $projectId);
+                $pm->update_score_moyUS($usMid->getscore_moyen_us()->sco, $projectId);
             }
         } catch (Exception $e) {
             $this->view('error/oops', ['error' => $e->getMessage()]);
