@@ -6,6 +6,7 @@ use Exception;
 use Project\Middleware\PersonnaMiddleware;
 use Project\Middleware\UserStoryMiddleware;
 use Project\Middleware\StoryMapMiddleware;
+use Project\Middleware\MatriceMiddleware;
 use Project\Middleware\ProjectMiddleware;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Html2Pdf;
@@ -232,7 +233,7 @@ class DownloadController extends Controller
             $html=($this->getHTMLPersonnas($idproj));
             $html=$html.($this->getHTMLUserStorys($idproj));
             $html=$html.($this->getHTMLStoryMaps($idproj));
-            //$html=$html.($this->getHTMLMatrices($idproj));
+            $html=$html.($this->getHTMLMatrices($idproj));
             $html2pdf->WriteHTML($html);
             $html2pdf->Output('PDF-PROJET-N'.$idproj.'.pdf');
         } catch (Exception $e) {
@@ -249,7 +250,7 @@ class DownloadController extends Controller
         try {
             $html2pdf = new Html2Pdf('P', 'Legal', 'en', true, 'UTF-8', array(25.4, 20.4, 25.4, 20.4));
             $html2pdf->pdf->SetTitle('PDF PROJET N°'.$idproj.' - MATRICE');
-            $html2pdf->WriteHTML($this->getHTMLStoryMaps($idproj));
+            $html2pdf->WriteHTML($this->getHTMLMatrices($idproj));
             $html2pdf->Output('PDF-PROJET-N'.$idproj.'-MATRICE.pdf');
         } catch (HTML2PDF_exception $e) {
             $this->view('error/oops', ['error' => $e->getMessage()]);
@@ -257,7 +258,25 @@ class DownloadController extends Controller
         }
     }
 
-    
+     /**
+     * Récupère les case cochées de la matrice
+     * @param $correspond array
+     * @param $etapeid int 
+     * @param $exigenceid int 
+     * @return bool True si la case est cochée, False si elle ne l'est pas
+     */
+    public function checked($correspond, $etapeid, $exigenceid): bool
+    {
+        foreach ($correspond as $c) 
+        {
+            if ($c->idetape === $etapeid && $c->idexigence === $exigenceid) 
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Création du contenu du PDF de la Matrice
      */
@@ -272,15 +291,52 @@ class DownloadController extends Controller
             $pm = new ProjectMiddleware();
             $pm->getProject($idproj, $user->getId());
             $matriceMid = new MatriceMiddleware($idproj);
-            $roles = $storymapMid->getAllRoles();
-            $activites = $storymapMid->activitiesFromRoles($roles);
-            $stories = $storymapMid->storiesFromActivities($activites);
-            $columns = $storymapMid->createColumns($roles, $activites, $stories);
+            $etapes = $matriceMid->getEtapesFromStoryMap();
+            $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);
+            $couvertureId = $matriceMid->getCouvertureIdFromCorrespond($couverture);
+            $correspond = $matriceMid->getCorrespond();
         } catch (Exception $exception) {
             $this->view('oops', ['error' => $exception->getMessage()]);
             exit();
         }
-            $html = '';
+            $html = '
+            <div class="flex justify-center bg-white w-full mt-10 p-4 ">
+                <u><h1 class="text-center text-4xl font-bold underline" style="text-align:center;">Matrice </h1></u>
+            </div>
+        
+            <div class="flex flex-col px-8 mt-4 bg-white ml-4 mr-4">
+        
+                <div class="my-4 mx-2 ">
+                    <div class="mt-4 ml-auto mr-auto text-center">
+                        <div class="m-4 p-4 border border-gray-500 rounded-lg" style="text-align:center; border:solid;">';
+                            for ($i = 0; $i < count($couverture); $i++)
+                            {
+                                
+                                $etape = array_keys($couverture)[$i];
+                                $exigences = array_values($couverture)[$i];
+                                $etapeId = array_keys($couvertureId)[$i];
+                                $exigencesId = array_values($couvertureId)[$i];
+                                $html=$html.'<u><p class="mb-2" style="text-align:center;">'.$etape.' : </p></u>';
+                                for ($j = 0; $j < count($exigences); $j++){
+                                    if($this->checked($correspond, $etapeId, $exigencesId[$j]))
+                                    {
+                                        $html=$html.'
+                                        <input
+                                            class="ml-4 mr-2 mb-5"
+                                            type="checkbox"
+                                            name="'.$etapeId.'[]"
+                                            value="'. $exigencesId[$j].'"';
+                                            $html=$html.'checked>' .$exigences[$j];
+                                    }
+                                        
+                                }
+                                $html=$html.'<br>';
+                            }
+                            $html=$html.'<br>
+                        </div>
+                    </div>
+                </div>
+            </div>';
             return $html;
     }
 }

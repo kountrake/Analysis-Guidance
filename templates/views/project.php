@@ -181,6 +181,7 @@ function checked($correspond, $etapeid, $exigenceid): bool
                                     <input
                                     class="ml-4 mr-2 mb-5"
                                     type="checkbox"
+                                    disabled="disabled"
                                     name="<?= $etapeId ?>[]"
                                     value="<?= $exigencesId[$j] ?>"
                                     <?= checked($correspond, $etapeId, $exigencesId[$j]) ? 'checked' : '' ?>><?= $exigences[$j] ?>
