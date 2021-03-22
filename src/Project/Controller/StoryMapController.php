@@ -121,4 +121,20 @@ class StoryMapController extends Controller
             $this->view('error/oops', ['error' => $exception->getMessage()]);
         }
     }
+
+    public function delete()
+    {
+        session_start();
+        try {
+            $projectId = $_POST['projectId'];
+            $pm = new ProjectMiddleware();
+            $pm->getProject($projectId, $_SESSION['user']->getId());
+            $storymapMid = new StoryMapMiddleware($projectId);
+            $storymapMid->delete();
+            header('Location: /myprojects/'.$projectId);
+            exit();
+        } catch (Exception $exception) {
+            $this->view('error/oops', ['error' => $exception->getMessage()]);
+        }
+    }
 }

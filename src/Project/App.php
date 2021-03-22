@@ -119,8 +119,7 @@ class App
         $this->router->addRoute('POST', 'storymap_role_create', '/storymap/role/create', 'StoryMapController@createRole');
         $this->router->addRoute('GET', 'storymap_activite', '/storymap/activite/:id', 'StoryMapController@activite');
         $this->router->addRoute('POST', 'storymap_activite_create', '/storymap/activite/create', 'StoryMapController@createActivite');
-        $this->router->addRoute('POST', 'storymap_create', '/storymap/create', 'StoryMapController@create');
-        $this->router->addRoute('POST', 'storymap_update', '/storymap/update', 'StoryMapController@update');
+        $this->router->addRoute('POST', 'storymap_delete', '/storymap/delete', 'StoryMapController@delete');
 
         //TODO Route à supprimer avant de rendre le projet
         $this->router->addRoute('GET', 'test', '/test/:id', 'TestController@test');

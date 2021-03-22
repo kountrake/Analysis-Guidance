@@ -38,11 +38,6 @@ class StoryMapMiddleware
         return $stmt->fetch();
     }
 
-    public function getStoryMap(int $storymapId)
-    {
-        return 1;
-    }
-
     public function createRole(string $role)
     {
         $stmt = $this->db->getPDO()->prepare(
@@ -63,12 +58,8 @@ class StoryMapMiddleware
         $stmt->execute($values);
     }
 
-
-    public function createStory(
-        string $story,
-        int $priorite,
-        int $idactivite
-    ) {
+    public function createStory(string $story, int $priorite, int $idactivite)
+    {
             $stmt = $this->db->getPDO()->prepare(
                 'INSERT INTO story (description, priorité, idactivite)
                        VALUES (:story, :priorite, :idactivite)'
@@ -77,37 +68,10 @@ class StoryMapMiddleware
             $stmt->execute($values);
     }
 
-    public function updateRole($role, $idBut)
+    public function delete()
     {
-        $stmt = $this->db->getPDO()->prepare('UPDATE storymap
-                SET role = :role
-                WHERE idbut= :id');
-        $values = array(':role' => $role, ':id' => $idBut);
-        $stmt->execute($values);
-    }
-
-    public function updateActivite($activite, $idactivite)
-    {
-        $stmt = $this->db->getPDO()->prepare('UPDATE flotnarattion
-                SET activite = :activite
-                WHERE idactivite= :id');
-        $values = array(':activite' => $activite, ':id' => $idactivite);
-        $stmt->execute($values);
-    }
-
-    public function updateStory($story, $priorite, $idstory)
-    {
-        $stmt = $this->db->getPDO()->prepare('UPDATE story
-                SET description = :story, priorité = :priorite
-                WHERE idstory= :id');
-        $values = array(':story' => $story, ':id' => $idstory);
-        $stmt->execute($values);
-    }
-
-    public function delete($id)
-    {
-        $stmt = $this->db->getPDO()->prepare('DELETE FROM storymap WHERE idbut=:id');
-        $values = array(':id' => $id);
+        $stmt = $this->db->getPDO()->prepare('DELETE FROM storymap WHERE idprojet=:id');
+        $values = array(':id' => $this->projectId);
         $stmt->execute($values);
     }
 
@@ -166,7 +130,6 @@ class StoryMapMiddleware
         }
         return $stories;
     }
-
 
     /**
      * @param array $roles

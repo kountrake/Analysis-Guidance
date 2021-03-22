@@ -55,28 +55,30 @@
             <?php for ($i = 0; $i < count($userstories); $i+=3) : ?>
                 <div class="mt-10 bg-white rounded">
                     <h3 class="text-center underline text-xl">Us - <?= $nbUs ?> </h3>
-                    <p class="p-2">
-                        En tant que : <?= $userstories[$i]->entantque ?>
-                    </p>
-                    <p class="p-2">
-                        Je veux : <?= $userstories[$i]->jeveux ?>
-                    </p>
-                    <p class="p-2">
-                        De sorte que : <?= $userstories[$i]->desorte ?>
-                    </p>
-                    <p class="p-2">
-                        Je suis satisfait si :
-                    </p>
-                    <ul>
-                        <li><?= $userstories[$i]->description ?></li>
-                        <li><?= $userstories[$i+1]->description ?></li>
-                        <li><?= $userstories[$i+2]->description ?></li>
-                    </ul>
+                    <div class="p-4">
+                        <p class="p-2">
+                            En tant que : <?= $userstories[$i]->entantque ?>
+                        </p>
+                        <p class="p-2">
+                            Je veux : <?= $userstories[$i]->jeveux ?>
+                        </p>
+                        <p class="p-2">
+                            De sorte que : <?= $userstories[$i]->desorte ?>
+                        </p>
+                        <p class="p-2">
+                            Je suis satisfait si :
+                        </p>
+                        <ul class="pl-10 list-disc">
+                            <li><?= $userstories[$i]->description ?></li>
+                            <li><?= $userstories[$i+1]->description ?></li>
+                            <li><?= $userstories[$i+2]->description ?></li>
+                        </ul>
+                    </div>
                 </div>
                 <?php $nbUs++?>
             <?php endfor; ?>
         <?php endif; ?>
-        <div class="flex justify-end">
+        <div class="flex justify-end mt-4">
             <a href="/userstory/<?= $id ?>"
                class="bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold hover:underline hover:bg-blue-600">Modifier</a>
         </div>
@@ -85,8 +87,9 @@
     <div class="flex justify-center bg-white w-full mt-10 p-4 mb-4">
         <h2 class="text-center text-2xl font-bold underline">Story Map</h2>
     </div>
+
     <div class="mx-10">
-        <div class="flex justify-center bg-white">
+        <div class="flex justify-center bg-white mb-4">
             <div class="flex flex-row m-4">
                 <div class="flex flex-col border border-black border-r-0 justify-items-center">
                     <div class="border-b border-black p-4 text-center">
@@ -134,8 +137,12 @@
             </div>
         </div>
         <div class="flex justify-end">
-            <a href="/storymap/<?= $id ?>"
-               class="bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold hover:underline hover:bg-blue-600">Modifier</a>
+            <form method="post" action="/storymap/delete">
+                <input type="hidden" name="idProjet" value="<?= $id ?>">
+                <button class="bg-red-700 rounded border-2 border-red-800 py-2 px-5  text-white text-semi-bold hover:underline hover:bg-red-600">
+                    Supprimer
+                </button>
+            </form>
         </div>
     </div>
 
