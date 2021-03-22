@@ -97,7 +97,6 @@ class App
         /*
          * Les routes pour le téléchargement
          */
-        $this->router->addRoute('GET', 'download', '/download/:id', 'DownloadController@index');
         $this->router->addRoute('GET', 'download_personna', '/download/personna/:id', 'DownloadController@gethtmlPersonna');
         $this->router->addRoute('GET', 'download_userstory', '/download/userstory/:id', 'DownloadController@gethtmlUserStory');
         $this->router->addRoute('GET', 'download_storymap', '/download/storymap/:id', 'DownloadController@gethtmlStoryMap');
