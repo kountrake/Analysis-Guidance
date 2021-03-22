@@ -91,3 +91,9 @@ class MatriceController extends Controller
         }
     }
 }
+
+/*
+ * etapes -> [etape1, etape2]
+ * exigence1 -> ['', 'x', ...;]
+ * exigence2 -> ['', '', 'x', ...]
+ */

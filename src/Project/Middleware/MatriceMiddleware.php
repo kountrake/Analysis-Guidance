@@ -260,6 +260,7 @@ class MatriceMiddleware
         $res = array();
         $etapesIds = $this->getEtapesIdFromCouverture($couverture);
         $exigencesIds = array();
+
         foreach ($couverture as $etape => $exigences) {
             $tmp = $this -> getExigencesIdsFromArray($exigences);
             array_push($exigencesIds, $tmp);
@@ -301,7 +302,7 @@ class MatriceMiddleware
     /*
      * convertis le résultat de la requête sql en un array php à deux dimensions
      */
-    public function matrixDataToToArray($etapes, $exigences, $couverture)
+    public function matrixDataToArray($etapes, $exigences, $couverture)
     {
         //initialise l'array en 2D
         $result = array(
@@ -527,7 +528,7 @@ class MatriceMiddleware
                 FROM etapesmatrice etm 
                 JOIN correspond cor ON etm.idetape=cor.idetape 
                 JOIN exigencesmatrice exm ON cor.idexigence = exm.idexigence 
-                WHERE idprojet=:projectId
+                WHERE exm.idprojet=:projectId
                 AND coche = TRUE'
         );
         $values = array(':projectId' => $this->projectId);
