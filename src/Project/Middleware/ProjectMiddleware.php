@@ -19,7 +19,12 @@ class ProjectMiddleware
         $this->db = new Db();
     }
 
-    public function getAllProjects(int $userId): array
+    /**
+     * @param string $userId
+     * @return array l'ensemble des projets de cet id
+     * @throws ProjectMiddlewareException
+     */
+    public function getAllProjects(string $userId): array
     {
         $stmt = $this->db->getPDO()->prepare('SELECT * FROM projet WHERE userid=:userId');
         $values = array(':userId' => $userId);
@@ -28,12 +33,12 @@ class ProjectMiddleware
     }
 
     /**
-     * @param int $projectId
-     * @param int $userId
-     * @return mixed
+     * @param string $projectId
+     * @param string $userId
+     * @return mixed un objet contenant l'ensemble du projet
      * @throws ProjectMiddlewareException
      */
-    public function getProject(int $projectId, int $userId)
+    public function getProject(string $projectId, string $userId)
     {
         $stmt = $this->db->getPDO()->prepare('SELECT * FROM projet WHERE idprojet=:projectId AND userid=:userId');
         $values = array(':projectId' => $projectId, ':userId' => $userId);
@@ -44,8 +49,12 @@ class ProjectMiddleware
         }
         return $value;
     }
-
-    public function create(int $userId)
+    
+    /**
+     * @param string $userId
+     * @return mixed le projet qui vient d'être créé
+     */
+    public function create(string $userId)
     {
         $date = new DateTime('now');
         $date->setTimezone(new DateTimeZone('Europe/Paris'));
@@ -58,14 +67,21 @@ class ProjectMiddleware
         return $this->getLastProjectId($userId);
     }
 
-    public function delete($projectId)
+    /**
+     * @param string $projectId
+     */
+    public function delete(string $projectId)
     {
         $stmt = $this->db->getPDO()->prepare('DELETE FROM projet WHERE idprojet=:id');
         $values = array(':id' => $projectId);
         $stmt->execute($values);
     }
 
-    public function getLastProjectId($userId): int
+    /**
+     * @param string $userId
+     * @return int id du dernier projet
+     */
+    public function getLastProjectId(string $userId): int
     {
         $stmt = $this->db->getPDO()->prepare('SELECT MAX(idprojet) FROM projet WHERE userid=:userId');
         $values = array(':userId' => $userId);
@@ -73,7 +89,12 @@ class ProjectMiddleware
         return $stmt->fetch()->max;
     }
 
-    public function getoneProject(int $userId,int $idprojet): array
+    /**
+     * @param string $userId
+     * @param string $idprojet
+     * @return array contient un projet
+     */
+    public function getoneProject(string $userId,string $idprojet): array
     {
         $stmt = $this->db->getPDO()->prepare('SELECT * FROM projet WHERE userid=:userId and idprojet=:idprojet');
         $values = array(':userId' => $userId,':idprojet' => $idprojet);
@@ -81,7 +102,11 @@ class ProjectMiddleware
         return $stmt->fetchAll();
     }
 
-    public function update_score_persona($Score_Moyen_Personna,$projectId)
+    /**
+     * @param float $Score_Moyen_Personna
+     * @param string $projectId
+     */
+    public function update_score_persona(float $Score_Moyen_Personna,string $projectId)
     {
         $stmt = $this->db->getPDO()->prepare('UPDATE projet 
                 SET Score_Moyen_Personna = :Score_Moyen_Personna
@@ -90,7 +115,11 @@ class ProjectMiddleware
         $stmt->execute($values);
     }
 
-    public function update_score_moyUS($Score_Moyen_UserStory,$projectId)
+    /**
+     * @param float $Score_Moyen_UserStory
+     * @param string $projectId
+     */
+    public function update_score_moyUS(float $Score_Moyen_UserStory,string $projectId)
     {
         $stmt = $this->db->getPDO()->prepare('UPDATE projet 
                 SET Score_Moyen_UserStory = :Score_Moyen_UserStory
@@ -99,7 +128,11 @@ class ProjectMiddleware
         $stmt->execute($values);
     }
     
-    public function update_score_sm($Score_StoryMap,$projectId)
+    /**
+     * @param float $Score_StoryMap
+     * @param string $projectId
+     */
+    public function update_score_sm(float $Score_StoryMap,string $projectId)
     {
         $stmt = $this->db->getPDO()->prepare('UPDATE projet 
                 SET Score_StoryMap = :Score_StoryMap
@@ -108,12 +141,30 @@ class ProjectMiddleware
         $stmt->execute($values);
     }
 
-    public function update_score($score,$projectId)
+    /**
+     * @param float $Score_matrice
+     * @param string $projectId
+     */
+    public function update_score_matrice(float $Score_matrice,string $projectId)
     {
         $stmt = $this->db->getPDO()->prepare('UPDATE projet 
+                SET Score_Matrice = :Score_Matrice
+                WHERE IdProjet= :IdProjet');
+        $values = array(':Score_Matrice' => $Score_matrice, ':IdProjet' => $projectId);
+        $stmt->execute($values);
+    }
+
+    /**
+     * @param float $score
+     * @param string $projectId
+     */
+    public function update_score(float $score,string $projectId)
+    {
+        $stmt = $this->db->getPDO()->prepare('UPDATE projet
                 SET score = :score
                 WHERE IdProjet= :IdProjet');
         $values = array(':score' => $score, ':IdProjet' => $projectId);
         $stmt->execute($values);
     }
+    
 }
