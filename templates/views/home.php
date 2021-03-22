@@ -5,8 +5,6 @@
             <br/>
             <a class='lienMenu' href="/project/create">Nouveau Projet</a>
             <br/>
-            <a class='lienMenu' href="/help">Aide</a>
-            <br/>
         </div>
     <?php endif; ?>
     <div class="bg-white w-2/3 mt-10 p-4 rounded">
