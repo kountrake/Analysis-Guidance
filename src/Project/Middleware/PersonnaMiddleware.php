@@ -73,6 +73,16 @@ class PersonnaMiddleware
         $stmt->execute($values);
     }
 
+    /**
+     * @param $name
+     * @param $firstname
+     * @param $age
+     * @param $role
+     * @param $caracteristique
+     * @param $objectifs
+     * @param $scenario
+     * @param $idPersonna
+     */
     public function update($name, $firstname, $age, $role, $caracteristique, $objectifs, $scenario, $idPersonna)
     {
         $stmt = $this->db->getPDO()->prepare('UPDATE personna 

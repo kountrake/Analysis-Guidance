@@ -121,9 +121,6 @@ class App
         $this->router->addRoute('POST', 'storymap_activite_create', '/storymap/activite/create', 'StoryMapController@createActivite');
         $this->router->addRoute('POST', 'storymap_delete', '/storymap/delete', 'StoryMapController@delete');
 
-        //TODO Route à supprimer avant de rendre le projet
-        $this->router->addRoute('GET', 'test', '/test/:id', 'TestController@test');
-
         $route = $this->router->match($path, $request->getMethod());
         $route->execute();
     }
