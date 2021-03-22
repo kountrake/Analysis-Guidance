@@ -18,37 +18,33 @@ class MatriceController extends Controller
             $pm = new ProjectMiddleware();
             $pm->getProject($projectId, $_SESSION['user']->getId());
             $matriceMid = new MatriceMiddleware($projectId);
-            $etapes = $matriceMid -> getEtapesFromStoryMap();
-            $exigences = $matriceMid->getExigencesFromStoryMap();
+            $etapes = $matriceMid->getEtapesFromStoryMap();
             $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);
-            echo '<pre>';
-            var_dump($etapes,$exigences, $couverture);
-            echo '</pre>';
-            die();
-            $matriceMid -> create($etapes, $exigences);
-            $matriceMid -> initiateMatrixValues($couverture);
-            $matrix = $matriceMid -> matrixDataToToArray($etapes, $exigences, $couverture);
-            $this->loadMatrix($matrix);
-            $this->viewcontrol('matrice', [
-                'projectId' => $projectId,
-                'etapes' => $etapes,
-                'exigences' => $exigences,
-                'couverture' => $couverture,
-                'matrix' => $matrix
-                ]);
-            $exigencesbis = $matriceMid -> GetAllExigence();
-            foreach ($exigencesbis as $listage) {
-                $nombre=$nombre+1;
-                $valide=$matriceMid ->GetnumberTrueByExigence($listage->exi);
-                if ($valide->cou!=0) {
-                    $score=$score+1;
-                }
-            }
-            if ($nombre!=0) {
-                $pm->update_score_matrice($score*5/$nombre, $projectId);
-            } else {
-                $pm->update_score_matrice(0, $projectId);
-            }
+            $couvertureId = $matriceMid->getCouvertureIdFromCorrespond($couverture);
+            $correspond = $matriceMid->getCorrespond();
+
+            $this -> viewcontrol(
+                'matrice',
+                [
+                    'projectId' => $projectId,
+                    'couverture' => $couverture,
+                    'couvertureId' => $couvertureId,
+                    'correspond' => $correspond
+                ]
+            );
+//            $exigencesbis = $matriceMid -> GetAllExigence();
+//            foreach ($exigencesbis as $listage) {
+//                $nombre=$nombre+1;
+//                $valide=$matriceMid ->GetnumberTrueByExigence($listage->exi);
+//                if ($valide->cou!=0) {
+//                    $score=$score+1;
+//                }
+//            }
+//            if ($nombre!=0) {
+//                $pm->update_score_matrice($score*5/$nombre, $projectId);
+//            } else {
+//                $pm->update_score_matrice(0, $projectId);
+//            }
         } catch (ProjectMiddlewareException $e) {
         }
     }
@@ -63,9 +59,25 @@ class MatriceController extends Controller
 
             $etapes = $matriceMid->getEtapesFromStoryMap();
             $exigences = $matriceMid->getExigencesFromStoryMap();
+
             $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);
-            //$matriceMid->createAllEtapes($etapes);
-            $this -> viewcontrol('matrice/correspond', ['projectId' => $projectId, 'couverture' => $couverture]);
+
+            if ($matriceMid->protection() === false) {
+                $matriceMid->createAllEtapes($etapes, $projectId);
+                $matriceMid->createAllExigences($exigences, $projectId);
+            }
+
+            $couvertureId = $matriceMid->getCouvertureIdFromCorrespond($couverture);
+
+
+            $this -> viewcontrol(
+                'matrice/correspond',
+                [
+                    'projectId' => $projectId,
+                    'couverture' => $couverture,
+                    'couvertureId' => $couvertureId
+                ]
+            );
         } catch (\Exception $exception) {
             $this->view('error/oops', ['error' => $exception]);
         }
@@ -73,10 +85,26 @@ class MatriceController extends Controller
 
     public function create()
     {
-        echo '<pre>';
-        var_dump($_POST);
-        echo '</pre>';
-        die();
+        try {
+            $projectId = $_POST['projectId'];
+            $matriceMid = new MatriceMiddleware($projectId);
+            $etapes = $matriceMid->getEtapesFromStoryMap();
+            $exigences = $matriceMid->getExigencesFromStoryMap();
+
+            $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);
+            $etapesId = $matriceMid->getEtapesIdFromCouverture($couverture);
+
+            foreach ($etapesId as $etapeId) {
+                foreach ($_POST[$etapeId] as $exigenceId) {
+                    $matriceMid->createCorrespond($etapeId, $exigenceId);
+                }
+            }
+            header('Location: /matrice/'. $projectId);
+            exit();
+        } catch (\Exception $exception) {
+            $this->view('error/oops', ['error' => $exception]);
+        }
+
     }
 
     //charge l'affichage de la matrice dans l'index html
@@ -85,7 +113,7 @@ class MatriceController extends Controller
         foreach ($matrice as $key => $values) {
             echo('<tr> \n<tr>\n'.$key.'\n</tr>\n');
             foreach ($values as $case) {
-                echo('<td>'.$case.'</td>\n');
+                echo('<td> test </td>\n');
             }
             echo('</tr>\n');
         }

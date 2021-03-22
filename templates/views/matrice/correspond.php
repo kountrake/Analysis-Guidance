@@ -11,12 +11,18 @@
             <form method="post" action="/matrice/correspond/create" class="mt-4 ml-auto mr-auto text-center">
                 <div class="m-4 p-4 border border-gray-500 rounded-lg">
                     <input type="hidden" name="projectId" value="<?= $projectId ?>">
-                    <?php foreach ($couverture as $etape => $exigences) : ?>
+                    <?php for ($i = 0; $i < count($couverture); $i++) : ?>
+                        <?php
+                            $etape = array_keys($couverture)[$i];
+                            $exigences = array_values($couverture)[$i];
+                            $etapeId = array_keys($couvertureId)[$i];
+                            $exigencesId = array_values($couvertureId)[$i];
+                        ?>
                         <p class="mb-2" ><?= $etape ?> : </p>
-                        <?php foreach ($exigences as $exigence) : ?>
-                            <input class="ml-4 mr-2 mb-5" type="checkbox" name="<?= str_replace(' ', '',$etape) ?>[]" value="<?= $exigence ?>"><?= $exigence ?>
-                        <?php endforeach; ?>
-                    <?php endforeach; ?>
+                        <?php for ($j = 0; $j < count($exigences); $j++) : ?>
+                            <input class="ml-4 mr-2 mb-5" type="checkbox" name="<?= $etapeId ?>[]" value="<?= $exigencesId[$j] ?>"><?= $exigences[$j] ?>
+                        <?php endfor; ?>
+                    <?php endfor; ?>
                 </div>
             <button class="bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold hover:underline hover:bg-blue-600 float-right">Créer</button>
             </form>

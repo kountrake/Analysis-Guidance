@@ -21,7 +21,6 @@ class MatriceMiddleware
         $this->projectId = $projectId;
     }
 
-
     /**
      * transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
      * @param $resReq
@@ -38,6 +37,16 @@ class MatriceMiddleware
             }
         }
         return $res;
+    }
+
+    public function getCorrespond()
+    {
+        $stmt = $this->db->getPDO()->prepare(
+            'SELECT * FROM correspond WHERE idprojet=:projectId'
+        );
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
     }
 
     public function createAllEtapes($etapes, $idProjet)
@@ -99,12 +108,6 @@ class MatriceMiddleware
         );
         $values = array(':projectId' => $this->projectId);
         $stmt->execute($values);
-
-        /*echo '<pre>';
-        var_dump($stmt->fetchAll());
-        die();
-        echo '</pre>';*/
-
         $resReq = $stmt->fetchAll();
 
         //transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
@@ -126,12 +129,6 @@ class MatriceMiddleware
         $values = array(':projectId' => $this->projectId);
         $stmt->execute($values);
 
-        /*
-        echo '<pre>';
-        var_dump($stmt->fetchAll());
-        die();
-        echo '</pre>';
-        */
         $resReq = $stmt->fetchAll();
 
         //transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
@@ -164,13 +161,6 @@ class MatriceMiddleware
 
             $couverture[$etapes[$i]] = $arrayReq;
         }
-
-        /*
-        echo '<pre>';
-        var_dump($couverture);
-        die();
-        echo '</pre>';
-        */
         return $couverture;
     }
 
@@ -183,12 +173,6 @@ class MatriceMiddleware
         );
         $values = array(':projectId' => $this->projectId);
         $stmt->execute($values);
-    /*
-        echo '<pre>';
-        var_dump($stmt->fetchAll());
-        die();
-        echo '</pre>';
-    */
         $resReq = $stmt->fetchAll();
 
         //transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
@@ -204,12 +188,6 @@ class MatriceMiddleware
         );
         $values = array(':projectId' => $this->projectId);
         $stmt->execute($values);
-    /*
-        echo '<pre>';
-        var_dump($stmt->fetchAll());
-        die();
-        echo '</pre>';
-    */
         $resReq = $stmt->fetchAll();
 
         //transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
@@ -231,8 +209,8 @@ class MatriceMiddleware
             );
             $values = array(':projectId' => $this->projectId, ':etape' => $etape);
             $stmt->execute($values);
-            $tmp = $stmt->fetchAll();
-            array_push($resReq, $tmp);
+            $tmp = $stmt->fetch();
+            array_push($resReq, $tmp->idetape);
         }
         return $resReq; // $this->requestObjectToArray($resReq, 'idetape');
     }
@@ -248,8 +226,8 @@ class MatriceMiddleware
             );
             $values = array(':projectId' => $this->projectId, ':exigence' => $exigence);
             $stmt->execute($values);
-            $tmp = $stmt->fetchAll();
-            array_push($resReq, $tmp);
+            $tmp = $stmt->fetch();
+            array_push($resReq, $tmp->idexigence);
         }
         return $resReq;//$this->requestObjectToArray($resReq);
     }
@@ -266,16 +244,9 @@ class MatriceMiddleware
             array_push($exigencesIds, $tmp);
         }
 
-        foreach ($etapesIds as $etapesId) {
-            foreach ($exigencesIds as $arrayIds) {
-                array_push($res[$etapesId], $arrayIds);
-            }
+        for ($i = 0; $i< count($etapesIds); $i++) {
+            $res[$etapesIds[$i]] = $exigencesIds[$i];
         }
-
-        echo '<pre>';
-        var_dump($res);
-        echo '</pre>';
-        die();
 
         return $res;
     }
@@ -286,18 +257,17 @@ class MatriceMiddleware
     public function getCouvertureFromMatrix()
     {
         $stmt = $this->db->getPDO()->prepare(
-            'SELECT etm.description, exm.description, coche
-                FROM etapesmatrice etm 
-                JOIN correspond cor ON etm.etapidetape=cor.idetape 
-                JOIN exigencesmatrice exm ON cor.idexigence = exm.idexigence 
-                WHERE idprojet=:projectId
-                AND coche = TRUE'
+            'SELECT etm.description AS descriptionEtape, exm.description AS descriptionExigence
+                FROM etapesmatrice etm
+                JOIN correspond cor ON etm.idetape=cor.idetape 
+                JOIN exigencesmatrice exm ON cor.idexigence = exm.idexigence
+                WHERE etm.idprojet=:projectId
+                and exm.idprojet=:projectId'
         );
         $values = array(':projectId' => $this->projectId);
         $stmt->execute($values);
         return $stmt->fetchAll();
     }
-
 
     /*
      * convertis le résultat de la requête sql en un array php à deux dimensions
@@ -325,7 +295,6 @@ class MatriceMiddleware
         }
         return $result;
     }
-
 
     /*
      * créé la matrice dans la BDD avec les cases précochées par rapport au classement des exigences dans la storyMap
@@ -382,7 +351,6 @@ class MatriceMiddleware
         }
     }
 
-
     /*
      * initialise les cases de la matrice qui sont cochées par défaut après
      * la création de la matrice en mettant à jour la table Correspond
@@ -416,7 +384,6 @@ class MatriceMiddleware
         }
     }
 
-
     /*
      * repasse toutes les cases de la matrice d'un projet à false
      */
@@ -445,7 +412,6 @@ class MatriceMiddleware
         }
     }
 
-
     /*
      * remet à FALSE, puis met à jour les cases indiquées
      * dans $couverture en utilisant reset() et initiateMatrixValues($couverture)
@@ -455,7 +421,6 @@ class MatriceMiddleware
         $this -> reset($etapes, $exigences);
         $this -> initiateMatrixValues($couverture);
     }
-
 
     /*
      * supprime de la BDD les données des tables etapesMatrice/exigencesMatrice
@@ -471,7 +436,6 @@ class MatriceMiddleware
             $stmt->execute($values);
         }
     }
-
 
     /*
      * supprime la matrice de la BDD
@@ -506,6 +470,7 @@ class MatriceMiddleware
         //supprime les données dans la table ExigencesMatrice
         $this -> simpleDeleteMatrixValues($exigences, 'ExengesMatrice');
     }
+
     public function GetnumberTrueByExigence($exigenceid)
     {
         $stmt = $this->db->getPDO()->prepare(
@@ -536,3 +501,4 @@ class MatriceMiddleware
         return $stmt->fetchAll();
     }
 }
+
