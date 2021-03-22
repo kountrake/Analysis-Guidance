@@ -21,8 +21,8 @@ class MatriceMiddleware
         $this->projectId = $projectId;
     }
 
-    /*
-     * récupère les etapes du projet pour construire la matrice
+    /* 
+     * @return array les etapes du projet pour construire la matrice
      */
     public function getEtapesFromStoryMap()
     {
@@ -38,7 +38,7 @@ class MatriceMiddleware
     }
 
     /*
-     * recupere les exigences du projet pour construire la matrice
+     * @return array recupere les exigences du projet pour construire la matrice
      */
     public function getExigencesFromStoryMap()
     {
@@ -81,7 +81,7 @@ class MatriceMiddleware
     }
 
     /*
-     * récupère la matrice du projet (seulement les cases qui contiennent TRUE)
+     * @return array récupère la matrice du projet (seulement les cases qui contiennent TRUE)
      */
     public function getCouvertureFromMatrix()
     {
@@ -291,5 +291,34 @@ class MatriceMiddleware
 
         //supprime les données dans la table ExigencesMatrice
         $this -> simpleDeleteMatrixValues($exigences, 'ExengesMatrice');
+    }
+    public function GetnumberTrueByExigence($exigenceid)
+    {
+        $stmt = $this->db->getPDO()->prepare(
+            'SELECT count(coche) as cou
+                FROM etapesmatrice etm 
+                JOIN correspond cor ON etm.idetape=cor.idetape 
+                WHERE idprojet=:projectId
+                AND coche = TRUE
+                And idexigence=:exigenceid'
+        );
+        $values = array(':projectId' => $this->projectId,'exigenceid'=> $exigenceid);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
+    }
+
+    public function GetAllExigence()
+    {
+        $stmt = $this->db->getPDO()->prepare(
+            'SELECT exm.idexigence as exi
+                FROM etapesmatrice etm 
+                JOIN correspond cor ON etm.idetape=cor.idetape 
+                JOIN exigencesmatrice exm ON cor.idexigence = exm.idexigence 
+                WHERE idprojet=:projectId
+                AND coche = TRUE'
+        );
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+        return $stmt->fetchAll();
     }
 }
