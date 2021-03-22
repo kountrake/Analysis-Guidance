@@ -13,6 +13,7 @@ class PersonnaMiddleware
 
     /**
      * PersonnaMiddleware constructor.
+     * @param $projectId int L'id du projet auquel les personas seront attribués
      */
     public function __construct(int $projectId)
     {
@@ -20,6 +21,10 @@ class PersonnaMiddleware
         $this->projectId = $projectId;
     }
 
+    /**
+     * Récuperer tout les Personas d'un projet
+     * @return array les personas lié à un projet
+     */
     public function getAllPersonnas(): array
     {
         $stmt = $this->db->getPDO()->prepare('SELECT * FROM personna WHERE idprojet=:projectId');
@@ -28,7 +33,12 @@ class PersonnaMiddleware
         return $stmt->fetchAll();
     }
 
-    public function getPersonna(int $personnaId)
+    /**
+     * Récuperer un Persona d'un projet
+     * @param $personnaId string l'id du persona recherché
+     * @return mixed le persona recherché
+     */
+    public function getPersonna(string $personnaId)
     {
         $stmt = $this->db->getPDO()->prepare('SELECT * FROM personna 
                                                     WHERE idprojet=:projectId AND idpersonna=:personnaId');
@@ -37,6 +47,10 @@ class PersonnaMiddleware
         return $stmt->fetch();
     }
 
+    /**
+     * Récuperer le dernier persona d'un projet
+     * @return mixed le dernier persona lié à un projet
+     */
     public function getLastPersonna()
     {
         $stmt = $this->db->getPDO()->prepare('SELECT MAX(idpersonna) FROM personna WHERE idprojet=:projectId');
@@ -45,6 +59,10 @@ class PersonnaMiddleware
         return $stmt->fetch();
     }
 
+    /**
+     * Récuperer le premier persona d'un projet
+     * @return mixed le premier persona lié à un projet
+     */
     public function getFirstPersonna()
     {
         $stmt = $this->db->getPDO()->prepare('SELECT MIN(idpersonna) FROM personna WHERE idprojet=:projectId');
@@ -53,6 +71,16 @@ class PersonnaMiddleware
         return $stmt->fetch();
     }
 
+    /**
+     * Parmètres de création d'un persona
+     * @param $nom string
+     * @param $prenom string
+     * @param $age int
+     * @param $role string
+     * @param $caracteristique string
+     * @param $objectif string
+     * @param $scenario string
+     */
     public function create(
         string $nom,
         string $prenom,
@@ -74,16 +102,17 @@ class PersonnaMiddleware
     }
 
     /**
-     * @param $name
-     * @param $firstname
-     * @param $age
-     * @param $role
-     * @param $caracteristique
-     * @param $objectifs
-     * @param $scenario
-     * @param $idPersonna
+     * Modifier un Persona
+     * @param $name string
+     * @param $firstname string
+     * @param $age int
+     * @param $role string
+     * @param $caracteristique string
+     * @param $objectifs string
+     * @param $scenario string
+     * @param $idPersonna string
      */
-    public function update($name, $firstname, $age, $role, $caracteristique, $objectifs, $scenario, $idPersonna)
+    public function update(string $name,string $firstname, int $age,string $role, string $caracteristique,string $objectifs,string $scenario,string $idPersonna)
     {
         $stmt = $this->db->getPDO()->prepare('UPDATE personna 
                 SET nom = :nom, prenom = :prenom, age = :age, role = :role,
@@ -95,7 +124,12 @@ class PersonnaMiddleware
         $stmt->execute($values);
     }
 
-    public function update_score($id_p,$score)
+    /**
+     * Modifier le Score d'un persona
+     * @param $id_p string l'id du persona
+     * @param $score float nouvelle valeur du score d'un persona
+     */
+    public function update_score(string $id_p,$score)
     {
         $stmt = $this->db->getPDO()->prepare('UPDATE personna 
                 SET Score_Persona = :Score_Persona
@@ -104,6 +138,10 @@ class PersonnaMiddleware
         $stmt->execute($values);
     }
 
+    /**
+     * Obtenir la moyenne d'un persona
+     * @return array La moyenne de score des personas
+     */
     public function getscore_moyen()
     {
         $stmt = $this->db->getPDO()->prepare('SELECT avg(Score_Persona) as sco FROM personna WHERE idprojet=:projectId');
@@ -112,13 +150,21 @@ class PersonnaMiddleware
         return $stmt->fetchAll();
     }
 
-    public function delete($id)
+     /**
+     * Supprimer un persona
+     * @param $id string Id du persona a supprimer
+     */
+    public function delete(string $id)
     {
         $stmt = $this->db->getPDO()->prepare('DELETE FROM personna WHERE idpersonna=:id');
         $values = array(':id' => $id);
         $stmt->execute($values);
     }
 
+    /**
+     * Retourne tout les roles des personas 
+     * @return array Tout les roles des personas
+     */
     public function getAllRoles(): array
     {
         $stmt = $this->db->getPDO()->prepare('SELECT role FROM personna WHERE idprojet=:projectId');

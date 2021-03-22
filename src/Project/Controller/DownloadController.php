@@ -12,18 +12,10 @@ use Spipu\Html2Pdf\Html2Pdf;
 
 class DownloadController extends Controller
 {
-    public function index($id)
-    {
-        try {
-            $html2pdf = new Html2Pdf('P', 'Legal', 'en', true, 'UTF-8', array(25.4, 20.4, 25.4, 20.4));
-            $html2pdf->pdf->SetTitle('PDF PROJET N°'.$id);
-            $html2pdf->WriteHTML($this->gethtmlPersonna($id));
-            $html2pdf->Output('PDF-PROJET-N'.$id.'.pdf');
-        } catch (HTML2PDF_exception $e) {
-            echo $e;
-            exit;
-        }
-    }
+
+    /**
+     * Création du fichier PDF des personas
+     */
     public function gethtmlPersonna($idproj)
     {
         try {
@@ -32,11 +24,14 @@ class DownloadController extends Controller
             $html2pdf->WriteHTML($this->getHTMLPersonnas($idproj));
             $html2pdf->Output('PDF-PROJET-N'.$idproj.'-Persona.pdf');
         } catch (Exception $e) {
-            echo $e;
+            $this->view('error/oops', ['error' => $e->getMessage()]);
             exit();
         }
     }
 
+    /**
+     * Création du contenu du PDF des personas
+     */
     public function getHTMLPersonnas($idproj)
     {
         $html='';
@@ -87,6 +82,9 @@ class DownloadController extends Controller
         return $html.'<br>';
     }
 
+    /**
+     * Création du fichier PDF des UserStory
+     */
     public function gethtmlUserStory($idproj)
     {
         try {
@@ -95,10 +93,14 @@ class DownloadController extends Controller
             $html2pdf->WriteHTML($this->getHTMLUserStorys($idproj));
             $html2pdf->Output('PDF-PROJET-N'.$idproj.'-US.pdf');
         } catch (HTML2PDF_exception $e) {
-            echo $e;
-            exit;
+            $this->view('error/oops', ['error' => $e->getMessage()]);
+            exit();
         }
     }
+
+    /**
+     * Création du contenu du PDF des UserStory
+     */
     public function getHTMLUserStorys($idproj)
     {
         $html='';
@@ -113,6 +115,7 @@ class DownloadController extends Controller
             $userstories = $usMid->getAllUserStories();
         } catch (Exception $exception) {
             $this->view('oops', ['error' => $exception->getMessage()]);
+            exit();
         }
         if (isset($userstories)) {
             $nbUs = 1;
@@ -144,6 +147,9 @@ class DownloadController extends Controller
         return $html;
     }
 
+    /**
+     * Création du fichier PDF d'une StoryMap
+     */
     public function gethtmlStoryMap($idproj)
     {
         try {
@@ -152,11 +158,14 @@ class DownloadController extends Controller
             $html2pdf->WriteHTML($this->getHTMLStoryMaps($idproj));
             $html2pdf->Output('PDF-PROJET-N'.$idproj.'-STORYMAP.pdf');
         } catch (HTML2PDF_exception $e) {
-            echo $e;
-            exit;
+            $this->view('error/oops', ['error' => $e->getMessage()]);
+            exit();
         }
     }
 
+    /**
+     * Création du contenu du PDF des personas
+     */
     public function getHTMLStoryMaps($idproj)
     {
         $html='';
@@ -174,6 +183,7 @@ class DownloadController extends Controller
             $columns = $storymapMid->createColumns($roles, $activites, $stories);
         } catch (Exception $exception) {
             $this->view('oops', ['error' => $exception->getMessage()]);
+            exit();
         }
             $html = '
             <div class="">
@@ -211,18 +221,21 @@ class DownloadController extends Controller
         return $html;
     }
 
+    /**
+     * Création du fichier PDF d'un projet
+     */
     public function gethtmlProject($idproj)
     {
         try {
             $html2pdf = new Html2Pdf('P', 'Legal', 'en', true, 'UTF-8', array(25.4, 20.4, 25.4, 20.4));
-            $html2pdf->pdf->SetTitle('PDF PROJET N°'.$idproj.' - Persona');
+            $html2pdf->pdf->SetTitle('PDF PROJET N°'.$idproj);
             $html=($this->getHTMLPersonnas($idproj));
             $html=$html.($this->getHTMLUserStorys($idproj));
             $html=$html.($this->getHTMLStoryMaps($idproj));
             $html2pdf->WriteHTML($html);
-            $html2pdf->Output('PDF-PROJET-N'.$idproj.'-Persona.pdf');
+            $html2pdf->Output('PDF-PROJET-N'.$idproj.'.pdf');
         } catch (Exception $e) {
-            echo $e;
+            $this->view('error/oops', ['error' => $e->getMessage()]);
             exit();
         }
     }
