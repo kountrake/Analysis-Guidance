@@ -60,6 +60,7 @@ class MatriceController extends Controller
             $pm = new ProjectMiddleware();
             $pm->getProject($projectId, $_SESSION['user']->getId());
             $matriceMid = new MatriceMiddleware($projectId);
+
             $etapes = $matriceMid->getEtapesFromStoryMap();
             $exigences = $matriceMid->getExigencesFromStoryMap();
             $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);

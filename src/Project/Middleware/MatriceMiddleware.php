@@ -40,6 +40,50 @@ class MatriceMiddleware
         return $res;
     }
 
+    public function createAllEtapes($etapes, $idProjet)
+    {
+        foreach ($etapes as $etape) {
+            $stmt = $this->db->getPDO()->prepare(
+                'INSERT INTO etapesmatrice (description, idprojet)
+                   VALUES (:description, :id)'
+            );
+            $values = array(':description' => $etape, ':id' => $idProjet);
+            $stmt->execute($values);
+        }
+    }
+
+    public function createAllExigences($exigences, $idProjet)
+    {
+        foreach ($exigences as $exigence) {
+            $stmt = $this->db->getPDO()->prepare(
+                'INSERT INTO exigencesmatrice (description, idprojet)
+                   VALUES (:description, :id)'
+            );
+            $values = array(':description' => $exigence, ':id' => $idProjet);
+            $stmt->execute($values);
+        }
+    }
+
+    public function protection()
+    {
+        $stmt = $this->db->getPDO()->prepare(
+            'SELECT idetape 
+                FROM etapesmatrice WHERE idprojet=:projectId'
+        );
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+        return $stmt->fetch();
+    }
+
+    public function createCorrespond($etapeId, $exigenceId)
+    {
+        $stmt = $this->db->getPDO()->prepare(
+            'INSERT INTO correspond (idetape, idexigence, coche)
+               VALUES (:idetape, :idexigence, :coche)'
+        );
+        $values = array(':idetape' => $etapeId, ':idexigence' => $exigenceId, ':coche' => true);
+        $stmt->execute($values);
+    }
 
     /**
      * récupère les etapes du projet pour construire la matrice
@@ -66,7 +110,6 @@ class MatriceMiddleware
         //transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
         return $this->requestObjectToArray($resReq, 'activite');
     }
-
 
     /*
      * @return array recupere les exigences du projet pour construire la matrice
@@ -95,14 +138,13 @@ class MatriceMiddleware
         return $this->requestObjectToArray($resReq, 'description');
     }
 
-
     /*
      * forme et renvoie le tableau $couverture qui indique quelle etape et couvertte par quelles exigences
      *  ( tableau en 2D clé : étape => valeurs[exigences] )
      */
     public function getCouvertureFromStoryMap($etapes)
     {
-        $couverture = array();
+        $couverture = [];
 
         for ($i = 0; $i < sizeof($etapes); $i += 1) {
             $stmt = $this->db->getPDO()->prepare(
@@ -132,29 +174,110 @@ class MatriceMiddleware
         return $couverture;
     }
 
-
-    public function getEtapesIdFromEtapes() {
+    public function getEtapesIdFromEtapes(): array
+    {
         $stmt = $this->db->getPDO()->prepare(
-            'SELECT activite 
-                FROM storymap stom
-                JOIN flotnarattion flon ON stom.idbut = flon.idbut
+            'SELECT idetape 
+                FROM etapesmatrice etm
                 WHERE idprojet=:projectId'
         );
         $values = array(':projectId' => $this->projectId);
         $stmt->execute($values);
-
-        /*echo '<pre>';
+    /*
+        echo '<pre>';
         var_dump($stmt->fetchAll());
         die();
-        echo '</pre>';*/
-
+        echo '</pre>';
+    */
         $resReq = $stmt->fetchAll();
 
         //transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
         return $this->requestObjectToArray($resReq, 'activite');
     }
 
-    //public function gExigenceset
+    public function getExigencesIdFromExigences(): array
+    {
+        $stmt = $this->db->getPDO()->prepare(
+            'SELECT idexigence
+                FROM exigencessmatrice exm
+                WHERE idprojet=:projectId'
+        );
+        $values = array(':projectId' => $this->projectId);
+        $stmt->execute($values);
+    /*
+        echo '<pre>';
+        var_dump($stmt->fetchAll());
+        die();
+        echo '</pre>';
+    */
+        $resReq = $stmt->fetchAll();
+
+        //transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
+        return $this->requestObjectToArray($resReq, 'activite');
+    }
+
+    /*
+     * reçoit un tableau de couverture
+     */
+    public function getEtapesIdFromCouverture($couverture)
+    {
+        $resReq = array();
+        foreach ($couverture as $etape => $exigences) {
+            $stmt = $this->db->getPDO()->prepare(
+                'SELECT idetape
+                FROM etapesmatrice
+                WHERE idprojet = :projectId
+                AND description = :etape'
+            );
+            $values = array(':projectId' => $this->projectId, ':etape' => $etape);
+            $stmt->execute($values);
+            $tmp = $stmt->fetchAll();
+            array_push($resReq, $tmp);
+        }
+        return $resReq; // $this->requestObjectToArray($resReq, 'idetape');
+    }
+
+    public function getExigencesIdsFromArray($exigences){
+        $resReq = array();
+        foreach ($exigences as $exigence) {
+            $stmt = $this->db->getPDO()->prepare(
+                'SELECT idexigence
+                FROM exigencesmatrice
+                WHERE idprojet = :projectId
+                AND description = :exigence'
+            );
+            $values = array(':projectId' => $this->projectId, ':exigence' => $exigence);
+            $stmt->execute($values);
+            $tmp = $stmt->fetchAll();
+            array_push($resReq, $tmp);
+        }
+        return $resReq;//$this->requestObjectToArray($resReq);
+    }
+
+
+    public function getCouvertureIdFromCorrespond($couverture)
+    {
+        $res = array();
+        $etapesIds = $this->getEtapesIdFromCouverture($couverture);
+        $exigencesIds = array();
+        foreach ($couverture as $etape => $exigences) {
+            $tmp = $this -> getExigencesIdsFromArray($exigences);
+            array_push($exigencesIds, $tmp);
+        }
+
+        foreach ($etapesIds as $etapesId) {
+            foreach ($exigencesIds as $arrayIds) {
+                array_push($res[$etapesId], $arrayIds);
+            }
+        }
+
+        echo '<pre>';
+        var_dump($res);
+        echo '</pre>';
+        die();
+
+        return $res;
+    }
 
     /*
      * @return array récupère la matrice du projet (seulement les cases qui contiennent TRUE)
