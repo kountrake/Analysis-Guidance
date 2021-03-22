@@ -26,22 +26,24 @@ class UserStoryController extends Controller
             }
             if (count($us) === 0) {
                 $this->viewcontrol('userstory', ['projectId' => $projectId, 'roles' => $roles]);
-                $pm->update_score_moyUS(0,$projectId);
+                $pm->update_score_moyUS(0, $projectId);
             } else {
                 $this->viewcontrol('userstory', ['projectId' => $projectId, 'roles' => $roles, 'userstories' => $us]);
-                foreach($us as $value){
+                foreach ($us as $value) {
                     $score_critere=2;
                     $critere = $usMid->getBenefice($value->idus);
-                    foreach($critere as $criteres){
-                        if((strlen($criteres->description)>0))
-                            {$score_critere=$score_critere+1;}
+                    foreach ($critere as $criteres) {
+                        if ((strlen($criteres->description)>0)) {
+                            $score_critere=$score_critere+1;
+                        }
                     }
-                    $usMid->update_score_us($value->idus,$score_critere);
-                } 
-                $pm->update_score_moyUS($usMid->getscore_moyen_us()[0]->sco,$projectId);
+                    $usMid->update_score_us($value->idus, $score_critere);
+                }
+                $pm->update_score_moyUS($usMid->getscore_moyen_us()[0]->sco, $projectId);
             }
         } catch (Exception $e) {
             $this->view('error/oops', ['error' => $e->getMessage()]);
+            exit();
         }
     }
 
@@ -62,6 +64,7 @@ class UserStoryController extends Controller
             exit();
         } catch (Exception $exception) {
             $this->view('error/oops', ['error' => $exception->getMessage()]);
+            exit();
         }
     }
 
@@ -74,6 +77,7 @@ class UserStoryController extends Controller
             $this->viewcontrol('modify/userstory', ['projectId' => $idProject, 'us' => $us]);
         } catch (Exception $exception) {
             $this->view('error/oops', ['error' => $exception->getMessage()]);
+            exit();
         }
     }
 
@@ -94,6 +98,7 @@ class UserStoryController extends Controller
             exit();
         } catch (Exception $exception) {
             $this->view('error/oops', ['error' => $exception->getMessage()]);
+            exit();
         }
     }
 
