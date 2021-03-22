@@ -7,23 +7,31 @@ use Project\Middleware\ProjectMiddleware;
 use Project\Middleware\ProjectMiddlewareException;
 use Project\Middleware\MatriceMiddleware;
 
+/**
+ * Class MatriceController
+ * @package Project\Controller
+ */
 class MatriceController extends Controller
 {
+    /**
+     * index de la page matrice
+     * @param string $projectId
+     */
     public function index(string $projectId)
     {
         session_start();
         try {
-            $nombre=0;
-            $score=0;
+            $nombre = 0;
+            $score = 0;
             $pm = new ProjectMiddleware();
             $pm->getProject($projectId, $_SESSION['user']->getId());
             $matriceMid = new MatriceMiddleware($projectId);
             $etapes = $matriceMid->getEtapesFromStoryMap();
-            $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);
+            $couverture = $matriceMid->getCouvertureFromStoryMap($etapes);
             $couvertureId = $matriceMid->getCouvertureIdFromCorrespond($couverture);
             $correspond = $matriceMid->getCorrespond();
 
-            $this -> viewcontrol(
+            $this->viewcontrol(
                 'matrice',
                 [
                     'projectId' => $projectId,
@@ -49,6 +57,10 @@ class MatriceController extends Controller
         }
     }
 
+    /**
+     * renseigne les correspondances de la matrice
+     * @param $projectId
+     */
     public function correspond($projectId)
     {
         session_start();
@@ -60,7 +72,7 @@ class MatriceController extends Controller
             $etapes = $matriceMid->getEtapesFromStoryMap();
             $exigences = $matriceMid->getExigencesFromStoryMap();
 
-            $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);
+            $couverture = $matriceMid->getCouvertureFromStoryMap($etapes);
 
             if ($matriceMid->protection() === false) {
                 $matriceMid->createAllEtapes($etapes, $projectId);
@@ -70,7 +82,7 @@ class MatriceController extends Controller
             $couvertureId = $matriceMid->getCouvertureIdFromCorrespond($couverture);
 
 
-            $this -> viewcontrol(
+            $this->viewcontrol(
                 'matrice/correspond',
                 [
                     'projectId' => $projectId,
@@ -83,6 +95,9 @@ class MatriceController extends Controller
         }
     }
 
+    /**
+     *créé la matrice
+     */
     public function create()
     {
         try {
@@ -91,7 +106,7 @@ class MatriceController extends Controller
             $etapes = $matriceMid->getEtapesFromStoryMap();
             $exigences = $matriceMid->getExigencesFromStoryMap();
 
-            $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);
+            $couverture = $matriceMid->getCouvertureFromStoryMap($etapes);
             $etapesId = $matriceMid->getEtapesIdFromCouverture($couverture);
 
             foreach ($etapesId as $etapeId) {
@@ -99,29 +114,11 @@ class MatriceController extends Controller
                     $matriceMid->createCorrespond($etapeId, $exigenceId);
                 }
             }
-            header('Location: /matrice/'. $projectId);
+            header('Location: /matrice/' . $projectId);
             exit();
         } catch (\Exception $exception) {
             $this->view('error/oops', ['error' => $exception]);
         }
 
     }
-
-    //charge l'affichage de la matrice dans l'index html
-    public function loadMatrix($matrice)
-    {
-        foreach ($matrice as $key => $values) {
-            echo('<tr> \n<tr>\n'.$key.'\n</tr>\n');
-            foreach ($values as $case) {
-                echo('<td> test </td>\n');
-            }
-            echo('</tr>\n');
-        }
-    }
 }
-
-/*
- * etapes -> [etape1, etape2]
- * exigence1 -> ['', 'x', ...;]
- * exigence2 -> ['', '', 'x', ...]
- */

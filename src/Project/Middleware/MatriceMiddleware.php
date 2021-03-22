@@ -4,6 +4,10 @@ namespace Project\Middleware;
 
 use Project\Db\Db;
 
+/**
+ * Class MatriceMiddleware
+ * @package Project\Middleware
+ */
 class MatriceMiddleware
 {
 
@@ -39,6 +43,11 @@ class MatriceMiddleware
         return $res;
     }
 
+    /**
+     * renvoie les correspondances entres les etapes
+     * et les exigences de la matrice depuis la table correspond
+     * @return array
+     */
     public function getCorrespond()
     {
         $stmt = $this->db->getPDO()->prepare(
@@ -49,6 +58,11 @@ class MatriceMiddleware
         return $stmt->fetchAll();
     }
 
+    /**
+     * ajoute à la BDD les étapes du projet en cours
+     * @param $etapes
+     * @param $idProjet
+     */
     public function createAllEtapes($etapes, $idProjet)
     {
         foreach ($etapes as $etape) {
@@ -61,6 +75,11 @@ class MatriceMiddleware
         }
     }
 
+    /**
+     * ajoute à la BDD les éxigences du projet en cours
+     * @param $exigences
+     * @param $idProjet
+     */
     public function createAllExigences($exigences, $idProjet)
     {
         foreach ($exigences as $exigence) {
@@ -73,6 +92,10 @@ class MatriceMiddleware
         }
     }
 
+    /**
+     * renvoie les ids des étapes du projet en cours
+     * @return mixed
+     */
     public function protection()
     {
         $stmt = $this->db->getPDO()->prepare(
@@ -84,6 +107,11 @@ class MatriceMiddleware
         return $stmt->fetch();
     }
 
+    /**
+     * ajoute une ligne de correspondance dans la BDD à partir d'un id d'étape et d'un id d'exigence
+     * @param $etapeId
+     * @param $exigenceId
+     */
     public function createCorrespond($etapeId, $exigenceId)
     {
         $stmt = $this->db->getPDO()->prepare(
@@ -114,8 +142,9 @@ class MatriceMiddleware
         return $this->requestObjectToArray($resReq, 'activite');
     }
 
-    /*
-     * @return array recupere les exigences du projet pour construire la matrice
+    /**
+     * recupere les exigences du projet pour construire la matrice
+     * @return array
      */
     public function getExigencesFromStoryMap()
     {
@@ -135,9 +164,10 @@ class MatriceMiddleware
         return $this->requestObjectToArray($resReq, 'description');
     }
 
-    /*
+    /**
      * forme et renvoie le tableau $couverture qui indique quelle etape et couvertte par quelles exigences
      *  ( tableau en 2D clé : étape => valeurs[exigences] )
+     * @return array
      */
     public function getCouvertureFromStoryMap($etapes)
     {
@@ -164,38 +194,10 @@ class MatriceMiddleware
         return $couverture;
     }
 
-    public function getEtapesIdFromEtapes(): array
-    {
-        $stmt = $this->db->getPDO()->prepare(
-            'SELECT idetape 
-                FROM etapesmatrice etm
-                WHERE idprojet=:projectId'
-        );
-        $values = array(':projectId' => $this->projectId);
-        $stmt->execute($values);
-        $resReq = $stmt->fetchAll();
 
-        //transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
-        return $this->requestObjectToArray($resReq, 'activite');
-    }
-
-    public function getExigencesIdFromExigences(): array
-    {
-        $stmt = $this->db->getPDO()->prepare(
-            'SELECT idexigence
-                FROM exigencessmatrice exm
-                WHERE idprojet=:projectId'
-        );
-        $values = array(':projectId' => $this->projectId);
-        $stmt->execute($values);
-        $resReq = $stmt->fetchAll();
-
-        //transforme l'objet renvoyé en tableau de chaines de caractères sans copier les doublons
-        return $this->requestObjectToArray($resReq, 'activite');
-    }
-
-    /*
-     * reçoit un tableau de couverture
+    /**
+     * reçoit un tableau de couverture et renvoie les id des étapes de la couverture
+     * @return array
      */
     public function getEtapesIdFromCouverture($couverture)
     {
@@ -215,6 +217,11 @@ class MatriceMiddleware
         return $resReq; // $this->requestObjectToArray($resReq, 'idetape');
     }
 
+    /**
+     * reçoit un tableau d'exigence et renvoie les ids de ces exigences
+     * @param $exigences
+     * @return array
+     */
     public function getExigencesIdsFromArray($exigences){
         $resReq = array();
         foreach ($exigences as $exigence) {
@@ -232,7 +239,12 @@ class MatriceMiddleware
         return $resReq;//$this->requestObjectToArray($resReq);
     }
 
-
+    /**
+     * renvoie un tableau de la meme structure que couverture (array(etapes -> array(exigences) )
+     * en remplaçant les noms des étapes et exigences par leurs ids
+     * @param $couverture
+     * @return array
+     */
     public function getCouvertureIdFromCorrespond($couverture)
     {
         $res = array();
@@ -296,10 +308,12 @@ class MatriceMiddleware
         return $result;
     }
 
-    /*
+    /**
      * créé la matrice dans la BDD avec les cases précochées par rapport au classement des exigences dans la storyMap
      * (ici dans $couverture on a des tableaux avec pour id l'etape et pour valeur les exigences pour
      * indiquer quelles cases précocher)
+     * @param $etapes
+     * @param $exigences
      */
     public function create($etapes, $exigences)
     {
@@ -351,9 +365,11 @@ class MatriceMiddleware
         }
     }
 
-    /*
+
+    /**
      * initialise les cases de la matrice qui sont cochées par défaut après
      * la création de la matrice en mettant à jour la table Correspond
+     * @param couverture
      */
     public function initiateMatrixValues($couverture)
     {
@@ -384,8 +400,11 @@ class MatriceMiddleware
         }
     }
 
-    /*
+
+    /**
      * repasse toutes les cases de la matrice d'un projet à false
+     * @param $etapes
+     * @param $exigences
      */
     public function reset($etapes, $exigences)
     {
@@ -412,9 +431,13 @@ class MatriceMiddleware
         }
     }
 
-    /*
+
+    /**
      * remet à FALSE, puis met à jour les cases indiquées
      * dans $couverture en utilisant reset() et initiateMatrixValues($couverture)
+     * @param $etapes
+     * @param $exigences
+     * @param $couverture
      */
     public function update($etapes, $exigences, $couverture)
     {
@@ -422,8 +445,11 @@ class MatriceMiddleware
         $this -> initiateMatrixValues($couverture);
     }
 
-    /*
+
+    /**
      * supprime de la BDD les données des tables etapesMatrice/exigencesMatrice
+     * @param $values
+     * @param $tableName
      */
     public function simpleDeleteMatrixValues($values, $tableName)
     {
@@ -437,8 +463,11 @@ class MatriceMiddleware
         }
     }
 
-    /*
+
+    /**
      * supprime la matrice de la BDD
+     * @param $etapes
+     * @param $exigences
      */
     public function delete($etapes, $exigences)
     {
@@ -471,6 +500,11 @@ class MatriceMiddleware
         $this -> simpleDeleteMatrixValues($exigences, 'ExengesMatrice');
     }
 
+    /**
+     * renvoie le nombre de valeurs cochées à vrai pour l'exigence
+     * @param $exigenceid
+     * @return array
+     */
     public function GetnumberTrueByExigence($exigenceid)
     {
         $stmt = $this->db->getPDO()->prepare(
@@ -486,6 +520,10 @@ class MatriceMiddleware
         return $stmt->fetchAll();
     }
 
+    /**
+     * renvoie toute les exigences du projet
+     * @return array
+     */
     public function GetAllExigence()
     {
         $stmt = $this->db->getPDO()->prepare(
@@ -501,4 +539,3 @@ class MatriceMiddleware
         return $stmt->fetchAll();
     }
 }
-
