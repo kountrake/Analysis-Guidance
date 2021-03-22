@@ -440,35 +440,14 @@ class MatriceMiddleware
     /*
      * supprime la matrice de la BDD
      */
-    public function delete($etapes, $exigences)
+    public function delete()
     {
-        //supprime les données dans la table Correspond
-        for ($i = 0; $i < sizeof($etapes); $i += 1) {
-            for ($j = 0; $j < sizeof($exigences); $j += 1) {
-                $stmt = $this->db->getPDO()->prepare(
-                    'DELETE FROM Correspond
-                        WHERE
-                         idEtape = (
-                             SELECT idEtape
-                             FROM EtapesMatrice
-                             WHERE description = :etapes
-                             ) 
-                        AND idExigence = (
-                          SELECT idExigence
-                          FROM EtapesMatrice
-                          WHERE description = :exigences
-                      )'
-                );
-                $values = array(':etapes' => $etapes[$i], ':exigences' => $exigences[$i]);
-                $stmt->execute($values);
-            }
-        }
-
-        //supprime les données dans la table EtapesMatrice
-        $this -> simpleDeleteMatrixValues($etapes, 'EtapesMatrice');
-
-        //supprime les données dans la table ExigencesMatrice
-        $this -> simpleDeleteMatrixValues($exigences, 'ExengesMatrice');
+        $stmt = $this->db->getPDO()->prepare('DELETE FROM etapesmatrice WHERE idprojet=:id');
+        $values = array(':id' => $this->projectId);
+        $stmt->execute($values);
+        $stmt = $this->db->getPDO()->prepare('DELETE FROM exigencesmatrice WHERE idprojet=:id');
+        $values = array(':id' => $this->projectId);
+        $stmt->execute($values);
     }
 
     public function GetnumberTrueByExigence($exigenceid)

@@ -94,6 +94,7 @@ class App
         $this->router->addRoute('GET', 'matrice_index', '/matrice/:id', 'MatriceController@index');
         $this->router->addRoute('GET', 'matrice_add', '/matrice/correspond/:id', 'MatriceController@correspond');
         $this->router->addRoute('POST', 'matrice_create', '/matrice/correspond/create', 'MatriceController@create');
+        $this->router->addRoute('POST', 'matrice_delete', '/matrice/delete', 'MatriceController@delete');
 
         /*
          * Les routes pour le téléchargement
