@@ -18,8 +18,14 @@ class MatriceController extends Controller
             $pm->getProject($projectId, $_SESSION['user']->getId());
             $matriceMid = new MatriceMiddleware($projectId);
 
-            $etapes = pg_fetch_array( $matriceMid -> getEtapesFromStoryMap() );
+            $etapes = $matriceMid -> getEtapesFromStoryMap();
             $exigences = $matriceMid -> getExigencesFromStoryMap();
+
+            /*
+            echo('\n');
+            $stringue = implode(",", $exigences);
+            echo $stringue;
+            */
             $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);
 
             $matriceMid -> create($etapes, $exigences);
