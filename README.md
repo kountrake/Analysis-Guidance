@@ -1,11 +1,4 @@
-# <u>Projet Analyse Fonctionnelle</u>
-
-
-
-## Table des matières
-
-[TOC]
-
+# <u>Projet Analyse Fonctionnelle - Equipe 3 - L3 MIAGE Groupe1</u>
 
 
 ## Installation et pré-requis
@@ -25,6 +18,14 @@ git clone https://gitlab-etu.fil.univ-lille1.fr/s6-projet/projet.git
 ```
 
 ou encore de le télécharger directement sur ce [lien](https://gitlab-etu.fil.univ-lille1.fr/s6-projet/projet).
+
+### Prototype
+
+Pour accéder au prototype sur le serveur du fil : [lien](https://webtp.fil.univ-lille1.fr/~naessens)
+
+Compte factice:
+* email: JohnDoe@gmail.com
+* mot de passe: John123!
 
 ### Composer
 
@@ -81,7 +82,7 @@ $maroute->matches(string $path); //return bool
 
 ##### La méthode execute
 
-Execute permet de lancer dans le controller la  méthode. Par exemple, elle lancera dans le DashboardController la fonction index qui permet l'affichage de la vue.
+Execute permet de lancer dans le controller la méthode. Par exemple, elle lancera dans le DashboardController la fonction index qui permet l'affichage de la vue.
 
 ```php
 $maroute->execute();
@@ -117,7 +118,7 @@ $monRouter->getRoute($name)
 
 ##### La méthode addRoute
 
-Cette méthode permet d'ajouter une route dans le tableau. La route est ajouter dans le sous tableau correspond à une méthode précise (GET, POST, UPDATE, DELETE)
+Cette méthode permet d'ajouter une route dans le tableau. La route est ajouter dans le sous tableau correspond à une méthode précise (GET, POST)
 
 ```php
 $monRouter->addRoute('GET', 'dashboard_index', '/dashboard', 'DashboardController@index')
@@ -150,11 +151,9 @@ class LoginController extends Controller
 ```
 
 
+### Les Middelawares
 
-### RegisterValidator
+Les middlewares permettent de faire du traitement d'informations. Ils sont appelés par les controllers au besoin et retourne l'information traitée afin que le controller puisse poursuivre
 
-Cette classe permet de tester différents informations récupérées depuis un formulaire d'inscription et permet de les valider si elles suivent les critères fixés.
+## Remarques
 
-- isValidName()
-- isValidEmail()
-- isValidPassword()
