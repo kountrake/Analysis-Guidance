@@ -115,10 +115,10 @@ class MatriceMiddleware
     public function createCorrespond($etapeId, $exigenceId)
     {
         $stmt = $this->db->getPDO()->prepare(
-            'INSERT INTO correspond (idetape, idexigence, coche)
-               VALUES (:idetape, :idexigence, :coche)'
+            'INSERT INTO correspond (idetape, idexigence, coche, idprojet)
+               VALUES (:idetape, :idexigence, :coche, :id)'
         );
-        $values = array(':idetape' => $etapeId, ':idexigence' => $exigenceId, ':coche' => true);
+        $values = array(':idetape' => $etapeId, ':idexigence' => $exigenceId, ':coche' => true, 'id' => $this->projectId);
         $stmt->execute($values);
     }
 
@@ -222,7 +222,8 @@ class MatriceMiddleware
      * @param $exigences
      * @return array
      */
-    public function getExigencesIdsFromArray($exigences){
+    public function getExigencesIdsFromArray($exigences)
+    {
         $resReq = array();
         foreach ($exigences as $exigence) {
             $stmt = $this->db->getPDO()->prepare(
@@ -236,7 +237,7 @@ class MatriceMiddleware
             $tmp = $stmt->fetch();
             array_push($resReq, $tmp->idexigence);
         }
-        return $resReq;//$this->requestObjectToArray($resReq);
+        return $resReq;
     }
 
     /**
@@ -259,7 +260,6 @@ class MatriceMiddleware
         for ($i = 0; $i< count($etapesIds); $i++) {
             $res[$etapesIds[$i]] = $exigencesIds[$i];
         }
-
         return $res;
     }
 
@@ -471,6 +471,9 @@ class MatriceMiddleware
      */
     public function delete()
     {
+        $stmt = $this->db->getPDO()->prepare('DELETE FROM correspond WHERE idprojet=:id');
+        $values = array(':id' => $this->projectId);
+        $stmt->execute($values);
         $stmt = $this->db->getPDO()->prepare('DELETE FROM etapesmatrice WHERE idprojet=:id');
         $values = array(':id' => $this->projectId);
         $stmt->execute($values);

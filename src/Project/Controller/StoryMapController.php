@@ -138,7 +138,7 @@ class StoryMapController extends Controller
     {
         session_start();
         try {
-            $projectId = $_POST['projectId'];
+            $projectId = $_POST['idProjet'];
             $pm = new ProjectMiddleware();
             $pm->getProject($projectId, $_SESSION['user']->getId());
             $storymapMid = new StoryMapMiddleware($projectId);

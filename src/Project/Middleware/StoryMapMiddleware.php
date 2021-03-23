@@ -107,7 +107,7 @@ class StoryMapMiddleware
      * Retourne le dernier role crée d'un projet
      * @return mixed
      */
-    public function getLastRoleId(): mixed
+    public function getLastRoleId()
     {
         $stmt = $this->db->getPDO()->prepare('SELECT MAX(idbut) FROM storymap WHERE idprojet=:projectId');
         $values = array(':projectId' => $this->projectId);
@@ -162,7 +162,7 @@ class StoryMapMiddleware
      * @param string $idactivite
      * @return mixed
      */
-    public function getNumberStories(string $idactivite): mixed
+    public function getNumberStories(string $idactivite)
     {
         $stmt = $this->db->getPDO()->prepare('SELECT Count(*) as cou FROM story NATURAL JOIN FlotNarattion NATURAL JOIN StoryMap                                                    
                                                     WHERE StoryMap.idprojet=:idactivite');

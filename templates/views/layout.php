@@ -27,7 +27,7 @@
         </ul>
     <?php else : ?>
         <ul class="flex flex-row">
-            <li class="p-4 text-xl text-white font-bold underline"><a href="/help" target="_blank"> Aide </a></li>
+            <li class="p-4 "><a href="/help" target="_blank"> Aide </a></li>
             <li class="p-4"><a href="/login">Connexion</a></li>
             <li class="p-4"><a href="/register">Inscription</a></li>
         </ul>

@@ -102,6 +102,7 @@ function checked($correspond, $etapeid, $exigenceid): bool
     </div>
 
     <div class="mx-10">
+        <?php if ($columns != null) : ?>
         <div class="flex justify-center bg-white mb-4">
             <div class="flex flex-row m-4">
                 <div class="flex flex-col border border-black border-r-0 justify-items-center">
@@ -157,12 +158,20 @@ function checked($correspond, $etapeid, $exigenceid): bool
                 </button>
             </form>
         </div>
+        <?php else : ?>
+            <div class="flex justify-end">
+                <a href="/storymap/role/<?= $id ?>"
+                   class="block bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold hover:underline hover:bg-blue-600">Créer la storymap</a>
+            </div>
+        <?php endif; ?>
     </div>
 
     <div class="flex justify-center bg-white w-full mt-10 p-4 mb-4">
         <h2 class="text-center text-2xl font-bold underline">Matrice</h2>
     </div>
+
     <div class="mx-10">
+        <?php if ($couverture != null) : ?>
         <div class="bg-white rounded mb-4">
             <div class="flex flex-col px-8 mt-4 bg-white ml-4 mr-4">
 
@@ -200,6 +209,12 @@ function checked($correspond, $etapeid, $exigenceid): bool
                 </button>
             </form>
         </div>
+        <?php else : ?>
+            <div class="flex justify-end">
+                <a href="/matrice/correspond/<?= $id ?>"
+                   class="block bg-blue-700 rounded border-2 border-blue-800 p-2 text-white text-semi-bold hover:underline hover:bg-blue-600">Créer la matrice</a>
+            </div>
+        <?php endif; ?>
     </div>
 
     <div class="flex justify-around bg-white w-full mt-10 p-4 mb-4">

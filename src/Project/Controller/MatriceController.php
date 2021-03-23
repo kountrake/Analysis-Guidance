@@ -81,7 +81,6 @@ class MatriceController extends Controller
 
             $couvertureId = $matriceMid->getCouvertureIdFromCorrespond($couverture);
 
-
             $this->viewcontrol(
                 'matrice/correspond',
                 [
@@ -104,7 +103,6 @@ class MatriceController extends Controller
             $projectId = $_POST['projectId'];
             $matriceMid = new MatriceMiddleware($projectId);
             $etapes = $matriceMid->getEtapesFromStoryMap();
-            $exigences = $matriceMid->getExigencesFromStoryMap();
 
             $couverture = $matriceMid->getCouvertureFromStoryMap($etapes);
             $etapesId = $matriceMid->getEtapesIdFromCouverture($couverture);
@@ -126,7 +124,7 @@ class MatriceController extends Controller
     {
         session_start();
         try {
-            $projectId = $_POST['projectId'];
+            $projectId = $_POST['idProjet'];
             $pm = new ProjectMiddleware();
             $pm->getProject($projectId, $_SESSION['user']->getId());
             $matriceMid = new MatriceMiddleware($projectId);

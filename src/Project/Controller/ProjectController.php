@@ -34,14 +34,26 @@ class ProjectController extends Controller
             $userstories = $usMiddleware->getAllUserStories();
             $storymapMid = new StoryMapMiddleware($id);
             $roles = $storymapMid->getAllRoles();
+            if (count($roles) != 0) {
+                $activites = $storymapMid->activitiesFromRoles($roles);
+                $stories = $storymapMid->storiesFromActivities($activites);
+                $columns = $storymapMid->createColumns($roles, $activites, $stories);
+            } else {
+                $columns = null;
+            }
             $activites = $storymapMid->activitiesFromRoles($roles);
             $stories = $storymapMid->storiesFromActivities($activites);
             $columns = $storymapMid->createColumns($roles, $activites, $stories);
             $matriceMid = new MatriceMiddleware($id);
-            $etapes = $matriceMid->getEtapesFromStoryMap();
-            $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);
-            $couvertureId = $matriceMid->getCouvertureIdFromCorrespond($couverture);
             $correspond = $matriceMid->getCorrespond();
+            if (count($correspond) != 0) {
+                $etapes = $matriceMid->getEtapesFromStoryMap();
+                $couverture = $matriceMid -> getCouvertureFromStoryMap($etapes);
+                $couvertureId = $matriceMid->getCouvertureIdFromCorrespond($couverture);
+            } else {
+                $couverture = null;
+                $couvertureId = null;
+            }
             $this->viewcontrol(
                 'project',
                 [
