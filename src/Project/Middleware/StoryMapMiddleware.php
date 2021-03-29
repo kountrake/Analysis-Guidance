@@ -8,8 +8,8 @@ use Project\Item\StorymapColumn;
 
 class StoryMapMiddleware
 {
-    private Db $db;
-    private int $projectId;
+    private $db;
+    private $projectId;
 
     /**
      * StoryMapMiddleware constructor.
